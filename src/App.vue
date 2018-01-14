@@ -40,7 +40,6 @@
     <v-content>
       <v-container fluid fill-height>
         <v-layout justify-center align-center>
-          <img src="./assets/logo.png">
           <router-view/>
         </v-layout>
       </v-container>
