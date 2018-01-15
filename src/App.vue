@@ -12,6 +12,24 @@
             <p>Если неприятность может произойти, она обязательно происходит.</p>
             <p class="grey--text">Закон Мерфи, 2-я пол. ХХ века</p>
           </blockquote>
+      <hr>
+      <v-card>
+        <v-card-text>
+          <div>Мастерство: {{ stats.skl }}</div>
+          <div>Выносливость: {{ stats.sta }}</div>
+          <div>Удача: {{ stats.lck }}</div>
+        </v-card-text>
+      </v-card>
+      <hr>
+      <v-card>
+        <v-card-text>
+          <ul>
+            <template v-for="i in items">
+              <li>Item {{ i }}</li>
+            </template>
+          </ul> 
+        </v-card-text>
+      </v-card>
         </v-card-text>
       </v-card>
       <v-list dense>
@@ -57,7 +75,20 @@ export default {
   name: 'App',
   data: () => ({
     drawer: null,
-    source: 'String'
+    source: 'String',
+    stats: {
+      skl: 12,
+      sta: 24,
+      lck: 12
+    },
+    items: [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+    ]
   })
 }
 </script>
