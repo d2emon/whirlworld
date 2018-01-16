@@ -54,9 +54,12 @@
             </v-flex>
           </v-layout>
           <hr>
+          <div>{{player}}</div>
+          {{ player.items }}
           <ul>
             <template v-for="(i, id) in player.items">
-              <li :key="id">Item {{ i }}:{{ id }}</li>
+              <li>{{ i }}::{{ id }}</li>
+              <li v-if="i" :key="id">{{ i.title }} Item {{ i }}:{{ id }}</li>
             </template>
           </ul>
         </v-card-text>
@@ -87,7 +90,7 @@
     <v-content>
       <v-container fluid fill-height>
         <v-layout justify-center align-center>
-          <router-view/>
+          <router-view @get_item="getItem" />
         </v-layout>
       </v-container>
     </v-content>
@@ -158,6 +161,21 @@ export default {
       }
       for (let i = 0; i < 6; i++) {
         this.player.items[i] = null
+      }
+    },
+    getItem: function (item) {
+      var res = false
+      for(let i = 0; i < this.player.items.length; i++) {
+        if (!this.player.items[i]) {
+          this.player.items[i] = item
+          res = true
+          break
+        }
+      }
+      alert(this.player.items)
+      console.log(this.player.items)
+      if (!res) {
+        alert('Ваш рюкзак забит.')
       }
     }
   },

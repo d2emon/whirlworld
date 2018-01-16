@@ -11,12 +11,31 @@
               top
               right
               slot="activator"
+              @click.stop="starting = true"
             >
               <v-icon>play_arrow</v-icon>
             </v-btn>
             <span>Начать игру</span>
           </v-tooltip>
         </v-fab-transition>
+
+        <v-dialog v-model="starting" max-width="500px">
+          <v-card>
+            <v-card-title>
+              Начало игры
+            </v-card-title>
+            <v-card-text>
+              <p>Вам предлагают на выбор одну из трех вещей, примерно равных по массе:</p>
+            </v-card-text>
+            <v-card-actions>
+              <v-tooltip bottom v-for="i in items">
+                <v-btn color="primary" dark @click.stop="selectItem(i)" slot="activator">{{ i.short }}</v-btn>
+                <h1>{{ i.title }}</h1>
+                <div v-if="i.description">{{ i.description }}</div>
+              </v-tooltip>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
 
         <v-card>
           <v-list three-line>
@@ -459,7 +478,32 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
+      starting: null,
+      items: [
+        {
+          short: 'Инфракрасные очки',
+          title: 'Инфракрасные очки «Ночное зрение»',
+          description: ''
+        },
+        {
+          short: 'Зажигалка',
+          title: 'Зажигалка',
+          description: ''
+        },
+        {
+          short: 'Тюбик',
+          title: 'Тюбик питательной пасты',
+          description: 'В любой момент восстановит ваши силы до первоначального уровня (увы, пасты хватит лишь на один прием).'
+        }
+      ],
       msg: 'Welcome to Your Vue.js App'
+    }
+  },
+  methods: {
+    selectItem: function (item) {
+      console.log(item)
+      this.starting = false
+      this.$emit('get_item', item)
     }
   }
 }
