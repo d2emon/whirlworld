@@ -1,6 +1,23 @@
 <template>
     <v-layout row>
       <v-flex xs10>
+        <v-fab-transition>
+          <v-tooltip bottom>
+            <v-btn
+              primary
+              dark
+              fab
+              fixed
+              top
+              right
+              slot="activator"
+            >
+              <v-icon>play_arrow</v-icon>
+            </v-btn>
+            <span>Начать игру</span>
+          </v-tooltip>
+        </v-fab-transition>
+
         <v-card>
           <v-list three-line>
             <v-list-tile avatar>
