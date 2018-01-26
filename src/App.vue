@@ -3,7 +3,7 @@
     <v-navigation-drawer
       clipped
       fixed
-      v-model="drawer"
+      :mini-variant.sync="minified"
       app
     >
       <v-list dense>
@@ -15,7 +15,36 @@
             <v-list-tile-title>Заново</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        <v-list-tile @click="generate">
+          <v-list-tile-action>
+            <v-icon>dashboard</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Dashboard</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile @click="generate">
+          <v-list-tile-action>
+            <v-icon>settings</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Settings</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
       </v-list>
+    </v-navigation-drawer>
+    <v-toolbar app fixed clipped-left>
+      <v-toolbar-side-icon @click.stop="minified = !minified"></v-toolbar-side-icon>
+      <v-toolbar-title>Вереница Миров</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+    </v-toolbar>
+    <v-navigation-drawer
+      fixed
+      v-model="drawer"
+      right
+      app
+    >
       <v-card>
         <v-card-text>
           <blockquote class="blockquote caption">
@@ -54,39 +83,23 @@
             </v-flex>
           </v-layout>
           <hr>
-          <div>{{player}}</div>
-          {{ player.items }}
-          <ul>
+          <ol>
             <template v-for="(i, id) in player.items">
-              <li>{{ i }}::{{ id }}</li>
-              <li v-if="i" :key="id">{{ i.title }} Item {{ i }}:{{ id }}</li>
+              <li v-if="i" :key="id">
+                <v-tooltip bottom>
+                  <span slot="activator">{{ i.short }}</span>
+                  <h1>{{ i.title }}</h1>
+                  <div v-if="i.description">{{ i.description }}</div>
+                </v-tooltip>
+              </li>
+              <li v-else :key="id">
+                <em class="grey--text darken-1">Ничего</em>
+              </li>
             </template>
-          </ul>
+          </ol>
         </v-card-text>
       </v-card>
-      <v-list dense>
-        <v-list-tile @click="generate">
-          <v-list-tile-action>
-            <v-icon>dashboard</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Dashboard</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile @click="generate">
-          <v-list-tile-action>
-            <v-icon>settings</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Settings</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-      </v-list>
     </v-navigation-drawer>
-    <v-toolbar app fixed clipped-left>
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title>Вереница Миров</v-toolbar-title>
-    </v-toolbar>
     <v-content>
       <v-container fluid fill-height>
         <v-layout justify-center align-center>
@@ -106,6 +119,7 @@ import('vuetify/dist/vuetify.min.css')
 export default {
   name: 'App',
   data: () => ({
+    minified: null,
     drawer: null,
     source: 'String',
     statBlocks: [
@@ -165,15 +179,13 @@ export default {
     },
     getItem: function (item) {
       var res = false
-      for(let i = 0; i < this.player.items.length; i++) {
+      for (let i = 0; i < this.player.items.length; i++) {
         if (!this.player.items[i]) {
           this.player.items[i] = item
           res = true
           break
         }
       }
-      alert(this.player.items)
-      console.log(this.player.items)
       if (!res) {
         alert('Ваш рюкзак забит.')
       }

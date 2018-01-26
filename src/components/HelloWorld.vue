@@ -2,13 +2,13 @@
     <v-layout row>
       <v-flex xs10>
         <v-fab-transition>
-          <v-tooltip bottom>
+          <v-tooltip left>
             <v-btn
               primary
               dark
               fab
               fixed
-              top
+              bottom
               right
               slot="activator"
               @click.stop="starting = true"
@@ -282,6 +282,7 @@
               </v-list-tile-content>
             </v-list-tile>
             <v-card class="ma-4">
+              <v-card-text>
               Полгода! За полгода Бронсон успеет связаться с Пауком — наверняка у них это продумано заранее. И, если вы хоть что-то понимаете в пиратской душе, через полгода Паук станет повелителем Галактики...
               </v-card-text>
             </v-card>
