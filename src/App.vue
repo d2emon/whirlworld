@@ -122,7 +122,29 @@
           </ol>
         </v-card-text>
       </v-card>
-      {{ player }}
+      <hr>
+      <v-card>
+        <v-card-text>
+          <form>
+            <v-layout row wrap>
+              <v-text-field xs6 :label="player.skl.title" v-model="player.skl.value" type="number"></v-text-field>
+              <v-text-field xs6 :label="player.skl.title" v-model="player.skl.max" type="number"></v-text-field>
+            </v-layout>
+            <v-layout row wrap>
+              <v-text-field xs6 :label="player.sta.title" v-model="player.sta.value" type="number"></v-text-field>
+              <v-text-field xs6 :label="player.sta.title" v-model="player.sta.max" type="number"></v-text-field>
+            </v-layout>
+            <v-layout row wrap>
+              <v-text-field xs6 :label="player.cha.title" v-model="player.cha.value" type="number"></v-text-field>
+              <v-text-field xs6 :label="player.cha.title" v-model="player.cha.max" type="number"></v-text-field>
+            </v-layout>
+            <v-layout row wrap>
+              <v-checkbox v-for="(id, i) in 6" :key="id" v-model="player.lck.data[i]" :label="i + 1"></v-checkbox>
+            </v-layout>
+          </form>
+          {{ player }}
+        </v-card-text>
+      </v-card>
     </v-navigation-drawer>
     <v-content>
       <v-container fluid fill-height>

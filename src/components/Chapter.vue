@@ -7,8 +7,10 @@
             <h1 v-html="chapter.title"></h1>
           </v-card-title>
           <v-card-text>
+            <div v-html="chapter.description">
+            </div>
             <v-list three-line>
-              <template v-for="(i, id) in chapter.description">
+              <template v-for="(i, id) in chapter.story">
                 <v-list-tile avatar v-if="i.dialog" :key="id">
                   <v-list-tile-avatar v-if="i.avatar">
                     <img :src="i.avatar">
