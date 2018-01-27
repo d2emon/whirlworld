@@ -505,6 +505,7 @@ export default {
       console.log(item)
       this.starting = false
       this.$emit('get_item', item)
+      this.$router.push('/chapter/1')
     }
   }
 }

@@ -162,6 +162,7 @@ export default {
       for (let i = 0; i < 6; i++) {
         this.player1.items[i] = null
       }
+      this.$router.push('/')
     },
     getItem: function (item) {
       var res = false

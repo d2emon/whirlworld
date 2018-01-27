@@ -49,6 +49,7 @@ lck.percent = function () {
 lck.max = 6
 
 var player = {
+  avatar: '/static/avatar/player.jpeg',
   skl: skl,
   sta: sta,
   cha: cha,
@@ -83,6 +84,9 @@ var player = {
     for (let i = 0; i < 6; i++) {
       this.items[i] = null
     }
+  },
+  roll: function() {
+    return Math.floor(Math.random() * 6) + 1
   }
 }
 
