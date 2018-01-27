@@ -135,7 +135,7 @@
 </template>
 
 <script>
-import player from './components/player.js'
+import store from '@/store'
 import('vuetify/dist/vuetify.min.css')
 
 export default {
@@ -144,7 +144,7 @@ export default {
     minified: true,
     drawer: null,
     source: 'String',
-    player: player.player,
+    player: store.state.player,
     player1: {
       items: [
         null,
@@ -158,11 +158,12 @@ export default {
   }),
   methods: {
     generate: function () {
+      console.log(store.state)
       this.player.generate()
       for (let i = 0; i < 6; i++) {
         this.player1.items[i] = null
       }
-      this.$router.push('/')
+      console.log(store.state)
     },
     getItem: function (item) {
       var res = false
@@ -179,7 +180,10 @@ export default {
     }
   },
   created: function () {
-    this.generate()
+    if (!store.state.player.ready) {
+      this.generate()
+      this.$router.push('/')
+    }
   }
 }
 </script>

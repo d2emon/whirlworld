@@ -49,6 +49,7 @@ lck.percent = function () {
 lck.max = 6
 
 var player = {
+  ready: false,
   avatar: '/static/avatar/player.jpeg',
   skl: skl,
   sta: sta,
@@ -71,7 +72,7 @@ var player = {
     this.cha.max = chaValue
   },
   generate: function () {
-    let roll = Math.floor(Math.random() * 6) + Math.floor(Math.random() * 6) + 2
+    let roll = this.roll() + this.roll()
     let stats = statBlocks[roll]
     this.setStats(stats.skl, stats.sta, stats.cha)
     for (let i = 0; i < 6; i++) {
@@ -84,8 +85,9 @@ var player = {
     for (let i = 0; i < 6; i++) {
       this.items[i] = null
     }
+    this.ready = true
   },
-  roll: function() {
+  roll: function () {
     return Math.floor(Math.random() * 6) + 1
   }
 }

@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import {player} from './player.js'
+import store from '@/store'
 
 export default {
   name: 'HelloWorld',
@@ -41,7 +41,6 @@ export default {
       avatar: '/static/avatar/engineer.jpg'
     }
     return {
-      player: player,
       chapter: {
         description: [
           {
@@ -57,7 +56,7 @@ export default {
           },
           {
             dialog: true,
-            avatar: player.avatar,
+            avatar: store.state.player.avatar,
             text: 'Ладно, это нетрудно. Но я же вижу, что вы еще что-то хотите сказать!'
           },
           {
@@ -67,7 +66,7 @@ export default {
           },
           {
             dialog: true,
-            avatar: player.avatar,
+            avatar: store.state.player.avatar,
             text: 'Это как раз то, что мне хотелось услышать для поднятия духа, <em class="grey--text text--lighten-2">— мрачно отвечаете вы и делаете шаг вперед...</em>'
           }
         ],
@@ -90,7 +89,7 @@ export default {
   },
   methods: {
     doAction: function (action) {
-      action.action(this, player)
+      action.action(this, store.state.player)
     }
   }
 }
