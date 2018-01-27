@@ -89,6 +89,13 @@ var player = {
   },
   roll: function () {
     return Math.floor(Math.random() * 6) + 1
+  },
+  say: function (text) {
+    return {
+      dialog: true,
+      avatar: this.avatar,
+      text: text
+    }
   }
 }
 

@@ -3,7 +3,8 @@
       <v-flex xs10>
 
         <v-card>
-          <v-card-title primary-title v-text="$route.params.id">
+          <v-card-title primary-title>
+            <h1 v-html="chapter.title"></h1>
           </v-card-title>
           <v-card-text>
             <v-list three-line>
@@ -24,7 +25,10 @@
             </v-list>
           </v-card-text>
           <v-card-actions>
-            <v-btn v-for="(action, id) in chapter.actions" :key="id" flat @click="doAction(action)">{{ action.title }}</v-btn>
+            <template v-for="(action, id) in chapter.actions">
+              <v-btn v-if="action.action" :key="id" flat @click="doAction(action)">{{ action.title }}</v-btn>
+              <span v-else :key="id">{{ action.title }}</span>
+            </template>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -37,59 +41,19 @@ import store from '@/store'
 export default {
   name: 'HelloWorld',
   data () {
-    let engineer = {
-      avatar: '/static/avatar/engineer.jpg'
-    }
+    var chapter = store.state.chapters[this.$route.params.id]
+    chapter.generate(store.state.player)
     return {
-      chapter: {
-        description: [
-          {
-            text: '<p>Ворота выглядят не так, как вы их себе представляли. У ваших ног — большая металлическая чаша.' +
-              'Вторая чаша — перевернутая — куполом нависает над первой на высоте в полтора человеческих роста.' +
-              'А между ними — столб теплого золотого света.</p>' +
-              '<p>Вы уже приготовились вступить в световой поток, как вдруг инженер кладет руку вам на плечо.</p>'
-          },
-          {
-            dialog: true,
-            avatar: engineer.avatar,
-            text: 'Еще одна просьба. Из-за подлого Бронсона у нас перепутаны все сведения в банке данных... Обратите внимание — над каждыми Воротами обозначен их кодовый номер. Будем признательны, если запишете для нас номера всех Ворот, через которые вам придется пройти.'
-          },
-          {
-            dialog: true,
-            avatar: store.state.player.avatar,
-            text: 'Ладно, это нетрудно. Но я же вижу, что вы еще что-то хотите сказать!'
-          },
-          {
-            dialog: true,
-            avatar: engineer.avatar,
-            text: 'Да, <em class="grey--text text--lighten-2">— хмуро кивает инженер, —</em> должен предупредить. Если вы вторично попадете в Мир, где недавно уже побывали, произойдет перегрузка основного контура, и вас зашвырнет неизвестно куда, в любую точку Вселенной... или даже за ее пределы. Это непредсказуемо!'
-          },
-          {
-            dialog: true,
-            avatar: store.state.player.avatar,
-            text: 'Это как раз то, что мне хотелось услышать для поднятия духа, <em class="grey--text text--lighten-2">— мрачно отвечаете вы и делаете шаг вперед...</em>'
-          }
-        ],
-        actions: [
-          {
-            title: 'Войти в Ворота',
-            action: function (vue, player) {
-              var links = [366, 290, 345, 178]
-              let roll = 10
-              while (roll > 4) {
-                roll = player.roll()
-              }
-              window.scrollTo(0, 0)
-              vue.$router.push('/chapter/' + links[roll - 1])
-            }
-          }
-        ]
-      }
+      chapter: chapter
     }
   },
   methods: {
     doAction: function (action) {
-      action.action(this, store.state.player)
+      var goto = action.action(store.state.player)
+      window.scrollTo(0, 0)
+      this.$router.push('/chapter/' + goto)
+      this.chapter = store.state.chapters[this.$route.params.id]
+      this.chapter.generate(store.state.player)
     }
   }
 }

@@ -5,6 +5,7 @@ import Vuex from 'vuex'
 // import products from './modules/products'
 // import createLogger from '../../../src/plugins/logger'
 import {player} from './player.js'
+import chapters from './chapters'
 
 Vue.use(Vuex)
 
@@ -12,7 +13,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    player: player
+    player: player,
+    chapters: chapters
   }
   // actions,
   /*

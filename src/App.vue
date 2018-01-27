@@ -7,7 +7,7 @@
       app
     >
       <v-list dense>
-        <v-list-tile @click="generate">
+        <v-list-tile @click="restart">
           <v-list-tile-action>
             <v-icon>refresh</v-icon>
           </v-list-tile-action>
@@ -36,6 +36,9 @@
     <v-toolbar app fixed clipped-left>
       <v-toolbar-side-icon @click.stop="minified = !minified"></v-toolbar-side-icon>
       <v-toolbar-title>Вереница Миров</v-toolbar-title>
+      <v-btn icon @click="restart">
+        <v-icon>refresh</v-icon>
+      </v-btn>
       <v-spacer></v-spacer>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
     </v-toolbar>
@@ -165,6 +168,11 @@ export default {
       }
       console.log(store.state)
     },
+    restart: function () {
+      store.state.player.ready = false
+      this.generate()
+      this.$router.push('/')
+    },
     getItem: function (item) {
       var res = false
       for (let i = 0; i < this.player.items.length; i++) {
@@ -182,7 +190,6 @@ export default {
   created: function () {
     if (!store.state.player.ready) {
       this.generate()
-      this.$router.push('/')
     }
   }
 }
