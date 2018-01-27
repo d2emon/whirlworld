@@ -4,7 +4,7 @@
         <v-fab-transition>
           <v-tooltip left>
             <v-btn
-              primary
+              color="primary"
               dark
               fab
               fixed
@@ -28,7 +28,7 @@
               <p>Вам предлагают на выбор одну из трех вещей, примерно равных по массе:</p>
             </v-card-text>
             <v-card-actions>
-              <v-tooltip bottom v-for="i in items">
+              <v-tooltip bottom v-for="(i, id) in items" :key="id">
                 <v-btn color="primary" dark @click.stop="selectItem(i)" slot="activator">{{ i.short }}</v-btn>
                 <h1>{{ i.title }}</h1>
                 <div v-if="i.description">{{ i.description }}</div>

@@ -55,30 +55,50 @@
           <v-layout row wrap>
             <v-flex xs12>
               <v-layout row wrap>
-                <v-flex xs8>Мастерство:</v-flex>
-                <v-flex xs2>{{ player.skl }}</v-flex>
-                <v-flex xs2>({{ player.skl }})</v-flex>
+                <v-flex xs8>{{ player.skl.title }}:</v-flex>
+                <v-flex xs2>{{ player.skl.value }}</v-flex>
+                <v-flex xs2>({{ player.skl.max }})</v-flex>
+              </v-layout>
+              <v-layout row wrap>
+                <v-flex xs12>
+                  <v-progress-linear :value="player.skl.percent()" :color="player.skl.color()"></v-progress-linear>
+                </v-flex>
               </v-layout>
             </v-flex>
             <v-flex xs12>
               <v-layout row wrap>
-                <v-flex xs8>Выносливость:</v-flex>
-                <v-flex xs2>{{ player.sta }}</v-flex>
-                <v-flex xs2>({{ player.sta }})</v-flex>
+                <v-flex xs8>{{ player.sta.title }}:</v-flex>
+                <v-flex xs2>{{ player.sta.value }}</v-flex>
+                <v-flex xs2>({{ player.sta.max }})</v-flex>
+              </v-layout>
+              <v-layout row wrap>
+                <v-flex xs12>
+                  <v-progress-linear :value="player.sta.percent()" :color="player.sta.color()"></v-progress-linear>
+                </v-flex>
               </v-layout>
             </v-flex>
             <v-flex xs12>
               <v-layout row wrap>
-                <v-flex xs8>Обаяние:</v-flex>
-                <v-flex xs2>{{ player.cha }}</v-flex>
-                <v-flex xs2>({{ player.cha }})</v-flex>
+                <v-flex xs8>{{ player.cha.title }}:</v-flex>
+                <v-flex xs2>{{ player.cha.value }}</v-flex>
+                <v-flex xs2>({{ player.cha.max }})</v-flex>
+              </v-layout>
+              <v-layout row wrap>
+                <v-flex xs12>
+                  <v-progress-linear :value="player.cha.percent()" :color="player.cha.color()"></v-progress-linear>
+                </v-flex>
               </v-layout>
             </v-flex>
             <v-flex xs12>
               <v-layout row wrap>
-                <v-flex xs8>Удача:</v-flex>
-                <v-flex xs2>{{ player.luck() }}</v-flex>
-                <v-flex xs2>(6)</v-flex>
+                <v-flex xs8>{{ this.player.lck.title }}:</v-flex>
+                <v-flex xs2>{{ player.lck.value() }}</v-flex>
+                <v-flex xs2>({{ player.lck.max }})</v-flex>
+              </v-layout>
+              <v-layout row wrap>
+                <v-flex xs12>
+                  <v-progress-linear :value="player.lck.percent()" :color="player.lck.color()"></v-progress-linear>
+                </v-flex>
               </v-layout>
             </v-flex>
           </v-layout>
@@ -99,6 +119,7 @@
           </ol>
         </v-card-text>
       </v-card>
+      {{ player }}
     </v-navigation-drawer>
     <v-content>
       <v-container fluid fill-height>
@@ -114,34 +135,17 @@
 </template>
 
 <script>
+import player from './components/player.js'
 import('vuetify/dist/vuetify.min.css')
 
 export default {
   name: 'App',
   data: () => ({
-    minified: null,
+    minified: true,
     drawer: null,
     source: 'String',
-    statBlocks: [
-      null,
-      null,
-      {skl: 8, sta: 22, cha: 8},
-      {skl: 10, sta: 20, cha: 6},
-      {skl: 12, sta: 16, cha: 5},
-      {skl: 9, sta: 18, cha: 8},
-      {skl: 11, sta: 20, cha: 6},
-      {skl: 9, sta: 20, cha: 7},
-      {skl: 10, sta: 16, cha: 7},
-      {skl: 8, sta: 24, cha: 7},
-      {skl: 9, sta: 22, cha: 6},
-      {skl: 10, sta: 18, cha: 7},
-      {skl: 11, sta: 20, cha: 5}
-    ],
-    player: {
-      skl: 0,
-      sta: 0,
-      cha: 0,
-      luckData: [true, true, true, true, true, true],
+    player: player.player,
+    player1: {
       items: [
         null,
         null,
@@ -149,32 +153,14 @@ export default {
         null,
         null,
         null
-      ],
-      luck: function () {
-        var luck = 0
-        for (let i = 0; i < 6; i++) {
-          if (this.luckData[i]) luck++
-        }
-        return luck
-      }
+      ]
     }
   }),
   methods: {
     generate: function () {
-      let roll = Math.floor(Math.random() * 6) + Math.floor(Math.random() * 6) + 2
-      let stats = this.statBlocks[roll]
-      this.player.skl = stats.skl
-      this.player.sta = stats.sta
-      this.player.cha = stats.cha
+      this.player.generate()
       for (let i = 0; i < 6; i++) {
-        this.player.luckData[i] = true
-      }
-      for (let i = 0; i < 2; i++) {
-        let roll = Math.floor(Math.random() * 6) + 1
-        this.player.luckData[roll] = false
-      }
-      for (let i = 0; i < 6; i++) {
-        this.player.items[i] = null
+        this.player1.items[i] = null
       }
     },
     getItem: function (item) {
