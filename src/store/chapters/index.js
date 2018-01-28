@@ -1,4 +1,5 @@
 import dragonflies from './dragonflies.js'
+import robots from './robots.js'
 import characters from './characters.js'
 // import {describe, addDescription, addReplica} from './description.js'
 import desc from './description.js'
@@ -46,6 +47,11 @@ chapters[1].generate = function (player) {
 }
 
 dragonflies.forEach(function (item, i, arr) {
+  chapters[item.id] = item
+  chapters[item.id].title = '&#xa7;' + item.id
+})
+
+robots.forEach(function (item, i, arr) {
   chapters[item.id] = item
   chapters[item.id].title = '&#xa7;' + item.id
 })

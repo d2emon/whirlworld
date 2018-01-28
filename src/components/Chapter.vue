@@ -27,10 +27,24 @@
             </v-list>
           </v-card-text>
           <v-card-actions>
-            <template v-for="(action, id) in chapter.actions">
-              <v-btn v-if="action.action" :key="id" flat @click="doAction(action)">{{ action.title }}</v-btn>
-              <span v-else :key="id">{{ action.title }}</span>
-            </template>
+            <v-layout row wrap>
+              <template v-for="(item, id) in chapter.items">
+                <v-flex xs12 :key="'i' + id">
+                  <v-tooltip bottom>
+                    <v-btn flat slot="activator" @click.stop="takeItem(item)">{{ item.short ? item.short : item.title }}</v-btn>
+                    <h1>{{ item.title }}</h1>
+                    <div v-if="item.description">{{ item.description }}</div>
+                    <div v-if="item.full">{{ item.full }}</div>
+                  </v-tooltip>
+                </v-flex>
+              </template>
+              <template v-for="(action, id) in chapter.actions">
+                <v-flex xs12 :key="id">
+                  <v-btn v-if="action.action" flat @click.stop="doAction(action)">{{ action.title }}</v-btn>
+                  <div v-else>{{ action.title }}</div>
+                </v-flex>
+              </template>
+            </v-layout>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -55,6 +69,16 @@ export default {
       window.scrollTo(0, 0)
       this.$router.push('/chapter/' + goto)
       this.chapter = store.state.chapters[this.$route.params.id]
+      this.chapter.generate(store.state.player)
+    },
+    takeItem: function (item) {
+      alert(item)
+
+      store.state.player.takeItem(item)
+
+      this.chapter.items = this.chapter.items.filter(function (element, i) {
+        return element !== item
+      })
       this.chapter.generate(store.state.player)
     }
   }

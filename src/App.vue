@@ -113,6 +113,7 @@
                   <span slot="activator">{{ i.short }}</span>
                   <h1>{{ i.title }}</h1>
                   <div v-if="i.description">{{ i.description }}</div>
+                  <div v-if="i.full">{{ i.full }}</div>
                 </v-tooltip>
               </li>
               <li v-else :key="id">
@@ -120,6 +121,21 @@
               </li>
             </template>
           </ol>
+          <ul>
+            <template v-for="(i, id) in player.noBag">
+              <li v-if="i" :key="id">
+                <v-tooltip bottom>
+                  <span slot="activator">{{ i.short }}</span>
+                  <h1>{{ i.title }}</h1>
+                  <div v-if="i.description">{{ i.description }}</div>
+                  <div v-if="i.full">{{ i.full }}</div>
+                </v-tooltip>
+              </li>
+              <li v-else :key="id">
+                <em class="grey--text darken-1">Ничего</em>
+              </li>
+            </template>
+          </ul>
         </v-card-text>
       </v-card>
       <hr>
@@ -139,7 +155,7 @@
               <v-text-field xs6 :label="player.cha.title" v-model="player.cha.max" type="number"></v-text-field>
             </v-layout>
             <v-layout row wrap>
-              <v-checkbox v-for="(id, i) in 6" :key="id" v-model="player.lck.data[i]" :label="i + 1"></v-checkbox>
+              <v-checkbox v-for="(id, i) in 6" :key="id" v-model="player.lck.data[i]" :label="'' + (i + 1)"></v-checkbox>
             </v-layout>
           </form>
           {{ player }}

@@ -63,6 +63,7 @@ var player = {
     null,
     null
   ],
+  noBag: [],
   setStats: function (sklValue, staValue, chaValue) {
     this.skl.value = sklValue
     this.skl.max = sklValue
@@ -85,10 +86,42 @@ var player = {
     for (let i = 0; i < 6; i++) {
       this.items[i] = null
     }
+    this.noBag = []
     this.ready = true
   },
   roll: function () {
     return Math.floor(Math.random() * 6) + 1
+  },
+  testLuck: function (win, loose) {
+    let roll = this.roll()
+    if (!this.lck.data[roll - 1]) return loose
+    this.lck.data[roll - 1] = false
+    return win
+  },
+  wound: function (value) {
+    if (value >= this.sta.value) {
+      this.sta.value = 0
+      return
+    }
+    this.sta.value -= value
+  },
+  takeItem: function (item) {
+    if (item.noBag) {
+      this.noBag.push(item)
+      return true
+    }
+    var res = false
+    for (let i = 0; i < this.items.length; i++) {
+      if (!this.items[i]) {
+        this.items[i] = item
+        res = true
+        break
+      }
+    }
+    if (!res) {
+      alert('Ваш рюкзак забит.')
+    }
+    return res
   },
   say: function (text) {
     return {
