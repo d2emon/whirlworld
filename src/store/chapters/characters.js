@@ -17,5 +17,9 @@ export default {
   clusha: {
     __proto__: actor,
     avatar: '/static/avatar/clusha.jpg'
+  },
+  player: {
+    __proto__: actor,
+    avatar: '/static/avatar/player.jpeg'
   }
 }

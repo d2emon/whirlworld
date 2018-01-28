@@ -199,7 +199,6 @@ export default {
   }),
   methods: {
     generate: function () {
-      console.log(store.state)
       this.player.generate()
       for (let i = 0; i < 6; i++) {
         this.player1.items[i] = null

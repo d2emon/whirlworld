@@ -23,7 +23,6 @@ function stat (title) {
       return (this.value / this.max) * 100
     },
     color: function () {
-      console.log(this.title + ' ' + this.percent() + ' vs ' + 100)
       if (this.percent() === 100) return 'info'
       if (this.percent() > 50) return 'warning'
       return 'error'

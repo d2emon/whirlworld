@@ -40,7 +40,7 @@
               </template>
               <template v-for="(action, id) in chapter.actions">
                 <v-flex xs12 :key="id">
-                  <v-btn v-if="action.action" flat @click.stop="doAction(action)">{{ action.title }}</v-btn>
+                  <v-btn v-if="(action.chapter) || (action.action)" flat @click.stop="doAction(action)">{{ action.title }}</v-btn>
                   <div v-else>{{ action.title }}</div>
                 </v-flex>
               </template>
@@ -65,7 +65,11 @@ export default {
   },
   methods: {
     doAction: function (action) {
-      var goto = action.action(store.state.player)
+      if (action.chapter) {
+        var goto = action.chapter
+      } else {
+        var goto = action.action(store.state.player)
+      }
       window.scrollTo(0, 0)
       this.$router.push('/chapter/' + goto)
       this.chapter = store.state.chapters[this.$route.params.id]
