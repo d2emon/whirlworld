@@ -77,8 +77,9 @@
               <v-card-text v-html="battleLog">
               </v-card-text>
             </v-card>
+            <h1 v-if="player.sta.value === 0">Ваше путешествие окончено!</h1>
           </v-card-text>
-          <v-card-actions>
+          <v-card-actions v-if="(player.sta.value > 0) && (!inFight)">
             <v-layout row wrap>
               <template v-for="(item, id) in chapter.items">
                 <v-flex xs12 :key="'i' + id">
@@ -90,7 +91,7 @@
                   </v-tooltip>
                 </v-flex>
               </template>
-              <template v-if="(player.sta.value > 0) && (!inFight)" v-for="(action, id) in chapter.actions">
+              <template v-for="(action, id) in chapter.actions">
                 <v-flex xs12 :key="id">
                   <v-btn v-if="(action.chapter) || (action.action)" flat @click.stop="doAction(action)">{{ action.title }}</v-btn>
                   <div v-else>{{ action.title }}</div>
@@ -126,6 +127,9 @@ export default {
         this.inFight = true
         this.enemy = this.chapter.enemies[0]
         console.log(this.enemy)
+      }
+      if (this.chapter.loose) {
+        this.player.sta.value = 0
       }
     },
     doAction: function (action) {

@@ -11,6 +11,7 @@ var chapter = {
   story: [],
   actions: [],
   enemies: [],
+  loose: false,
   generate: function (player) {}
 }
 
