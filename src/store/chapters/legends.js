@@ -43,7 +43,11 @@ var chapters = [
     ],
     actions: [
       { title: 'Попытаетесь ему помочь?', chapter: 441 },
-      { title: 'Или не станете вмешиваться во внутренние дела жителей планеты?', chapter: 601 }
+      {
+        title: 'Или не станете вмешиваться во внутренние дела жителей ' +
+          'планеты?',
+        chapter: 601
+      }
     ]
   },
   {
@@ -87,9 +91,14 @@ var chapters = [
         'черным.')
     ],
     actions: [
-      { title: 'Вы обводите взглядом местность вокруг...', action: (player) => { return (player.roll() % 2) ? 405 : 9 } }
+      {
+        title: 'Вы обводите взглядом местность вокруг...',
+        action: (player) => { return (player.roll() % 2) ? 405 : 9 } }
     ]
   }
+  // 405
+  // 441
+
 ]
 
 export default chapters
