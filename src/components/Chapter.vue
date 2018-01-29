@@ -1,5 +1,53 @@
 <template>
     <v-layout row>
+      <v-dialog v-model="inFight" persistent max-width="290">
+        <v-card>
+          <v-card-title class="headline">Бой</v-card-title>
+          <v-card-text>
+            <v-layout row>
+              <v-flex xs6 v-if="player">
+                <v-card>
+                  <v-card-title>
+                    <h2>{{player.title}}</h2>
+                  </v-card-title>
+                  <v-card-text>
+                    <v-layout row>
+                      <v-flex xs9>{{player.skl.title}}</v-flex>
+                      <v-flex xs3>{{player.skl.value}}</v-flex>
+                    </v-layout>
+                    <v-layout row>
+                      <v-flex xs9>{{player.sta.title}}</v-flex>
+                      <v-flex xs3>{{player.sta.value}}</v-flex>
+                    </v-layout>
+                  </v-card-text>
+                </v-card>
+              </v-flex>
+              <v-flex xs6 v-if="enemy">
+                <v-card>
+                  <v-card-title>
+                    <h2>{{enemy.title}}</h2>
+                  </v-card-title>
+                  <v-card-text>
+                    <v-layout row>
+                      <v-flex xs9>Ловкость</v-flex>
+                      <v-flex xs3>{{enemy.skl}}</v-flex>
+                    </v-layout>
+                    <v-layout row>
+                      <v-flex xs9>Сила</v-flex>
+                      <v-flex xs3>{{enemy.sta}}</v-flex>
+                    </v-layout>
+                  </v-card-text>
+                </v-card>
+              </v-flex>
+            </v-layout>
+            <div class="battle-log" v-html="battleLog"></div>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn color="primary" flat v-if="inFight" @click.native="attack">Атаковать</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
       <v-flex xs10>
 
         <v-card>
@@ -25,6 +73,10 @@
                 </v-card>
               </template>
             </v-list>
+            <v-card v-if="battleLog">
+              <v-card-text v-html="battleLog">
+              </v-card-text>
+            </v-card>
           </v-card-text>
           <v-card-actions>
             <v-layout row wrap>
@@ -38,7 +90,7 @@
                   </v-tooltip>
                 </v-flex>
               </template>
-              <template v-for="(action, id) in chapter.actions">
+              <template v-if="(player.sta.value > 0) && (!inFight)" v-for="(action, id) in chapter.actions">
                 <v-flex xs12 :key="id">
                   <v-btn v-if="(action.chapter) || (action.action)" flat @click.stop="doAction(action)">{{ action.title }}</v-btn>
                   <div v-else>{{ action.title }}</div>
@@ -57,38 +109,77 @@ import store from '@/store'
 export default {
   name: 'HelloWorld',
   data () {
-    var chapter = store.state.chapters[this.$route.params.id]
-    chapter.generate(store.state.player)
     return {
-      chapter: chapter
+      chapter: null,
+      player: store.state.player,
+      inFight: false,
+      enemy: null,
+      battleLog: ''
     }
   },
   methods: {
+    loadChapter: function (id) {
+      this.chapter = store.state.chapters[id]
+      this.chapter.generate(store.state.player)
+      this.battleLog = ''
+      if (this.chapter.enemies.length) {
+        this.inFight = true
+        this.enemy = this.chapter.enemies[0]
+        console.log(this.enemy)
+      }
+    },
     doAction: function (action) {
+      var newChapterID = 0
       if (action.chapter) {
-        var goto = action.chapter
+        newChapterID = action.chapter
       } else {
-        var goto = action.action(store.state.player)
+        newChapterID = action.action(store.state.player)
       }
       window.scrollTo(0, 0)
-      this.$router.push('/chapter/' + goto)
-      this.chapter = store.state.chapters[this.$route.params.id]
-      this.chapter.generate(store.state.player)
+      this.$router.push('/chapter/' + newChapterID)
+      this.loadChapter(newChapterID)
     },
     takeItem: function (item) {
-      alert(item)
-
       store.state.player.takeItem(item)
 
       this.chapter.items = this.chapter.items.filter(function (element, i) {
         return element !== item
       })
       this.chapter.generate(store.state.player)
+    },
+    attack: function () {
+      var attack = this.player.fight(this.enemy)
+      console.log(attack)
+      this.inFight = ((this.player.sta.value > 0) && (this.enemy.sta > 0))
+      if (attack.result > 0) {
+        this.battleLog += '<p class="info--text">' + this.player.title +
+          '(' + attack.player + ') наносит удар.<br>\n' +
+          this.enemy.title + '(' + attack.enemy + ') получает ранение (' +
+          attack.wound + ').</p>\n'
+        return
+      }
+      if (attack.result < 0) {
+        this.battleLog += '<p class="red--text">' + this.enemy.title +
+          '(' + attack.enemy + ') наносит удар.<br>\n' +
+          this.player.title + '(' + attack.player + ') получает ранение (' +
+          attack.wound + ').</p>\n'
+        return
+      }
+      this.battleLog += '<p class="yellow--text">' + this.player.title +
+        '(' + attack.player + ') наносит удар.<br>\n' +
+        this.enemy.title + '(' + attack.enemy + ') наносит удар.</p>\n'
     }
+  },
+  created: function () {
+    this.loadChapter(this.$route.params.id)
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.battle-log {
+  height: 100px;
+  overflow: auto;
+}
 </style>

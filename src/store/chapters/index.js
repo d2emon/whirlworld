@@ -9,13 +9,11 @@ import desc from './description.js'
 
 var chapters = []
 
-for (var i = 0; i < 650; i++) {
+for (var i = 0; i < 665; i++) {
   chapters.push({
-    title: '&#xa7;' + i,
-    description: [],
-    actions: [],
-    generate: function () {
-    }
+    __proto__: desc.chapter,
+    id: i,
+    title: '&#xa7;' + i
   })
 }
 

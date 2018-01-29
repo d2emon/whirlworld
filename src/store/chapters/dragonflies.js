@@ -2,13 +2,7 @@
 import desc from './description.js'
 import characters from './characters.js'
 
-var chapter = {
-  id: 0,
-  title: '&#xa7;',
-  description: [],
-  actions: [],
-  generate: function (player) {}
-}
+var chapter = desc.chapter
 
 var chapters = [
   {

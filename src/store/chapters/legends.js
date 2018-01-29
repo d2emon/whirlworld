@@ -2,14 +2,7 @@ import desc from './description.js'
 import characters from './characters.js'
 // import items from './items.js'
 
-var chapter = {
-  id: 0,
-  title: '&#xa7;',
-  description: '',
-  story: [],
-  actions: [],
-  generate: function (player) {}
-}
+var chapter = desc.chapter
 
 var chapters = [
   {
@@ -73,7 +66,7 @@ var chapters = [
         'сэром Артуром, Первым Королем. С тех пор они и застряли в этом ' +
         'средневековье.'),
       characters.player.say('Так, <em class="grey--text text--lighten-2">' +
-	'— говорите вы, не открывая глаз, чтобы окончательно побороть ' +
+        '— говорите вы, не открывая глаз, чтобы окончательно побороть ' +
         'головокружение. —</em> Стало быть, здесь всюду шастают всадники в ' +
         'сверкающих латах и ищут великанов и людоедов, чтобы с ними ' +
         'сразиться?'),

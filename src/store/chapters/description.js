@@ -4,7 +4,18 @@ function addDescription (chapter, text) {
   })
 }
 
+var chapter = {
+  id: 0,
+  title: '&#xa7;',
+  description: '',
+  story: [],
+  actions: [],
+  enemies: [],
+  generate: function (player) {}
+}
+
 export default {
   describe: (text) => { return { text: text } },
-  addDescription
+  addDescription,
+  chapter
 }

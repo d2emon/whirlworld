@@ -50,10 +50,12 @@ lck.max = 6
 var player = {
   ready: false,
   avatar: '/static/avatar/player.jpeg',
+  title: 'Игрок',
   skl: skl,
   sta: sta,
   cha: cha,
   lck: lck,
+  attack: 2,
   items: [
     null,
     null,
@@ -121,6 +123,37 @@ var player = {
       alert('Ваш рюкзак забит.')
     }
     return res
+  },
+  fight: function (enemy) {
+    var playerStr = this.roll() + this.roll() + this.skl.value
+    var enemyStr = this.roll() + this.roll() + enemy.skl
+
+    console.log('Player: ' + playerStr)
+    console.log('Enemy: ' + enemyStr)
+    if (playerStr > enemyStr) {
+      enemy.sta -= player.attack
+      return {
+        player: playerStr,
+        enemy: enemyStr,
+        result: 1,
+        wound: player.attack
+      }
+    }
+    if (playerStr < enemyStr) {
+      player.wound(enemy.attack)
+      return {
+        player: playerStr,
+        enemy: enemyStr,
+        result: -1,
+        wound: enemy.attack
+      }
+    }
+    return {
+      player: playerStr,
+      enemy: enemyStr,
+      result: 0,
+      wound: 0
+    }
   },
   say: function (text) {
     return {
