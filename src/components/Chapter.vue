@@ -72,6 +72,12 @@
                   </v-card-text>
                 </v-card>
               </template>
+              <template v-for="(item, id) in chapter.items">
+                <v-card class="ma-4" :key="id" v-if="!item.canTake">
+                  <v-card-text v-html="item.description">
+                  </v-card-text>
+                </v-card>
+              </template>
             </v-list>
             <v-card v-if="battleLog">
               <v-card-text v-html="battleLog">
@@ -82,7 +88,7 @@
           <v-card-actions v-if="(player.sta.value > 0) && (!inFight)">
             <v-layout row wrap>
               <template v-for="(item, id) in chapter.items">
-                <v-flex xs12 :key="'i' + id">
+                <v-flex xs12 :key="'i' + id" v-if="item.active">
                   <v-tooltip bottom>
                     <v-btn flat slot="activator" @click.stop="takeItem(item)">{{ item.short ? item.short : item.title }}</v-btn>
                     <h1>{{ item.title }}</h1>
@@ -121,15 +127,12 @@ export default {
   methods: {
     loadChapter: function (id) {
       this.chapter = store.state.chapters[id]
-      this.chapter.generate(store.state.player)
+      this.chapter.load(store.state.player)
       this.battleLog = ''
       if (this.chapter.enemies.length) {
         this.inFight = true
         this.enemy = this.chapter.enemies[0]
         console.log(this.enemy)
-      }
-      if (this.chapter.loose) {
-        this.player.sta.value = 0
       }
     },
     doAction: function (action) {
@@ -144,12 +147,14 @@ export default {
       this.loadChapter(newChapterID)
     },
     takeItem: function (item) {
-      store.state.player.takeItem(item)
+      var canTake = store.state.player.takeItem(item)
 
-      this.chapter.items = this.chapter.items.filter(function (element, i) {
-        return element !== item
-      })
-      this.chapter.generate(store.state.player)
+      if (canTake) {
+        this.chapter.items = this.chapter.items.filter(function (element, i) {
+          return element !== item
+        })
+        this.chapter.load(store.state.player)
+      }
     },
     attack: function () {
       var attack = this.player.fight(this.enemy)

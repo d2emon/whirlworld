@@ -1,3 +1,5 @@
+import items from './chapters/items.js'
+
 var statBlocks = [
   null,
   null,
@@ -64,6 +66,7 @@ var player = {
     null,
     null
   ],
+  blaster: items.blaster,
   noBag: [],
   setStats: function (sklValue, staValue, chaValue) {
     this.skl.value = sklValue
@@ -87,7 +90,10 @@ var player = {
     for (let i = 0; i < 6; i++) {
       this.items[i] = null
     }
-    this.noBag = []
+    this.noBag = [
+      this.blaster
+    ]
+    this.blaster.shots = 1
     this.ready = true
   },
   roll: function () {
@@ -107,6 +113,10 @@ var player = {
     this.sta.value -= value
   },
   takeItem: function (item) {
+    item.onTake(this)
+
+    if (!item.canTake) return false
+
     if (item.noBag) {
       this.noBag.push(item)
       return true
@@ -164,6 +174,4 @@ var player = {
   }
 }
 
-module.exports = {
-  player: player
-}
+export default player

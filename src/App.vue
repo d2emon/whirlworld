@@ -104,6 +104,12 @@
                 </v-flex>
               </v-layout>
             </v-flex>
+            <v-flex xs12>
+              <v-layout row wrap>
+                <v-flex xs8>Заряды:</v-flex>
+                <v-flex xs4>{{ player.blaster.shots }}</v-flex>
+              </v-layout>
+            </v-flex>
           </v-layout>
           <hr>
           <ol>
@@ -112,7 +118,7 @@
                 <v-tooltip bottom>
                   <span slot="activator">{{ i.short }}</span>
                   <h1>{{ i.title }}</h1>
-                  <div v-if="i.description">{{ i.description }}</div>
+                  <div v-if="i.description">{{ i.showDescription() }}</div>
                   <div v-if="i.full">{{ i.full }}</div>
                 </v-tooltip>
               </li>
@@ -127,7 +133,7 @@
                 <v-tooltip bottom>
                   <span slot="activator">{{ i.short }}</span>
                   <h1>{{ i.title }}</h1>
-                  <div v-if="i.description">{{ i.description }}</div>
+                  <div v-if="i.description">{{ i.showDescription() }}</div>
                   <div v-if="i.full">{{ i.full }}</div>
                 </v-tooltip>
               </li>

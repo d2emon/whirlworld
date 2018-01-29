@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 // import cart from './modules/cart'
 // import products from './modules/products'
 // import createLogger from '../../../src/plugins/logger'
-import {player} from './player.js'
+import player from './player.js'
 import chapters from './chapters'
 
 Vue.use(Vuex)

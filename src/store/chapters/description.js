@@ -11,7 +11,17 @@ var chapter = {
   story: [],
   actions: [],
   enemies: [],
+  items: [],
   loose: false,
+  load: function (player) {
+    this.generate(player)
+    this.items.forEach(function (item) {
+      item.active = true
+    })
+    if (this.loose) {
+      player.sta.value = 0
+    }
+  },
   generate: function (player) {}
 }
 
