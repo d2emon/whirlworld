@@ -6,6 +6,63 @@
       :mini-variant.sync="minified"
       app
     >
+      <v-dialog v-model="savePlayer" max-width="500px">
+        <v-card>
+          <v-card-title>
+            Сохранить данные
+          </v-card-title>
+          <v-card-text>
+            <v-container fluid>
+              <v-layout row>
+                <v-flex xs12>
+                  <v-text-field
+                    label="Данные игрока"
+                    textarea
+                    readonly
+                    dark
+                    :value="player.json()"
+                  >{{ player.json() }}</v-text-field>
+                </v-flex>
+              </v-layout>
+            </v-container>
+            {{ player }}
+          </v-card-text>
+          <v-card-actions>
+            <v-btn color="primary" flat @click.stop="savePlayer=false">Закрыть</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-dialog v-model="editPlayer" max-width="500px">
+        <v-card>
+          <v-card-title v-text="player.title">
+          </v-card-title>
+          <v-card-text>
+            <form>
+              <v-layout row wrap>
+                <v-text-field xs6 :label="player.skl.title" v-model="player.skl.value" type="number"></v-text-field>
+                <v-text-field xs6 :label="player.skl.title" v-model="player.skl.max" type="number"></v-text-field>
+              </v-layout>
+              <v-layout row wrap>
+                <v-text-field xs6 :label="player.sta.title" v-model="player.sta.value" type="number"></v-text-field>
+                <v-text-field xs6 :label="player.sta.title" v-model="player.sta.max" type="number"></v-text-field>
+              </v-layout>
+              <v-layout row wrap>
+                <v-text-field xs6 :label="player.cha.title" v-model="player.cha.value" type="number"></v-text-field>
+                <v-text-field xs6 :label="player.cha.title" v-model="player.cha.max" type="number"></v-text-field>
+              </v-layout>
+              <v-layout row wrap>
+                <v-checkbox v-for="(id, i) in 6" :key="id" v-model="player.lck.data[i]" :label="'' + (i + 1)"></v-checkbox>
+              </v-layout>
+            </form>
+            {{ player }}
+          </v-card-text>
+          <v-card-actions>
+            <v-btn color="primary" flat @click.stop="editPlayer=false">Закрыть</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
       <v-list dense>
         <v-list-tile @click="restart">
           <v-list-tile-action>
@@ -15,12 +72,28 @@
             <v-list-tile-title>Заново</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="generate">
+        <v-list-tile @click="edit">
           <v-list-tile-action>
-            <v-icon>dashboard</v-icon>
+            <v-icon>mode_edit</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>Dashboard</v-list-tile-title>
+            <v-list-tile-title>Править</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile @click="save">
+          <v-list-tile-action>
+            <v-icon>file_download</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Сохранить</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile @click="save">
+          <v-list-tile-action>
+            <v-icon>file_upload</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Загрузить</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-list-tile @click="generate">
@@ -144,29 +217,6 @@
           </ul>
         </v-card-text>
       </v-card>
-      <hr>
-      <v-card>
-        <v-card-text>
-          <form>
-            <v-layout row wrap>
-              <v-text-field xs6 :label="player.skl.title" v-model="player.skl.value" type="number"></v-text-field>
-              <v-text-field xs6 :label="player.skl.title" v-model="player.skl.max" type="number"></v-text-field>
-            </v-layout>
-            <v-layout row wrap>
-              <v-text-field xs6 :label="player.sta.title" v-model="player.sta.value" type="number"></v-text-field>
-              <v-text-field xs6 :label="player.sta.title" v-model="player.sta.max" type="number"></v-text-field>
-            </v-layout>
-            <v-layout row wrap>
-              <v-text-field xs6 :label="player.cha.title" v-model="player.cha.value" type="number"></v-text-field>
-              <v-text-field xs6 :label="player.cha.title" v-model="player.cha.max" type="number"></v-text-field>
-            </v-layout>
-            <v-layout row wrap>
-              <v-checkbox v-for="(id, i) in 6" :key="id" v-model="player.lck.data[i]" :label="'' + (i + 1)"></v-checkbox>
-            </v-layout>
-          </form>
-          {{ player }}
-        </v-card-text>
-      </v-card>
     </v-navigation-drawer>
     <v-content>
       <v-container fluid fill-height>
@@ -192,23 +242,12 @@ export default {
     drawer: null,
     source: 'String',
     player: store.state.player,
-    player1: {
-      items: [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
-      ]
-    }
+    savePlayer: false,
+    editPlayer: false
   }),
   methods: {
     generate: function () {
       this.player.generate()
-      for (let i = 0; i < 6; i++) {
-        this.player1.items[i] = null
-      }
       console.log(store.state)
     },
     restart: function () {
@@ -228,6 +267,12 @@ export default {
       if (!res) {
         alert('Ваш рюкзак забит.')
       }
+    },
+    save: function () {
+      this.savePlayer = true
+    },
+    edit: function () {
+      this.editPlayer = true
     }
   },
   created: function () {

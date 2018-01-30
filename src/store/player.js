@@ -171,6 +171,9 @@ var player = {
       avatar: this.avatar,
       text: text
     }
+  },
+  json: function () {
+    return JSON.stringify(this)
   }
 }
 
