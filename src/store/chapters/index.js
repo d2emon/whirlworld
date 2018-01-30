@@ -1,6 +1,7 @@
 import dragonflies from './dragonflies.js'
 import robots from './robots.js'
 import legends from './legends.js'
+import stones from './stones.js'
 
 import characters from './characters.js'
 
@@ -47,13 +48,17 @@ chapters[1].generate = function (player) {
   })
 }
 
-// 366
-legends.forEach(function (item, i, arr) {
+// 178
+robots.forEach(function (item, i, arr) {
   chapters[item.id] = item
   chapters[item.id].title = '&#xa7;' + item.id
 })
 
 // 290
+stones.forEach(function (item, i, arr) {
+  chapters[item.id] = item
+  chapters[item.id].title = '&#xa7;' + item.id
+})
 
 // 345
 dragonflies.forEach(function (item, i, arr) {
@@ -61,8 +66,8 @@ dragonflies.forEach(function (item, i, arr) {
   chapters[item.id].title = '&#xa7;' + item.id
 })
 
-// 178
-robots.forEach(function (item, i, arr) {
+// 366
+legends.forEach(function (item, i, arr) {
   chapters[item.id] = item
   chapters[item.id].title = '&#xa7;' + item.id
 })

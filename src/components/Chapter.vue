@@ -1,6 +1,6 @@
 <template>
     <v-layout row>
-      <v-dialog v-model="inFight" persistent max-width="290">
+      <v-dialog v-model="inFight" persistent max-width="400">
         <v-card>
           <v-card-title class="headline">Бой</v-card-title>
           <v-card-text>
@@ -10,6 +10,8 @@
                   <v-card-title>
                     <h2>{{player.title}}</h2>
                   </v-card-title>
+                  <v-card-media :src="player.avatar" height="100px">
+                  </v-card-media>
                   <v-card-text>
                     <v-layout row>
                       <v-flex xs9>{{player.skl.title}}</v-flex>
@@ -23,28 +25,30 @@
                 </v-card>
               </v-flex>
               <v-flex xs6 v-if="enemy">
-                <v-card>
+                <v-card v-for="e in enemies" v-if="e.sta > 0">
                   <v-card-title>
-                    <h2>{{enemy.title}}</h2>
+                    <h2>{{e.title}}</h2>
                   </v-card-title>
+                  <v-card-media :src="e.avatar" height="100px">
+                  </v-card-media>
                   <v-card-text>
-                    <v-layout row>
-                      <v-flex xs9>Ловкость</v-flex>
-                      <v-flex xs3>{{enemy.skl}}</v-flex>
-                    </v-layout>
-                    <v-layout row>
-                      <v-flex xs9>Сила</v-flex>
-                      <v-flex xs3>{{enemy.sta}}</v-flex>
-                    </v-layout>
+                      <v-layout row>
+                        <v-flex xs9>Ловкость</v-flex>
+                        <v-flex xs3>{{e.skl}}</v-flex>
+                      </v-layout>
+                      <v-layout row>
+                        <v-flex xs9>Сила</v-flex>
+                        <v-flex xs3>{{e.sta}}</v-flex>
+                      </v-layout>
                   </v-card-text>
+                  <v-card-actions>
+                    <v-btn color="primary" flat v-if="inFight" @click.native="attack(e)">Атаковать</v-btn>
+                  </v-card-actions>
                 </v-card>
               </v-flex>
             </v-layout>
             <div class="battle-log" v-html="battleLog"></div>
           </v-card-text>
-          <v-card-actions>
-            <v-btn color="primary" flat v-if="inFight" @click.native="attack">Атаковать</v-btn>
-          </v-card-actions>
         </v-card>
       </v-dialog>
 
@@ -98,7 +102,7 @@
                 </v-flex>
               </template>
               <template v-for="(action, id) in chapter.actions">
-                <v-flex xs12 :key="id">
+                <v-flex xs12 :key="id" v-if="(!action.canDo) || (action.canDo(player))">
                   <v-btn v-if="(action.chapter) || (action.action)" flat @click.stop="doAction(action)">{{ action.title }}</v-btn>
                   <div v-else>{{ action.title }}</div>
                 </v-flex>
@@ -121,27 +125,28 @@ export default {
       player: store.state.player,
       inFight: false,
       enemy: null,
+      enemies: [],
       battleLog: ''
     }
   },
   methods: {
     loadChapter: function (id) {
+      this.enemy = null
+      this.enemies = []
       this.chapter = store.state.chapters[id]
       this.chapter.load(store.state.player)
       this.battleLog = ''
       if (this.chapter.enemies.length) {
         this.inFight = true
+        this.enemies = this.chapter.enemies
         this.enemy = this.chapter.enemies[0]
         console.log(this.enemy)
       }
     },
     doAction: function (action) {
-      var newChapterID = 0
-      if (action.chapter) {
-        newChapterID = action.chapter
-      } else {
-        newChapterID = action.action(store.state.player)
-      }
+      var newChapterID = this.chapter.doAction(action, store.state.player)
+      if (!newChapterID) return
+
       window.scrollTo(0, 0)
       this.$router.push('/chapter/' + newChapterID)
       this.loadChapter(newChapterID)
@@ -156,27 +161,42 @@ export default {
         this.chapter.load(store.state.player)
       }
     },
-    attack: function () {
-      var attack = this.player.fight(this.enemy)
+    attack: function (enemy) {
+      this.battleLog += '<hr>'
+      var attack = this.player.fight(enemy, this.enemies.filter(function (e) {
+        return e.sta > 0
+      }))
+
+      console.log('attack')
       console.log(attack)
-      this.inFight = ((this.player.sta.value > 0) && (this.enemy.sta > 0))
-      if (attack.result > 0) {
-        this.battleLog += '<p class="info--text">' + this.player.title +
-          '(' + attack.player + ') наносит удар.<br>\n' +
-          this.enemy.title + '(' + attack.enemy + ') получает ранение (' +
-          attack.wound + ').</p>\n'
-        return
+      var enemiesCount = 0
+      this.enemies.forEach(function (e) {
+        if (e.sta > 0) {
+          enemiesCount += 1
+        }
+      })
+      if (this.player.sta.value <= 0) this.inFight = false
+      if (!enemiesCount) this.inFight = false
+
+      this.battleLog += '<p>'
+      for(var i = 0; i < attack.length; i++) {
+        var a = attack[i]
+        console.log(a)
+        var color = "info--text"
+        var text = a.attacker.actor.title + '(' + a.attacker.roll + ')'
+        if (a.hit) {
+          if (a.attacker.actor != this.player) {
+            color = "red--text"
+          }
+          text += ' наносит удар'
+        } else {
+          color = "yellow--text"
+          text += ' промахивается.'
+        }
+        text += '(' + a.wound + ').'
+        this.battleLog += '<span class="' + color + '">' + text + '</span><br>'
       }
-      if (attack.result < 0) {
-        this.battleLog += '<p class="red--text">' + this.enemy.title +
-          '(' + attack.enemy + ') наносит удар.<br>\n' +
-          this.player.title + '(' + attack.player + ') получает ранение (' +
-          attack.wound + ').</p>\n'
-        return
-      }
-      this.battleLog += '<p class="yellow--text">' + this.player.title +
-        '(' + attack.player + ') наносит удар.<br>\n' +
-        this.enemy.title + '(' + attack.enemy + ') наносит удар.</p>\n'
+      this.battleLog += '</p>'
     }
   },
   created: function () {

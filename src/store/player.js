@@ -134,36 +134,59 @@ var player = {
     }
     return res
   },
-  fight: function (enemy) {
-    var playerStr = this.roll() + this.roll() + this.skl.value
-    var enemyStr = this.roll() + this.roll() + enemy.skl
+  attackRoll: function () {
+    return this.roll() + this.roll() + this.skl.value
+  },
+  fight: function (enemy, enemies) {
+    var playerStr = this.attackRoll()
+    var enemyStr = enemy.attackRoll()
+    var enemiesStr = []
+    var wounds = []
+    var player = this
 
-    console.log('Player: ' + playerStr)
-    console.log('Enemy: ' + enemyStr)
     if (playerStr > enemyStr) {
-      enemy.sta -= player.attack
-      return {
-        player: playerStr,
-        enemy: enemyStr,
-        result: 1,
-        wound: player.attack
+      enemy.wound(player.attack)
+    }
+    wounds.push({
+      attacker: {
+        actor: player,
+        roll: playerStr
+      },
+      defender: {
+        actor: enemy,
+        roll: enemyStr
+      },
+      hit: (playerStr > enemyStr),
+      wound: (playerStr > enemyStr) ? player.attack : 0
+    })
+
+    enemies.forEach(function (e) {
+      var roll = 0
+      if (e == enemy) {
+        roll = enemyStr
+      } else {
+        roll = e.attackRoll()
       }
-    }
-    if (playerStr < enemyStr) {
-      player.wound(enemy.attack)
-      return {
-        player: playerStr,
-        enemy: enemyStr,
-        result: -1,
-        wound: enemy.attack
+
+      enemiesStr.push(roll)
+      if (playerStr < roll) {
+        player.wound(e.attack)
       }
-    }
-    return {
-      player: playerStr,
-      enemy: enemyStr,
-      result: 0,
-      wound: 0
-    }
+      wounds.push({
+        attacker: {
+          actor: e,
+          roll: roll
+        },
+        defender: {
+          actor: player,
+          roll: playerStr
+        },
+        hit: (playerStr < roll),
+        wound: (playerStr < roll) ? e.attack : 0
+      })
+    })
+
+    return wounds
   },
   say: function (text) {
     return {

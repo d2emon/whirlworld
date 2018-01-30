@@ -22,6 +22,17 @@ var chapter = {
       player.sta.value = 0
     }
   },
+  doAction: function (action, player) {
+    if (action.canDo) {
+      if (!action.canDo(player)) return false
+    }
+
+    if (action.chapter) {
+      return action.chapter
+    } else {
+      return action.action(player)
+    }
+  },
   generate: function (player) {}
 }
 
