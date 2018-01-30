@@ -28,6 +28,14 @@ function stat (title) {
       if (this.percent() === 100) return 'info'
       if (this.percent() > 50) return 'warning'
       return 'error'
+    },
+    restore: function (value) {
+      this.value = parseInt(this.value)
+      if (this.value + value > this.max) {
+        this.value = this.max
+        return
+      }
+      this.value += value
     }
   }
 }
@@ -48,6 +56,10 @@ lck.percent = function () {
   return (this.value() / 6) * 100
 }
 lck.max = 6
+lck.restore = function () {
+  var roll = Math.floor(Math.random() * 6) + 1
+  this.data[roll] = true
+}
 
 var player = {
   ready: false,

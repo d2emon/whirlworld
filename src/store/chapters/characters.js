@@ -67,5 +67,19 @@ export default {
     title: 'Пират',
     skl: 9,
     sta: 9
+  },
+  spiderMonkey: {
+    __proto__: actor,
+    avatar: '/static/avatar/spidermonkey.jpg',
+    title: 'Обезьянопаук',
+    skl: 10,
+    sta: 10
+  },
+  bertold: {
+    __proto__: actor,
+    avatar: '/static/avatar/knight.jpg',
+    title: 'Бертольд из Соргейля',
+    skl: 10,
+    sta: 10
   }
 }
