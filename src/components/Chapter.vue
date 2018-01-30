@@ -25,7 +25,7 @@
                 </v-card>
               </v-flex>
               <v-flex xs6 v-if="enemy">
-                <v-card v-for="e in enemies" v-if="e.sta > 0">
+                <v-card v-for="(id, e) in enemies" v-if="e.sta > 0" :key="'e' + id">
                   <v-card-title>
                     <h2>{{e.title}}</h2>
                   </v-card-title>
@@ -179,18 +179,18 @@ export default {
       if (!enemiesCount) this.inFight = false
 
       this.battleLog += '<p>'
-      for(var i = 0; i < attack.length; i++) {
+      for (var i = 0; i < attack.length; i++) {
         var a = attack[i]
         console.log(a)
-        var color = "info--text"
+        var color = 'info--text'
         var text = a.attacker.actor.title + '(' + a.attacker.roll + ')'
         if (a.hit) {
-          if (a.attacker.actor != this.player) {
-            color = "red--text"
+          if (a.attacker.actor !== this.player) {
+            color = 'red--text'
           }
           text += ' наносит удар'
         } else {
-          color = "yellow--text"
+          color = 'yellow--text'
           text += ' промахивается.'
         }
         text += '(' + a.wound + ').'

@@ -117,6 +117,16 @@ var player = {
     this.lck.data[roll - 1] = false
     return win
   },
+  testCha: function (win, loose) {
+    let roll = this.roll() + this.roll()
+    if (roll <= this.cha.value) {
+      this.cha.value++
+      return win
+    } else {
+      this.cha.value--
+      return loose
+    }
+  },
   wound: function (value) {
     if (value >= this.sta.value) {
       this.sta.value = 0
@@ -174,7 +184,7 @@ var player = {
 
     enemies.forEach(function (e) {
       var roll = 0
-      if (e == enemy) {
+      if (e === enemy) {
         roll = enemyStr
       } else {
         roll = e.attackRoll()

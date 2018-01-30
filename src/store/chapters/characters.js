@@ -14,7 +14,7 @@ var actor = {
   roll: function () {
     return Math.floor(Math.random() * 6) + 1
   },
-  attackRoll() {
+  attackRoll () {
     return this.roll() + this.roll() + this.skl
   },
   wound: function (value) {
@@ -81,5 +81,10 @@ export default {
     title: 'Бертольд из Соргейля',
     skl: 10,
     sta: 10
+  },
+  forestMistress: {
+    __proto__: actor,
+    avatar: '/static/avatar/knight.jpg',
+    title: 'Владычица Древнего Леса'
   }
 }
