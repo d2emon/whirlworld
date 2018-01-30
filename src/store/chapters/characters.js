@@ -60,5 +60,12 @@ export default {
     title: '2-Й Шершень',
     skl: 8,
     sta: 6
+  },
+  pirate: {
+    __proto__: actor,
+    avatar: '/static/avatar/pirate.jpeg',
+    title: 'Пират',
+    skl: 9,
+    sta: 9
   }
 }

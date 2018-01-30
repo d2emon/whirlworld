@@ -94,5 +94,22 @@ export default {
       player.blaster.shots += 1
       this.active = false
     }
+  },
+  usedBlaster2: {
+    __proto__: item,
+    title: 'Бластер',
+    short: 'Бластер',
+    description: 'Ну и крепко же бластер грохнулся о камни! Корпус ' +
+      'пересекает трещина, затвор покорежен. Хорошо, что зарядник, хоть и с ' +
+      'трудом, но открывается...',
+    canTake: false,
+    onTake: function (player) {
+      if (!this.active) return
+      this.description += '<p>Какая досада! Этот светлой памяти болван даже ' +
+        'не позаботился о полном боезапасе: в бластере только один заряд. ' +
+        'Конечно, вы можете взять его себе.</p>'
+      player.blaster.shots += 1
+      this.active = false
+    }
   }
 }
