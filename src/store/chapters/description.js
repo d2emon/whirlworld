@@ -14,6 +14,7 @@ var chapter = {
   items: [],
   loose: false,
   load: function (player) {
+    player.chapter = this.id
     this.generate(player)
     this.items.forEach(function (item) {
       item.active = true

@@ -158,6 +158,7 @@ export default {
         this.chapter.items = this.chapter.items.filter(function (element, i) {
           return element !== item
         })
+        this.chapter = store.state.chapters[store.state.player.chapter]
         this.chapter.load(store.state.player)
       }
     },

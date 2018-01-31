@@ -6,6 +6,7 @@ var item = {
   noBag: false,
   canTake: true,
   active: true,
+  chapter: null,
   onTake: function (player) {},
   lowercase: function () {
     if (!this.description) return ''
@@ -79,6 +80,36 @@ export default {
      * Тогда имейте в виду: когда вы захотите его использовать, вычтите 100 из
      * номера параграфа, на котором будете находиться...
      */
+  },
+  seeds: {
+    __proto__: item,
+    title: 'Мешочек с семенами',
+    short: 'Семена',
+    chapter: 177,
+    description: 'Бархатный мешочек с двумя крупными, похожими на шишечки, ' +
+      'семенами'
+  },
+  ring: {
+    __proto__: item,
+    title: 'Кольцо',
+    short: 'Кольцо',
+    chapter: 253,
+    description: 'Серебряные кольцо с прозрачным камнем'
+  },
+  jar: {
+    __proto__: item,
+    title: 'Кувшинчик',
+    short: 'Кувшинчик',
+    chapter: 313,
+    code: -80,
+    description: 'Небольшой синий кувшинчик с плотно притертой пробкой'
+  },
+  belt: {
+    __proto__: item,
+    title: 'Пояс',
+    short: 'Пояс',
+    chapter: 353,
+    description: 'Шелковый пояс кошмарной пестрой расцветки'
   },
   usedBlaster: {
     __proto__: item,

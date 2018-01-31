@@ -70,6 +70,7 @@ var player = {
   cha: cha,
   lck: lck,
   attack: 2,
+  chapter: 0,
   items: [
     null,
     null,
@@ -153,6 +154,10 @@ var player = {
     }
     if (!res) {
       alert('Ваш рюкзак забит.')
+      return false
+    }
+    if (item.chapter) {
+      this.chapter = item.chapter
     }
     return res
   },

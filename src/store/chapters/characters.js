@@ -86,5 +86,10 @@ export default {
     __proto__: actor,
     avatar: '/static/avatar/knight.jpg',
     title: 'Владычица Древнего Леса'
+  },
+  murphy: {
+    __proto__: actor,
+    avatar: '/static/avatar/knight.jpg',
+    title: 'Эргенгард Мерфи'
   }
 }
