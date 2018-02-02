@@ -24,8 +24,8 @@
                   </v-card-text>
                 </v-card>
               </v-flex>
-              <v-flex xs6 v-if="enemy">
-                <v-card v-for="(id, e) in enemies" v-if="e.sta > 0" :key="'e' + id">
+              <v-flex xs6 v-if="enemies">
+                <v-card v-for="(e, id) in enemies" v-if="e.sta > 0" :key="'e' + id">
                   <v-card-title>
                     <h2>{{e.title}}</h2>
                   </v-card-title>
@@ -136,6 +136,7 @@ export default {
       this.chapter = store.state.chapters[id]
       this.chapter.load(store.state.player)
       this.battleLog = ''
+      console.log(this.chapter)
       if (this.chapter.enemies.length) {
         this.inFight = true
         this.enemies = this.chapter.enemies

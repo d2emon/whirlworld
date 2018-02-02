@@ -19,8 +19,6 @@ for (var i = 0; i < 665; i++) {
 }
 
 chapters[1].generate = function (player) {
-  console.log(desc.describe)
-
   this.actions = []
 
   this.description = '<p>Ворота выглядят не так, как вы их себе представляли. ' +
@@ -44,6 +42,19 @@ chapters[1].generate = function (player) {
       }
       return links[roll - 1]
       // vue.$router.push('/chapter/' + links[roll - 1])
+    }
+  })
+}
+
+chapters[641].generate = function (player) {
+  this.actions.push({
+    title: 'Вам сюда',
+    action: function (player) {
+      var links = [290, 345, 178]
+      let roll = player.roll()
+      if (roll <= 2) return links[0]
+      if (roll <= 4) return links[1]
+      return links[2]
     }
   })
 }
