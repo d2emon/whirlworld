@@ -1,11 +1,5 @@
 <template>
   <v-app id="inspire" dark>
-    <v-navigation-drawer
-      clipped
-      fixed
-      :mini-variant.sync="minified"
-      app
-    >
       <v-dialog v-model="savePlayer" max-width="500px">
         <v-card>
           <v-card-title>
@@ -63,6 +57,13 @@
         </v-card>
       </v-dialog>
 
+    <v-navigation-drawer
+      clipped
+      fixed
+      :mini-variant.sync="minified"
+      v-model="menuDrawer"
+      app
+    >
       <v-list dense>
         <v-list-tile @click="restart">
           <v-list-tile-action>
@@ -106,18 +107,220 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar app fixed clipped-left>
-      <v-toolbar-side-icon @click.stop="minified = !minified"></v-toolbar-side-icon>
+    <v-toolbar app fixed :clipped-right="false">
+      <v-toolbar-side-icon @click.stop="menuDrawer = !menuDrawer"></v-toolbar-side-icon>
       <v-toolbar-title>Вереница Миров</v-toolbar-title>
-      <v-btn icon @click="restart">
-        <v-icon>refresh</v-icon>
-      </v-btn>
+      <v-tooltip bottom>
+        <v-btn icon @click="restart" slot="activator">
+          <v-icon>refresh</v-icon>
+        </v-btn>
+        <span>Заново</span>
+      </v-tooltip>
+      <v-tooltip bottom>
+        <v-btn icon @click="restart" slot="activator">
+          <v-icon>{{ movement.icon }}</v-icon>
+        </v-btn>
+        <span>{{ movement.title }}</span>
+      </v-tooltip>
+      <v-tooltip bottom>
+        <v-btn icon @click="restart" slot="activator">
+          <v-icon>visibility</v-icon>
+        </v-btn>
+        <span>Смотреть</span>
+      </v-tooltip>
+      <v-tooltip bottom>
+        <v-btn icon @click="restart" slot="activator">
+          <v-icon>pan_tool</v-icon>
+        </v-btn>
+        <span>Брать</span>
+      </v-tooltip>
+      <v-tooltip bottom>
+        <v-btn icon @click="restart" slot="activator">
+          <v-icon>chat</v-icon>
+        </v-btn>
+        <span>Говорить</span>
+      </v-tooltip>
+      <v-menu
+        bottom
+        v-model="specialActions"
+        offset-y
+      >
+        <v-tooltip bottom slot="activator">
+          <v-btn icon slot="activator">
+            <v-icon>toys</v-icon>
+          </v-btn>
+          <span>Специальное</span>
+        </v-tooltip>
+        <v-list>
+          <v-list-tile v-for="(m, id) in movements" :key="id" @click="movement = m">
+            <v-tooltip bottom>
+              <v-icon slot="activator">{{ m.icon }}</v-icon>
+              <span>{{ m.title }}</span>
+            </v-tooltip>
+          </v-list-tile>
+          <v-list-tile @click="restart">
+            <v-tooltip bottom>
+              <v-icon slot="activator">local_hotel</v-icon>
+              <span>Отдыхать</span>
+            </v-tooltip>
+          </v-list-tile>
+          <v-list-tile @click="playerDrawer = !playerDrawer">
+            <v-tooltip bottom>
+              <v-icon slot="activator">face</v-icon>
+              <span>Лист персонажа</span>
+            </v-tooltip>
+          </v-list-tile>
+          <v-list-tile @click="showTime">
+            <v-tooltip bottom>
+              <v-icon slot="activator">hourglass_empty</v-icon>
+              <span>Время</span>
+            </v-tooltip>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+      <v-tooltip bottom>
+        <v-btn icon disabled @click="restart" slot="activator">
+          <v-icon>stars</v-icon>
+        </v-btn>
+        <span>Магия</span>
+      </v-tooltip>
+      <v-tooltip bottom>
+        <v-btn icon disabled @click="restart" slot="activator">
+          <v-icon>blur_on</v-icon>
+        </v-btn>
+        <span>Предмет</span>
+      </v-tooltip>
+      <v-menu
+        offset-y
+        bottom
+        :close-on-content-click="false"
+        :nudge-width="200"
+        v-model="showInventory"
+      >
+        <v-tooltip bottom slot="activator">
+          <v-btn icon slot="activator">
+            <v-icon>business_center</v-icon>
+          </v-btn>
+          <span>Инвентарь</span>
+        </v-tooltip>
+        <v-card>
+          <v-list>
+            <!-- v-list-tile>
+              <v-list-tile-action>
+                <v-switch v-model="message" color="purple"></v-switch>
+              </v-list-tile-action>
+              <v-list-tile-title>Enable messages</v-list-tile-title>
+            </v-list-tile -->
+            <template v-for="(i, id) in player.items">
+              <v-list-tile v-if="i" :key="id">
+                <v-tooltip bottom>
+                  <span slot="activator">{{ i.short }}</span>
+                  <h1>{{ i.title }}</h1>
+                  <div v-if="i.description">{{ i.showDescription() }}</div>
+                  <div v-if="i.full">{{ i.full }}</div>
+                </v-tooltip>
+              </v-list-tile>
+              <v-list-tile v-else :key="id">
+                <em class="grey--text darken-1">Ничего</em>
+              </v-list-tile>
+            </template>
+            <template v-for="(i, id) in player.noBag">
+              <v-list-tile v-if="i" :key="10 + id">
+                <v-tooltip bottom>
+                  <span slot="activator">{{ i.short }}</span>
+                  <h1>{{ i.title }}</h1>
+                  <div v-if="i.description">{{ i.showDescription() }}</div>
+                  <div v-if="i.full">{{ i.full }}</div>
+                </v-tooltip>
+              </v-list-tile>
+            </template>
+          </v-list>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn flat @click="showInventory = false">Cancel</v-btn>
+            <v-btn color="primary" flat @click="showInventory = false">Save</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-menu>
+      <v-menu
+        offset-x
+        :close-on-content-click="false"
+        :nudge-width="200"
+        v-model="showSettings"
+      >
+        <v-tooltip bottom slot="activator">
+          <v-btn icon slot="activator">
+            <v-icon>settings</v-icon>
+          </v-btn>
+          <span>Настройки</span>
+        </v-tooltip>
+        <v-card>
+          <v-layout row wrap>
+            <v-flex xs4>
+              <v-list>
+                <v-list-tile @click="save">
+                  Сохранить
+                </v-list-tile>
+                <v-list-tile @click="save">
+                  Загрузить
+                </v-list-tile>
+                <v-list-tile @click="restart">
+                  Заново
+                </v-list-tile>
+              </v-list>
+            </v-flex>
+            <v-flex xs8>
+          <v-list>
+            <v-list-tile avatar>
+              <v-list-tile-avatar>
+                <img src="/static/doc-images/john.jpg" alt="John">
+              </v-list-tile-avatar>
+              <v-list-tile-content>
+                <v-list-tile-title>John Leider</v-list-tile-title>
+                <v-list-tile-sub-title>Founder of Vuetify.js</v-list-tile-sub-title>
+              </v-list-tile-content>
+              <v-list-tile-action>
+                <v-btn
+                  icon
+                  :class="fav ? 'red--text' : ''"
+                  @click="fav = !fav"
+                >
+                  <v-icon>favorite</v-icon>
+                </v-btn>
+              </v-list-tile-action>
+            </v-list-tile>
+          </v-list>
+          <v-divider></v-divider>
+          <v-list>
+            <v-list-tile>
+              <v-list-tile-action>
+                <v-switch v-model="message" color="purple"></v-switch>
+              </v-list-tile-action>
+              <v-list-tile-title>Enable messages</v-list-tile-title>
+            </v-list-tile>
+            <v-list-tile>
+              <v-list-tile-action>
+                <v-switch v-model="hints" color="purple"></v-switch>
+              </v-list-tile-action>
+              <v-list-tile-title>Enable hints</v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+            </v-flex>
+          </v-layout>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn flat @click="showSettings = false">Cancel</v-btn>
+            <v-btn color="primary" flat @click="showSettings = false">Save</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-menu>
       <v-spacer></v-spacer>
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click.stop="playerDrawer = !playerDrawer"></v-toolbar-side-icon>
     </v-toolbar>
     <v-navigation-drawer
+      clipped
       fixed
-      v-model="drawer"
+      v-model="playerDrawer"
       right
       app
     >
@@ -238,9 +441,21 @@ import('vuetify/dist/vuetify.min.css')
 export default {
   name: 'App',
   data: () => ({
+    movements: [
+      { icon: 'directions_walk', title: 'Идти' },
+      { icon: 'directions_run', title: 'Бежать' },
+      { icon: 'directions_walk', title: 'Красться' }
+    ],
+    movement: { icon: 'directions_walk', title: 'Идти' },
+    fav: false,
+    message: true,
+    hints: false,
     minified: true,
-    drawer: null,
-    source: 'String',
+    menuDrawer: null,
+    playerDrawer: null,
+    specialActions: null,
+    showInventory: null,
+    showSettings: null,
     player: store.state.player,
     savePlayer: false,
     editPlayer: false
@@ -273,6 +488,9 @@ export default {
     },
     edit: function () {
       this.editPlayer = true
+    },
+    showTime: function () {
+      alert('Time')
     }
   },
   created: function () {
