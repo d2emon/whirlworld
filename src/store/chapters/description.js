@@ -14,6 +14,7 @@ var chapter = {
   items: [],
   loose: false,
   load: function (player) {
+    var items = []
     player.chapter = this.id
     this.generate(player)
     this.items.forEach(function (item) {
@@ -22,6 +23,15 @@ var chapter = {
     if (this.loose) {
       player.sta.value = 0
     }
+    items.push({ text: this.description })
+    this.story.forEach(function (item) {
+      items.push(item)
+    })
+    this.items.forEach(function (item) {
+      if (item.canTake) return
+      items.push({ text: item.description })
+    })
+    return items
   },
   doAction: function (action, player) {
     if (action.canDo) {

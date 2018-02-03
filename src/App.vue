@@ -20,6 +20,8 @@
               </v-layout>
             </v-container>
             {{ player }}
+            <hr>
+            {{ player.save() }}
           </v-card-text>
           <v-card-actions>
             <v-btn color="primary" flat @click.stop="savePlayer=false">Закрыть</v-btn>

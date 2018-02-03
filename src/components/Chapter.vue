@@ -52,43 +52,17 @@
         </v-card>
       </v-dialog>
 
-      <v-flex xs10>
+      <v-flex xs12>
 
         <v-card>
           <v-card-title primary-title>
             <h1 v-html="chapter.title"></h1>
           </v-card-title>
-          <v-card-text>
-            <div v-html="chapter.description">
-            </div>
-            <v-list three-line>
-              <template v-for="(i, id) in chapter.story">
-                <v-list-tile avatar v-if="i.dialog" :key="id">
-                  <v-list-tile-avatar v-if="i.avatar">
-                    <img :src="i.avatar">
-                  </v-list-tile-avatar>
-                  <v-list-tile-content class="body-1">
-                    <div v-html="i.text"></div>
-                  </v-list-tile-content>
-                </v-list-tile>
-                <v-card class="ma-4" :key="id" v-else>
-                  <v-card-text v-html="i.text">
-                  </v-card-text>
-                </v-card>
-              </template>
-              <template v-for="(item, id) in chapter.items">
-                <v-card class="ma-4" :key="id" v-if="!item.canTake">
-                  <v-card-text v-html="item.description">
-                  </v-card-text>
-                </v-card>
-              </template>
-            </v-list>
-            <v-card v-if="battleLog">
-              <v-card-text v-html="battleLog">
-              </v-card-text>
-            </v-card>
-            <h1 v-if="player.sta.value === 0">Ваше путешествие окончено!</h1>
+          <v-card-text class="grey">
+            <game-dialog :text="text" :battleLog="battleLog" :dead="player.sta.value <= 0">
+            </game-dialog>
           </v-card-text>
+
           <v-card-actions v-if="(player.sta.value > 0) && (!inFight)">
             <v-layout row wrap>
               <template v-for="(item, id) in chapter.items">
@@ -110,15 +84,31 @@
             </v-layout>
           </v-card-actions>
         </v-card>
+
+        <v-expansion-panel expand v-if="player.log.length">
+          <v-expansion-panel-content>
+            <div slot="header">История</div>
+            <v-card class="grey">
+              <v-card-text>
+                <game-dialog :text="player.log" :battleLog="false" :dead="false">
+                </game-dialog>
+              </v-card-text>
+            </v-card>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
       </v-flex>
     </v-layout>
 </template>
 
 <script>
 import store from '@/store'
+import GameDialog from '@/components/GameDialog'
 
 export default {
   name: 'HelloWorld',
+  components: {
+    GameDialog
+  },
   data () {
     return {
       chapter: null,
@@ -126,6 +116,7 @@ export default {
       inFight: false,
       enemy: null,
       enemies: [],
+      text: [],
       battleLog: ''
     }
   },
@@ -134,19 +125,23 @@ export default {
       this.enemy = null
       this.enemies = []
       this.chapter = store.state.chapters[id]
-      this.chapter.load(store.state.player)
+      this.text = this.chapter.load(store.state.player)
       this.battleLog = ''
-      console.log(this.chapter)
       if (this.chapter.enemies.length) {
         this.inFight = true
         this.enemies = this.chapter.enemies
         this.enemy = this.chapter.enemies[0]
-        console.log(this.enemy)
       }
     },
     doAction: function (action) {
       var newChapterID = this.chapter.doAction(action, store.state.player)
       if (!newChapterID) return
+
+      this.player.log = this.player.log.concat(this.text)
+      this.player.log.push({ text: this.battleLog })
+      this.player.log.push({ separator: true })
+      this.player.log.push({ text: action.title })
+      this.player.log.push({ separator: true })
 
       window.scrollTo(0, 0)
       this.$router.push('/chapter/' + newChapterID)

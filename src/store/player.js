@@ -81,6 +81,17 @@ var player = {
   ],
   blaster: items.blaster,
   noBag: [],
+  log: [],
+  save: function () {
+    return {
+      avatar: this.avatar,
+      title: this.title,
+      skl: { value: this.skl.value, max: this.skl.max },
+      sta: { value: this.sta.value, max: this.sta.max },
+      cha: { value: this.cha.value, max: this.cha.max },
+      lck: this.lck.data
+    }
+  },
   setStats: function (sklValue, staValue, chaValue) {
     this.skl.value = sklValue
     this.skl.max = sklValue
@@ -107,6 +118,7 @@ var player = {
       this.blaster
     ]
     this.blaster.shots = 1
+    this.log = []
     this.ready = true
   },
   roll: function () {
@@ -216,9 +228,14 @@ var player = {
     return wounds
   },
   say: function (text) {
+    console.log(this)
     return {
+      actor: {
+        player: true,
+        avatar: this.avatar,
+        title: this.title
+      },
       dialog: true,
-      avatar: this.avatar,
       text: text
     }
   },

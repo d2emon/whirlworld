@@ -4,10 +4,15 @@ var actor = {
   skl: 0,
   sta: 0,
   attack: 2,
+  isPlayer: false,
   say: function (text) {
     return {
+      actor: {
+        player: this.isPlayer,
+        avatar: this.avatar,
+        title: this.title
+      },
       dialog: true,
-      avatar: this.avatar,
       text: text
     }
   },
@@ -29,15 +34,19 @@ var actor = {
 export default {
   player: {
     __proto__: actor,
-    avatar: '/static/avatar/player.jpeg'
+    avatar: '/static/avatar/player.jpeg',
+    isPlayer: true,
+    title: 'Игрок'
   },
   engineer: {
     __proto__: actor,
-    avatar: '/static/avatar/engineer.jpg'
+    avatar: '/static/avatar/engineer.jpg',
+    title: 'Инженер'
   },
   clusha: {
     __proto__: actor,
-    avatar: '/static/avatar/clusha.jpg'
+    avatar: '/static/avatar/clusha.jpg',
+    title: 'Клуша'
   },
   robot: {
     __proto__: actor,
