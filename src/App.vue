@@ -196,7 +196,7 @@
         offset-y
         bottom
         :close-on-content-click="false"
-        :nudge-width="200"
+        :nudge-width="400"
         v-model="showInventory"
       >
         <v-tooltip bottom slot="activator">
@@ -206,37 +206,42 @@
           <span>Инвентарь</span>
         </v-tooltip>
         <v-card>
-          <v-list>
-            <!-- v-list-tile>
-              <v-list-tile-action>
-                <v-switch v-model="message" color="purple"></v-switch>
-              </v-list-tile-action>
-              <v-list-tile-title>Enable messages</v-list-tile-title>
-            </v-list-tile -->
+          <v-layout row wrap>
             <template v-for="(i, id) in player.items">
-              <v-list-tile v-if="i" :key="id">
-                <v-tooltip bottom>
-                  <span slot="activator">{{ i.short }}</span>
-                  <h1>{{ i.title }}</h1>
-                  <div v-if="i.description">{{ i.showDescription() }}</div>
-                  <div v-if="i.full">{{ i.full }}</div>
-                </v-tooltip>
-              </v-list-tile>
-              <v-list-tile v-else :key="id">
-                <em class="grey--text darken-1">Ничего</em>
-              </v-list-tile>
+              <v-flex xs4 v-if="i" :key="id">
+                <v-card>
+                  <v-card-title primary-title>
+                    <v-tooltip bottom>
+                      <div class="headline" slot="activator">{{ i.short }}</div>
+                      <h1>{{ i.title }}</h1>
+                      <div v-if="i.description">{{ i.showDescription() }}</div>
+                      <div v-if="i.full">{{ i.full }}</div>
+                    </v-tooltip>
+                  </v-card-title>
+                  <v-card-actions>
+                    <v-btn flat dark>Listen now</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-flex>
             </template>
             <template v-for="(i, id) in player.noBag">
-              <v-list-tile v-if="i" :key="10 + id">
-                <v-tooltip bottom>
-                  <span slot="activator">{{ i.short }}</span>
-                  <h1>{{ i.title }}</h1>
-                  <div v-if="i.description">{{ i.showDescription() }}</div>
-                  <div v-if="i.full">{{ i.full }}</div>
-                </v-tooltip>
-              </v-list-tile>
+              <v-flex xs4 v-if="i" :key="id">
+                <v-card>
+                  <v-card-title primary-title>
+                    <v-tooltip bottom>
+                      <div class="headline" slot="activator">{{ i.short }}</div>
+                      <h1>{{ i.title }}</h1>
+                      <div v-if="i.description">{{ i.showDescription() }}</div>
+                      <div v-if="i.full">{{ i.full }}</div>
+                    </v-tooltip>
+                  </v-card-title>
+                  <v-card-actions>
+                    <v-btn flat dark>Listen now</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-flex>
             </template>
-          </v-list>
+          </v-layout>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn flat @click="showInventory = false">Cancel</v-btn>
