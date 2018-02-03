@@ -173,6 +173,15 @@ var player = {
     }
     return res
   },
+  backpackPlace: function () {
+    var items = this.items.filter( function (x) { return x } )
+    return (items.length / 6) * 100
+  },
+  backpackColor: function () {
+    if (this.backpackPlace() < 50) return 'success'
+    if (this.backpackPlace() < 100) return 'yellow'
+    return 'red'
+  },
   attackRoll: function () {
     return this.roll() + this.roll() + this.skl.value
   },

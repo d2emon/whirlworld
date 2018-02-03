@@ -395,6 +395,11 @@
             </v-flex>
           </v-layout>
           <hr>
+          <v-layout row wrap>
+            <v-flex xs12>
+              <v-progress-linear :value="player.backpackPlace()" :color="player.backpackColor()"></v-progress-linear>
+            </v-flex>
+          </v-layout>
           <ol>
             <template v-for="(i, id) in player.items">
               <li v-if="i" :key="id">
