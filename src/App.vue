@@ -14,8 +14,8 @@
                     textarea
                     readonly
                     dark
-                    :value="player.json()"
-                  >{{ player.json() }}</v-text-field>
+                    :value="player.save()"
+                  ></v-text-field>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -25,6 +25,32 @@
           </v-card-text>
           <v-card-actions>
             <v-btn color="primary" flat @click.stop="savePlayer=false">Закрыть</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-dialog v-model="loadPlayer" max-width="500px">
+        <v-card>
+          <v-card-title>
+            Загрузить данные
+          </v-card-title>
+          <v-card-text>
+            <v-container fluid>
+              <v-layout row>
+                <v-flex xs12>
+                  <v-text-field
+                    label="Данные игрока"
+                    textarea
+                    dark
+                    v-model="loadData"
+                  ></v-text-field>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn color="success" flat @click.stop="loadPlayerData">Загрузить</v-btn>
+            <v-btn color="primary" flat @click.stop="loadPlayer = false">Закрыть</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -91,7 +117,7 @@
             <v-list-tile-title>Сохранить</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="save">
+        <v-list-tile @click="load">
           <v-list-tile-action>
             <v-icon>file_upload</v-icon>
           </v-list-tile-action>
@@ -469,7 +495,9 @@ export default {
     showInventory: null,
     showSettings: null,
     player: store.state.player,
+    loadData: '',
     savePlayer: false,
+    loadPlayer: false,
     editPlayer: false
   }),
   methods: {
@@ -497,6 +525,15 @@ export default {
     },
     save: function () {
       this.savePlayer = true
+    },
+    load: function () {
+      this.loadPlayer = true
+    },
+    loadPlayerData: function () {
+      var data = JSON.parse(this.loadData)
+      this.player.load(data)
+      this.loadPlayer = false
+      this.$router.push('/chapter/' + this.player.chapter)
     },
     edit: function () {
       this.editPlayer = true

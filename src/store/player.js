@@ -83,14 +83,31 @@ var player = {
   noBag: [],
   log: [],
   save: function () {
-    return {
+    return JSON.stringify({
       avatar: this.avatar,
       title: this.title,
       skl: { value: this.skl.value, max: this.skl.max },
       sta: { value: this.sta.value, max: this.sta.max },
       cha: { value: this.cha.value, max: this.cha.max },
-      lck: this.lck.data
-    }
+      lck: this.lck.data,
+      chapter: this.chapter,
+      log: this.log
+    })
+  },
+  load: function (data) {
+    this.generate()
+
+    this.avatar = data.avatar
+    this.title = data.title
+    this.skl.value = data.skl.value
+    this.skl.max = data.skl.max
+    this.sta.value = data.sta.value
+    this.sta.max = data.sta.max
+    this.cha.value = data.cha.value
+    this.cha.max = data.cha.max
+    this.lck.data = data.lck
+    this.chapter = data.chapter
+    this.log = data.log
   },
   setStats: function (sklValue, staValue, chaValue) {
     this.skl.value = sklValue
