@@ -3,6 +3,7 @@ var item = {
   short: '',
   title: '',
   description: '',
+  image: '',
   noBag: false,
   canTake: true,
   active: true,
@@ -24,6 +25,7 @@ var blaster = {
   short: 'Бластер',
   noBag: true,
   shots: 1,
+  image: 'blaster.jpg',
   description: true,
   showDescription: function () {
     return 'Выстрелов: ' + this.shots
@@ -32,6 +34,28 @@ var blaster = {
 
 export default {
   blaster,
+  glasses: {
+    __proto__: item,
+    title: 'Инфракрасные очки «Ночное зрение»',
+    short: 'Инфракрасные очки',
+    image: 'glasses.jpeg',
+    description: ''
+  },
+  lighter: {
+    __proto__: item,
+    title: 'Зажигалка',
+    short: 'Зажигалка',
+    image: 'lighter.jpeg',
+    description: ''
+  },
+  tube: {
+    __proto__: item,
+    title: 'Тюбик питательной пасты',
+    short: 'Тюбик',
+    image: 'tube.jpeg',
+    description: 'В любой момент восстановит ваши силы до первоначального ' +
+      'уровня (увы, пасты хватит лишь на один прием).'
+  },
   fan: {
     __proto__: item,
     title: 'Веер',

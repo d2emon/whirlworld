@@ -235,36 +235,14 @@
           <v-layout row wrap>
             <template v-for="(i, id) in player.items">
               <v-flex xs4 v-if="i" :key="id">
-                <v-card>
-                  <v-card-title primary-title>
-                    <v-tooltip bottom>
-                      <div class="headline" slot="activator">{{ i.short }}</div>
-                      <h1>{{ i.title }}</h1>
-                      <div v-if="i.description">{{ i.showDescription() }}</div>
-                      <div v-if="i.full">{{ i.full }}</div>
-                    </v-tooltip>
-                  </v-card-title>
-                  <v-card-actions>
-                    <v-btn flat dark>Listen now</v-btn>
-                  </v-card-actions>
-                </v-card>
+                <item-icon :item="i">
+                </item-icon>
               </v-flex>
             </template>
             <template v-for="(i, id) in player.noBag">
               <v-flex xs4 v-if="i" :key="id">
-                <v-card>
-                  <v-card-title primary-title>
-                    <v-tooltip bottom>
-                      <div class="headline" slot="activator">{{ i.short }}</div>
-                      <h1>{{ i.title }}</h1>
-                      <div v-if="i.description">{{ i.showDescription() }}</div>
-                      <div v-if="i.full">{{ i.full }}</div>
-                    </v-tooltip>
-                  </v-card-title>
-                  <v-card-actions>
-                    <v-btn flat dark>Listen now</v-btn>
-                  </v-card-actions>
-                </v-card>
+                <item-icon :item="i">
+                </item-icon>
               </v-flex>
             </template>
           </v-layout>
@@ -473,11 +451,15 @@
 </template>
 
 <script>
+import ItemIcon from '@/components/ItemIcon'
 import store from '@/store'
 import('vuetify/dist/vuetify.min.css')
 
 export default {
   name: 'App',
+  components: {
+    ItemIcon
+  },
   data: () => ({
     movements: [
       { icon: 'directions_walk', title: 'Идти' },

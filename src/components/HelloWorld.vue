@@ -475,27 +475,17 @@
 </template>
 
 <script>
+import items from '../store/chapters/items.js'
+
 export default {
   name: 'HelloWorld',
   data () {
     return {
       starting: null,
       items: [
-        {
-          short: 'Инфракрасные очки',
-          title: 'Инфракрасные очки «Ночное зрение»',
-          description: ''
-        },
-        {
-          short: 'Зажигалка',
-          title: 'Зажигалка',
-          description: ''
-        },
-        {
-          short: 'Тюбик',
-          title: 'Тюбик питательной пасты',
-          description: 'В любой момент восстановит ваши силы до первоначального уровня (увы, пасты хватит лишь на один прием).'
-        }
+        items.glasses,
+        items.lighter,
+        items.tube
       ],
       msg: 'Welcome to Your Vue.js App'
     }
