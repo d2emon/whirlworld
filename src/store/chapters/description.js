@@ -23,7 +23,9 @@ var chapter = {
     if (this.loose) {
       player.sta.value = 0
     }
-    items.push({ text: this.description })
+    if (this.description) {
+      items.push({ text: this.description })
+    }
     this.story.forEach(function (item) {
       items.push(item)
     })

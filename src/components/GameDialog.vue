@@ -10,21 +10,21 @@
             <v-flex xs1 pr-3 v-if="i.actor && !i.actor.player">
               <v-tooltip bottom>
                 <v-avatar slot="activator">
-                  <img :src="i.actor.avatar">
+                  <img :src="'/static/avatar/' + i.actor.avatar">
                 </v-avatar>
                 <span>{{ i.actor.title }}</span>
               </v-tooltip>
             </v-flex>
             <v-flex>
               <v-card color="grey darken-1">
-                <v-card-text v-html="i.text">
+                <v-card-text v-html="text2html(i.text)">
                 </v-card-text>
               </v-card>
             </v-flex>
             <v-flex xs1 pl-3 pr-5 v-if="i.actor && i.actor.player">
               <v-tooltip bottom>
                 <v-avatar slot="activator">
-                  <img :src="i.actor.avatar">
+                  <img :src="'/static/avatar/' + i.actor.avatar">
                 </v-avatar>
                 <span>{{ i.actor.title }}</span>
               </v-tooltip>
@@ -53,6 +53,11 @@ export default {
     'text',
     'battleLog',
     'dead'
-  ]
+  ],
+  methods: {
+    text2html: function (text) {
+      return '<p>' + (text + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1</p>\n<p>$2') + '</p>'
+    }
+  }
 }
 </script>

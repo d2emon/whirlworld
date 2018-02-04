@@ -10,7 +10,7 @@
                   <v-card-title>
                     <h2>{{player.title}}</h2>
                   </v-card-title>
-                  <v-card-media :src="player.avatar" height="100px">
+                  <v-card-media :src="'/static/avatar/' + player.avatar" height="100px">
                   </v-card-media>
                   <v-card-text>
                     <v-layout row>
@@ -29,7 +29,7 @@
                   <v-card-title>
                     <h2>{{e.title}}</h2>
                   </v-card-title>
-                  <v-card-media :src="e.avatar" height="100px">
+                  <v-card-media :src="'/static/avatar/' + e.avatar" height="100px">
                   </v-card-media>
                   <v-card-text>
                       <v-layout row>
@@ -54,11 +54,11 @@
 
       <v-flex xs12>
 
-        <v-card>
+        <v-card no-body>
           <v-card-title primary-title>
             <h1 v-html="chapter.title"></h1>
           </v-card-title>
-          <v-card-text class="grey">
+          <v-card-text class="grey" v-if="text.length">
             <game-dialog :text="text" :battleLog="battleLog" :dead="player.sta.value <= 0">
             </game-dialog>
           </v-card-text>
@@ -68,7 +68,7 @@
               <template v-for="(item, id) in chapter.items">
                 <v-flex xs12 :key="'i' + id" v-if="item.active">
                   <v-tooltip bottom>
-                    <v-btn flat slot="activator" @click.stop="takeItem(item)">{{ item.short ? item.short : item.title }}</v-btn>
+                    <v-btn block flat slot="activator" @click.stop="takeItem(item)">{{ item.short ? item.short : item.title }}</v-btn>
                     <h1>{{ item.title }}</h1>
                     <div v-if="item.description">{{ item.description }}</div>
                     <div v-if="item.full">{{ item.full }}</div>
@@ -77,10 +77,18 @@
               </template>
               <template v-for="(action, id) in chapter.actions">
                 <v-flex xs12 :key="id" v-if="(!action.canDo) || (action.canDo(player))">
-                  <v-btn v-if="(action.chapter) || (action.action)" flat @click.stop="doAction(action)">{{ action.title }}</v-btn>
+                  <v-btn v-if="(action.chapter) || (action.action)" block flat @click.stop="doAction(action)">
+                    <v-icon v-if="action.direction">{{ directionIcon(action.direction) }}</v-icon>
+                    {{ action.title }}
+                  </v-btn>
                   <div v-else>{{ action.title }}</div>
                 </v-flex>
               </template>
+              <v-flex xs12 v-if="chapter.defaultAction">
+                <v-btn block flat @click.stop="doAction(chapter.defaultAction)">
+                  Далее
+                </v-btn>
+              </v-flex>
             </v-layout>
           </v-card-actions>
         </v-card>
@@ -114,7 +122,6 @@ export default {
       chapter: null,
       player: store.state.player,
       inFight: false,
-      enemy: null,
       enemies: [],
       text: [],
       battleLog: ''
@@ -122,16 +129,28 @@ export default {
   },
   methods: {
     loadChapter: function (id) {
-      this.enemy = null
       this.enemies = []
       this.chapter = store.state.chapters[id]
       this.text = this.chapter.load(store.state.player)
       this.battleLog = ''
+      console.log(this.chapter.enemies)
       if (this.chapter.enemies.length) {
-        this.inFight = true
-        this.enemies = this.chapter.enemies
-        this.enemy = this.chapter.enemies[0]
+        this.enemies = this.chapter.enemies.filter(function (item) {
+          return item.sta > 0
+        })
+        this.inFight = this.enemies.length > 0
       }
+    },
+    directionIcon (direction) {
+      if (direction === 'nw') return 'mdi-arrow-top-left'
+      if (direction === 'n') return 'arrow_upward'
+      if (direction === 'ne') return 'mdi-arrow-top-right'
+      if (direction === 'e') return 'arrow_forward'
+      if (direction === 's') return 'arrow_downward'
+      if (direction === 'w') return 'arrow_back'
+      if (direction === 'l') return 'chevron_left'
+      if (direction === 'r') return 'chevron_right'
+      return ''
     },
     doAction: function (action) {
       var newChapterID = this.chapter.doAction(action, store.state.player)

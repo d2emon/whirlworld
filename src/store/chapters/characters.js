@@ -4,6 +4,7 @@ var actor = {
   skl: 0,
   sta: 0,
   attack: 2,
+  sklModify: 0,
   isPlayer: false,
   say: function (text) {
     return {
@@ -34,23 +35,28 @@ var actor = {
 export default {
   player: {
     __proto__: actor,
-    avatar: '/static/avatar/player.jpeg',
+    avatar: 'player.jpeg',
     isPlayer: true,
     title: 'Игрок'
   },
   engineer: {
     __proto__: actor,
-    avatar: '/static/avatar/engineer.jpg',
+    avatar: 'engineer.jpg',
     title: 'Инженер'
   },
   clusha: {
     __proto__: actor,
-    avatar: '/static/avatar/clusha.jpg',
-    title: 'Клуша'
+    avatar: 'clusha.jpg',
+    title: 'Клуша',
+    describe: function (world) {
+      return this.say('<h1>' + world.title + '</h1>' +
+        '<h2>' + world.subtitle + '</h2>' +
+        world.description)
+    }
   },
   robot: {
     __proto__: actor,
-    avatar: '/static/avatar/clusha.jpg',
+    avatar: 'clusha.jpg',
     title: 'Робот',
     skl: 8,
     sta: 8,
@@ -58,47 +64,62 @@ export default {
   },
   hornet1: {
     __proto__: actor,
-    avatar: '/static/avatar/hornet.jpeg',
+    avatar: 'hornet.jpeg',
     title: '1-Й Шершень',
     skl: 8,
     sta: 8
   },
   hornet2: {
     __proto__: actor,
-    avatar: '/static/avatar/hornet.jpeg',
+    avatar: 'hornet.jpeg',
     title: '2-Й Шершень',
     skl: 8,
     sta: 6
   },
   pirate: {
     __proto__: actor,
-    avatar: '/static/avatar/pirate.jpeg',
+    avatar: 'pirate.jpeg',
     title: 'Пират',
     skl: 9,
     sta: 9
   },
   spiderMonkey: {
     __proto__: actor,
-    avatar: '/static/avatar/spidermonkey.jpg',
+    avatar: 'spidermonkey.jpg',
     title: 'Обезьянопаук',
     skl: 10,
     sta: 10
   },
   bertold: {
     __proto__: actor,
-    avatar: '/static/avatar/knight.jpg',
+    avatar: 'knight.jpg',
     title: 'Бертольд из Соргейля',
     skl: 10,
     sta: 10
   },
   forestMistress: {
     __proto__: actor,
-    avatar: '/static/avatar/knight.jpg',
+    avatar: 'knight.jpg',
     title: 'Владычица Древнего Леса'
   },
   murphy: {
     __proto__: actor,
-    avatar: '/static/avatar/knight.jpg',
+    avatar: 'knight.jpg',
     title: 'Эргенгард Мерфи'
+  },
+  sundew: {
+    __proto__: actor,
+    avatar: 'sundew.jpg',
+    sklModify: -1,
+    title: 'Росянка',
+    skl: 7,
+    sta: 8
+  },
+  grasshopper: {
+    __proto__: actor,
+    avatar: 'grasshopper.jpg',
+    title: 'Кузнечик',
+    skl: 10,
+    sta: 10
   }
 }

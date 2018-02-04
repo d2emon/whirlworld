@@ -63,7 +63,7 @@ lck.restore = function () {
 
 var player = {
   ready: false,
-  avatar: '/static/avatar/player.jpeg',
+  avatar: 'player.jpeg',
   title: 'Игрок',
   skl: skl,
   sta: sta,
@@ -174,7 +174,7 @@ var player = {
     return res
   },
   backpackPlace: function () {
-    var items = this.items.filter( function (x) { return x } )
+    var items = this.items.filter(function (x) { return x })
     return (items.length / 6) * 100
   },
   backpackColor: function () {
@@ -186,7 +186,7 @@ var player = {
     return this.roll() + this.roll() + this.skl.value
   },
   fight: function (enemy, enemies) {
-    var playerStr = this.attackRoll()
+    var playerStr = this.attackRoll() + enemy.sklModify
     var enemyStr = enemy.attackRoll()
     var enemiesStr = []
     var wounds = []

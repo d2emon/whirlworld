@@ -6,6 +6,9 @@ import Vuetify from 'vuetify'
 import App from './App'
 import router from './router'
 
+// import 'vue-material-design-icons/styles.css'
+import 'mdi/css/materialdesignicons.css'
+
 Vue.config.productionTip = false
 
 Vue.use(Vuex)
