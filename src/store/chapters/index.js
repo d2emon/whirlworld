@@ -46,6 +46,18 @@ chapters[1].generate = function (player) {
   })
 }
 
+chapters[404].generate = function (player) {
+  this.actions.push({
+    title: 'Вам сюда',
+    action: function (player) {
+      var links = [366, 290, 345]
+      let roll = player.roll()
+      if (roll > 3) roll -= 3
+      return links[roll - 1]
+    }
+  })
+}
+
 chapters[641].generate = function (player) {
   this.actions.push({
     title: 'Вам сюда',
