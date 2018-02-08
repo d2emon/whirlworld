@@ -532,13 +532,18 @@ export default {
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss">
+  /* Import Font Awesome Icons Set */
+  // @import '~flag-icon-css/css/flag-icon.min.css';
+  /* Import Font Awesome Icons Set */
+  // $fa-font-path: '~font-awesome/fonts/';
+  // @import '~font-awesome/css/font-awesome.min.css';
+  /* Import Simple Line Icons Set */
+  // $simple-line-font-path: '~simple-line-icons/fonts/';
+  // @import '~simple-line-icons/css/simple-line-icons.css';
+  /* Import Bootstrap Vue Styles */
+  /* @import '~bootstrap-vue/dist/bootstrap-vue.css'; */
+
+  // Import Main styles for this application
+  @import './scss/style';
 </style>
