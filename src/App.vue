@@ -85,6 +85,7 @@
         </v-card>
       </v-dialog>
 
+    <!--
     AppHeader
     <div class="app-body">
       Sidebar :navItems="nav"
@@ -97,19 +98,22 @@
       AppAside
     </div>
     AppFooter
+    -->
 
-    <sidebar />
     <app-header />
-    <player-panel />
+    <div class="app-body">
+      <sidebar />
+      <player-panel />
 
-    <v-content class="main">
-      <v-container fluid fill-height>
+      <v-content class="main">
         breadcrumb :list="list"
-        <v-layout justify-center align-center>
-          <router-view @get_item="getItem" />
-        </v-layout>
-      </v-container>
-    </v-content>
+        <v-container fluid fill-height>
+          <v-layout justify-center align-center>
+            <router-view @get_item="getItem" />
+          </v-layout>
+        </v-container>
+      </v-content>
+    </div>
     <app-footer/>
   </v-app>
 </template>

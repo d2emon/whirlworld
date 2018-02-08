@@ -1,7 +1,34 @@
 <template>
-    <v-toolbar app fixed :clipped-right="false">
-      <v-toolbar-side-icon @click.stop="menuDrawer = !menuDrawer"></v-toolbar-side-icon>
-      <v-toolbar-title>Вереница Миров</v-toolbar-title>
+  <v-toolbar app fixed :clipped-right="false" class="app-header navbar">
+    <v-toolbar-side-icon @click.stop="menuDrawer = !menuDrawer"></v-toolbar-side-icon>
+    <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button" @click="mobileSidebarToggle">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <router-link class="navbar-brand" to="#"></router-link>
+    <v-toolbar-title>Вереница Миров</v-toolbar-title>
+    <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" @click="sidebarToggle">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- b-navbar-nav class="d-md-down-none">
+      <b-nav-item class="px-3">Dashboard</b-nav-item>
+      <b-nav-item class="px-3">Users</b-nav-item>
+      <b-nav-item class="px-3">Settings</b-nav-item>
+    </b-navbar-nav>
+    <b-navbar-nav class="ml-auto">
+      <b-nav-item class="d-md-down-none">
+        <i class="icon-bell"></i>
+        <b-badge pill variant="danger">5</b-badge>
+      </b-nav-item>
+      <b-nav-item class="d-md-down-none">
+        <i class="icon-list"></i>
+      </b-nav-item>
+      <b-nav-item class="d-md-down-none">
+        <i class="icon-location-pin"></i>
+      </b-nav-item>
+      <HeaderDropdown/>
+    </b-navbar-nav -->
+
       <v-tooltip bottom>
         <v-btn icon @click="restart" slot="activator">
           <v-icon>refresh</v-icon>
@@ -189,15 +216,17 @@
           </v-card-actions>
         </v-card>
       </v-menu>
-      <v-spacer></v-spacer>
-      <v-toolbar-side-icon @click.stop="playerDrawer = !playerDrawer"></v-toolbar-side-icon>
-    </v-toolbar>
+    <v-spacer></v-spacer>
+    <button class="navbar-toggler aside-menu-toggler d-md-down-none" type="button" @click="asideToggle">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <v-toolbar-side-icon @click.stop="playerDrawer = !playerDrawer"></v-toolbar-side-icon>
+  </v-toolbar>
 </template>
 
 <script>
 import ItemIcon from '@/components/ItemIcon'
 import store from '@/store'
-import('vuetify/dist/vuetify.min.css')
 
 export default {
   name: 'AppHeader',
@@ -227,6 +256,16 @@ export default {
     editPlayer: false
   }),
   methods: {
+    sidebarToggle: function () {
+      alert('Sidebar')
+    },
+    mobileSidebarToggle: function () {
+      alert('Mobile Sidebar')
+    },
+    asideToggle: function () {
+      alert('Asidebar')
+    },
+
     generate: function () {
       this.player.generate()
       console.log(store.state)
