@@ -1,3 +1,11 @@
+/*!
+ * CoreUI - Open Source Bootstrap Admin Template
+ * @version v1.0.9
+ * @link http://coreui.io
+ * Copyright (c) 2018 creativeLabs Łukasz Holeczek
+ * @license MIT
+ */
+
 // Override Boostrap variables
 @import "bootstrap-variables";
 
@@ -12,23 +20,3 @@
 
 // Custom styles
 @import "custom";
-
-/*
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-*/
-
-.app.theme--light {
-  color: #151b1e;
-  background-color: #e4e5e6;
-}
-
-.app-header.navbar {
-  background-color: #ffffff;
-}
