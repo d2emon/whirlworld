@@ -363,7 +363,6 @@
                     <small class="text-muted">CTR</small><br>
                     <strong class="h4">23%</strong>
                     <div class="chart-wrapper">
-                      <callout-chart-example :data="[78, 81, 80, 45, 34, 12, 40]" width="80px" height="30" />
                     </div>
                   </Callout>
                 </b-col>
@@ -372,7 +371,6 @@
                     <small class="text-muted">Bounce Rate</small><br>
                     <strong class="h4">5%</strong>
                     <div class="chart-wrapper">
-                      <callout-chart-example :data="[35, 23, 56, 22, 97, 23, 64]" variant="#20a8d8" width="80px" height="30" />
                     </div>
                   </Callout>
                 </b-col>

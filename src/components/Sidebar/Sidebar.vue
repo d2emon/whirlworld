@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar">
-    <SidebarHeader/>
-    <SidebarForm/>
+    <!-- SidebarHeader/ -->
+    <!-- SidebarForm/ -->
     <nav class="sidebar-nav">
       <div slot="header"></div>
       <ul class="nav">
