@@ -3,13 +3,16 @@
     <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button" @click="mobileSidebarToggle">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <b-link class="navbar-brand" to="#"></b-link>
+    <!-- b-link class="navbar-brand" to="#"></b-link -->
+    <b-link to="/">Вереница миров</b-link>
     <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" @click="sidebarToggle">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <b-navbar-nav class="d-md-down-none">
-      <b-nav-item class="px-3" v-for="(item, id) in mainMenu" :key="id" :to="item.url">{{ item.title }}</b-nav-item>
+      <b-nav-item class="px-3" v-for="(item, id) in mainMenu" :key="id" :to="item.url"><span v-html="item.title"></span></b-nav-item>
     </b-navbar-nav>
+
     <b-navbar-nav class="ml-auto">
       <b-nav-item-dropdown right no-caret>
         <template slot="button-content">
@@ -107,7 +110,17 @@ export default {
         { title: 'Начать', url: '/start' },
         { title: 'Панель управления', url: '/dashboard' },
         { title: 'Пользователи', url: '#' },
-        { title: 'Настройки', url: '#' }
+        { title: 'Настройки', url: '#' },
+        { title: '<i class="icon-refresh"></in>', url: '/start' },
+        { title: '<i class="icon-user"></i>', url: '#' },
+        { title: '<i class="icon-eye"></i>', url: '#' },
+        { title: '<i class="fa fa-hand-paper-o"></i>', url: '#' },
+        { title: '<i class="icon-bubble"></i>', url: '#' },
+        { title: '<i class="fa fa-plus-circle"></i>', url: '#' },
+        { title: '<i class="icon-magic-wand"></i', url: '#' },
+        { title: '<i class="icon-frame"></i>', url: '#' },
+        { title: '<i class="icon-briefcase"></i>', url: '#' },
+        { title: '<i class="icon-settings"></i>', url: '#' }
       ],
       notifications: [
         { icon: 'icon-user-follow text-success', text: 'Новый пользователь' },
