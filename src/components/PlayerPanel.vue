@@ -127,7 +127,7 @@ export default {
     hints: false,
     minified: true,
     menuDrawer: null,
-    playerDrawer: null,
+    playerDrawer: false,
     specialActions: null,
     showInventory: null,
     showSettings: null,
