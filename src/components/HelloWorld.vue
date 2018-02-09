@@ -41,7 +41,7 @@
           <v-list three-line>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/secretar.jpg">
+                <img src="/static/avatar/secretar.jpg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -57,7 +57,7 @@
             </v-card>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/player.jpeg">
+                <img src="/static/avatar/player.jpeg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -67,7 +67,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/boss.jpg">
+                <img src="/static/avatar/boss.jpg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -77,7 +77,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/player.jpeg">
+                <img src="/static/avatar/player.jpeg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -87,7 +87,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/boss.jpg">
+                <img src="/static/avatar/boss.jpg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -102,7 +102,7 @@
             </v-card>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/player.jpeg">
+                <img src="/static/avatar/player.jpeg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -112,7 +112,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/boss.jpg">
+                <img src="/static/avatar/boss.jpg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -122,7 +122,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/player.jpeg">
+                <img src="/static/avatar/player.jpeg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -132,7 +132,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/boss.jpg">
+                <img src="/static/avatar/boss.jpg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -142,7 +142,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/player.jpeg">
+                <img src="/static/avatar/player.jpeg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -153,7 +153,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/boss.jpg">
+                <img src="/static/avatar/boss.jpg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -163,7 +163,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/player.jpeg">
+                <img src="/static/avatar/player.jpeg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -173,7 +173,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/boss.jpg">
+                <img src="/static/avatar/boss.jpg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -183,7 +183,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/player.jpeg">
+                <img src="/static/avatar/player.jpeg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -193,7 +193,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/boss.jpg">
+                <img src="/static/avatar/boss.jpg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -203,7 +203,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/player.jpeg">
+                <img src="/static/avatar/player.jpeg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -213,7 +213,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/boss.jpg">
+                <img src="/static/avatar/boss.jpg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -223,7 +223,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/player.jpeg">
+                <img src="/static/avatar/player.jpeg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -233,7 +233,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/boss.jpg">
+                <img src="/static/avatar/boss.jpg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -243,7 +243,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/player.jpeg">
+                <img src="/static/avatar/player.jpeg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -253,7 +253,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/boss.jpg">
+                <img src="/static/avatar/boss.jpg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -263,7 +263,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/player.jpeg">
+                <img src="/static/avatar/player.jpeg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -273,7 +273,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/boss.jpg">
+                <img src="/static/avatar/boss.jpg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -288,7 +288,7 @@
             </v-card>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/player.jpeg">
+                <img src="/static/avatar/player.jpeg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -298,7 +298,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/boss.jpg">
+                <img src="/static/avatar/boss.jpg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -313,7 +313,7 @@
             </v-card>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/boss.jpg">
+                <img src="/static/avatar/boss.jpg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -323,7 +323,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/player.jpeg">
+                <img src="/static/avatar/player.jpeg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -333,7 +333,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/boss.jpg">
+                <img src="/static/avatar/boss.jpg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -350,7 +350,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/boss.jpg">
+                <img src="/static/avatar/boss.jpg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -360,7 +360,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/boss.jpg">
+                <img src="/static/avatar/boss.jpg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -377,7 +377,7 @@
             </v-card>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/engineer.jpg">
+                <img src="/static/avatar/engineer.jpg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -387,7 +387,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/player.jpeg">
+                <img src="/static/avatar/player.jpeg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -397,7 +397,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/engineer.jpg">
+                <img src="/static/avatar/engineer.jpg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -414,7 +414,7 @@
             </v-card>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/engineer.jpg">
+                <img src="/static/avatar/engineer.jpg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -424,7 +424,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/player.jpeg">
+                <img src="/static/avatar/player.jpeg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -434,7 +434,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/engineer.jpg">
+                <img src="/static/avatar/engineer.jpg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -444,7 +444,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/logo.png">
+                <img src="/static/logo.png">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
@@ -454,7 +454,7 @@
             </v-list-tile>
             <v-list-tile avatar>
               <v-list-tile-avatar>
-                <img src="../assets/avatar/engineer.jpg">
+                <img src="/static/avatar/engineer.jpg">
               </v-list-tile-avatar>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
