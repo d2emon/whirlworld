@@ -15,7 +15,10 @@
   },
   "dependencies": {
     "bootstrap": "^4.0.0",
+    "bootstrap-vue": "^2.0.0-rc.1",
+    "font-awesome": "^4.7.0",
     "mdi": "^2.1.19",
+    "simple-line-icons": "^2.4.1",
     "vue": "^2.5.2",
     "vue-material-design-icons": "^1.0.0",
     "vue-router": "^3.0.1",
