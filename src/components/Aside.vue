@@ -1,6 +1,11 @@
 <template>
   <aside class="aside-menu">
     <b-tabs>
+      <b-tab title="<i class='icon-user'></i>">
+        <div class="p-3">
+          <player-panel /> 
+        </div>
+      </b-tab>
       <b-tab title="<i class='icon-list'></i>">
         <Callout class="m-0 py-2 text-muted text-center bg-light text-uppercase">
           <small><b>Today</b></small>
@@ -221,11 +226,14 @@
 <script>
 import Callout from './Callout'
 import cSwitch from './Switch'
+import PlayerPanel from '@/components/PlayerPanel'
+
 export default {
   name: 'c-aside',
   components: {
     Callout,
-    cSwitch
+    cSwitch,
+    PlayerPanel
   }
 }
 </script>

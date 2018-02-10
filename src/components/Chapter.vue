@@ -52,8 +52,8 @@
         </v-card>
       </v-dialog>
 
-    <b-col>
-      <b-card no-body>
+    <b-col sm="12">
+      <b-card no-body class="w-75 mx-auto">
         <b-card-header v-html="chapter.title">
         </b-card-header>
         <b-card-body v-if="text.length || battleLog.length">
@@ -105,9 +105,6 @@
           </b-row>
         </b-card-footer>
       </b-card>
-    </b-col>
-    <b-col sm="3">
-      <player-panel />
     </b-col>
   </b-row>
 </template>

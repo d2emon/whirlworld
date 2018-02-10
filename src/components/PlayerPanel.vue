@@ -1,5 +1,5 @@
 <template>
-  <div show="playerDrawer">
+  <div>
     <b-card>
       <blockquote>
         <small>
@@ -106,15 +106,7 @@ export default {
         { icon: 'directions_walk', title: 'Красться' }
       ],
       movement: { icon: 'directions_walk', title: 'Идти' },
-      fav: false,
-      message: true,
-      hints: false,
-      minified: true,
-      menuDrawer: null,
-      playerDrawer: false,
-      specialActions: null,
-      showInventory: null,
-      showSettings: null,
+
       player: this.$store.state.player,
       loadData: '',
       savePlayer: false,
@@ -159,16 +151,14 @@ export default {
     },
     edit: function () {
       this.editPlayer = true
-    },
-    showTime: function () {
-      alert('Time')
     }
   },
   mounted: function () {
     if (!this.player.ready) {
       this.generate()
     }
-    document.body.classList.toggle('sidebar-hidden')
+    document.body.classList.toggle('sidebar-hidden', true)
+    document.body.classList.toggle('aside-menu-hidden', false)
   }
 }
 </script>
