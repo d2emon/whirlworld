@@ -26,17 +26,17 @@
         <b-dropdown-header tag="div" class="text-center"><strong>Сервер</strong></b-dropdown-header>
         <b-dropdown-item>
           <div class="text-uppercase mb-1"><small><b>Использование CPU</b></small></div>
-          <b-progress height={} class="progress-xs" variant="info" :value="(server.cpu.value / server.cpu.max) * 100"></b-progress>
+          <b-progress height={} class="progress-xs" :variant="server.cpu.color" :value="server.cpu.percent"></b-progress>
           <small class="text-muted">{{ server.cpu.processes }} Процессов. {{ server.cpu.value }}/{{ server.cpu.max }} Ядер.</small>
         </b-dropdown-item>
         <b-dropdown-item>
           <div class="text-uppercase mb-1"><small><b>Использование Памяти</b></small></div>
-          <b-progress height={} class="progress-xs" variant="warning" :value="(server.memory.value / server.memory.max) * 100"></b-progress>
+          <b-progress height={} class="progress-xs" :variant="server.memory.color" :value="server.memory.percent"></b-progress>
           <small class="text-muted">{{ server.memory.value }}MB/{{ server.memory.max }}MB</small>
         </b-dropdown-item>
         <b-dropdown-item>
           <div class="text-uppercase mb-1"><small><b>Использование SSD 1</b></small></div>
-          <b-progress height={} class="progress-xs" variant="danger" :value="(server.ssd.value / server.ssd.max) * 100"></b-progress>
+          <b-progress height={} class="progress-xs" :variant="server.ssd.color" :value="server.ssd.percent"></b-progress>
           <small class="text-muted">{{ server.ssd.value }}GB/{{ server.ssd.max }}GB</small>
         </b-dropdown-item>
       </b-nav-item-dropdown>
@@ -104,65 +104,15 @@ export default {
   components: {
     HeaderDropdown
   },
-  data: () => {
+  data: function () {
     return {
-      mainMenu: [
-        { title: 'Начать', url: '/start' },
-        { title: 'Панель управления', url: '/dashboard' },
-        { title: 'Пользователи', url: '#' },
-        { title: 'Настройки', url: '#' },
-        { title: '<i class="icon-refresh"></in>', url: '/start' },
-        { title: '<i class="icon-user"></i>', url: '#' },
-        { title: '<i class="icon-eye"></i>', url: '#' },
-        { title: '<i class="fa fa-hand-paper-o"></i>', url: '#' },
-        { title: '<i class="icon-bubble"></i>', url: '#' },
-        { title: '<i class="fa fa-plus-circle"></i>', url: '#' },
-        { title: '<i class="icon-magic-wand"></i', url: '#' },
-        { title: '<i class="icon-frame"></i>', url: '#' },
-        { title: '<i class="icon-briefcase"></i>', url: '#' },
-        { title: '<i class="icon-settings"></i>', url: '#' }
-      ],
-      notifications: [
-        { icon: 'icon-user-follow text-success', text: 'Новый пользователь' },
-        { icon: 'icon-user-unfollow text-danger', text: 'Пользователь удален' },
-        { icon: 'icon-chart text-info', text: 'Отчет о продажам готов' },
-        { icon: 'icon-basket-loaded text-primary', text: 'Новый клиент' },
-        { icon: 'icon-speedometer text-warning', text: 'Сервер перегружен' }
-      ],
-      server: {
-        cpu: { value: 1, max: 4, processes: 348 },
-        memory: { value: 11444, max: 16384 },
-        ssd: { value: 243, max: 256 }
-      },
-      tasks: [
-        { title: 'Обновить NPM & Bower', progress: 0, color: 'info' },
-        { title: 'Версия ReactJS', progress:25, color: 'danger' },
-        { title: 'Версия VueJS', progress: 50, color: 'warning' },
-        { title: 'Добавить новую верстку', progress: 75, color: 'info' },
-        { title: 'Версия Angular 2 Cli', progress: 100, color: 'success' },
-        { title: 'Обновить NPM & Bower', progress: 0, color: 'info' },
-        { title: 'Версия ReactJS', progress:25, color: 'danger' },
-        { title: 'Версия VueJS', progress: 50, color: 'warning' },
-        { title: 'Добавить новую верстку', progress: 75, color: 'info' },
-        { title: 'Версия Angular 2 Cli', progress: 100, color: 'success' },
-        { title: 'Обновить NPM & Bower', progress: 0, color: 'info' },
-        { title: 'Версия ReactJS', progress:25, color: 'danger' },
-        { title: 'Версия VueJS', progress: 50, color: 'warning' },
-        { title: 'Добавить новую верстку', progress: 75, color: 'info' },
-        { title: 'Версия Angular 2 Cli', progress: 100, color: 'success' }
-      ],
-      messages: [
-        { avatar: '7.jpg', email: 'admin@bootstrapmaster.com', variant: 'success', name: 'John Doe', registered: 'Только что', title: '<span class="fa fa-exclamation text-danger"></span> Важное сообщение', text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...' },
-        { avatar: '6.jpg', email: 'admin@bootstrapmaster.com', variant: 'success', name: 'John Doe', registered: 'Только что', title: 'Важное сообщение', text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...' },
-        { avatar: '5.jpg', email: 'admin@bootstrapmaster.com', variant: 'danger', name: 'Janet Doe', registered: '13:52', title: 'Lorem ipsum dolor sit amet', text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...' },
-        { avatar: '4.jpg', email: 'admin@bootstrapmaster.com', variant: 'info', name: 'Joe Doe', registered: '04:03', title: 'Lorem ipsum dolor sit amet', text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...' },
-        { avatar: '7.jpg', email: 'admin@bootstrapmaster.com', variant: 'success', name: 'John Doe', registered: 'Только что', title: '<span class="fa fa-exclamation text-danger"></span> Важное сообщение', text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...' },
-        { avatar: '6.jpg', email: 'admin@bootstrapmaster.com', variant: 'success', name: 'John Doe', registered: 'Только что', title: 'Важное сообщение', text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...' },
-        { avatar: '5.jpg', email: 'admin@bootstrapmaster.com', variant: 'danger', name: 'Janet Doe', registered: '13:52', title: 'Lorem ipsum dolor sit amet', text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...' },
-        { avatar: '4.jpg', email: 'admin@bootstrapmaster.com', variant: 'info', name: 'Joe Doe', registered: '04:03', title: 'Lorem ipsum dolor sit amet', text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...' }
-      ] 
+      mainMenu: this.$store.state.menu.mainMenu,
+      notifications: this.$store.state.notifications,
+      server: this.$store.state.server,
+      tasks: this.$store.state.tasks,
+      messages: this.$store.state.messages
     }
-  }, 
+  },
   methods: {
     sidebarToggle (e) {
       e.preventDefault()

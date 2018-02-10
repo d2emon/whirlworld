@@ -6,6 +6,7 @@ import Vuetify from 'vuetify'
 import BootstrapVue from 'bootstrap-vue'
 import App from './App'
 import router from './router'
+import store from './store'
 
 // import 'vue-material-design-icons/styles.css'
 import 'mdi/css/materialdesignicons.css'
@@ -20,6 +21,7 @@ Vue.use(BootstrapVue)
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
