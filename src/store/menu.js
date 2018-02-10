@@ -1,7 +1,7 @@
 export default {
   mainMenu: [
-    { title: 'Начать', url: '/start' },
-    { title: 'Панель управления', url: '/dashboard' },
+    // { title: 'Начать', url: '/start' },
+    { title: 'Панель', url: '/dashboard' },
     { title: 'Пользователи', url: '#' },
     { title: 'Настройки', url: '#' },
     { title: '<i class="icon-refresh"></in>', url: '/start' },
