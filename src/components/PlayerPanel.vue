@@ -124,7 +124,6 @@ export default {
   },
   methods: {
     generate: function () {
-      alert('Generate')
       this.player.generate()
       console.log(this.$store.state)
     },
@@ -169,6 +168,7 @@ export default {
     if (!this.player.ready) {
       this.generate()
     }
+    document.body.classList.toggle('sidebar-hidden')
   }
 }
 </script>

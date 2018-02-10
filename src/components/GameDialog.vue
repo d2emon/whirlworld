@@ -4,45 +4,32 @@
       <template v-if="i.separator">
         <hr :key="id">
       </template>
-      <v-card :key="id" v-if="i.text" flat class="grey pa-0 ma-2">
-        <v-card-text class="pa-0">
-          <v-layout row spacer>
-            <v-flex xs1 pr-3 v-if="i.actor && !i.actor.player">
-              <v-tooltip bottom>
-                <v-avatar slot="activator">
-                  <img :src="'/static/avatar/' + i.actor.avatar">
-                </v-avatar>
-                <span>{{ i.actor.title }}</span>
-              </v-tooltip>
-            </v-flex>
-            <v-flex>
-              <v-card color="grey darken-1">
-                <v-card-text v-html="text2html(i.text)">
-                </v-card-text>
-              </v-card>
-            </v-flex>
-            <v-flex xs1 pl-3 pr-5 v-if="i.actor && i.actor.player">
-              <v-tooltip bottom>
-                <v-avatar slot="activator">
-                  <img :src="'/static/avatar/' + i.actor.avatar">
-                </v-avatar>
-                <span>{{ i.actor.title }}</span>
-              </v-tooltip>
-            </v-flex>
-          </v-layout>
-        </v-card-text>
-      </v-card>
+      
+      <div :key="id" v-if="i.text" class="pa-0 ma-2 message">
+        <template v-if="i.actor">
+          <div class="py-3 pb-5 mr-3 float-left" v-if="i.actor">
+            <div class="avatar">
+              <img :src="'/static/avatar/' + i.actor.avatar" class="img-avatar" :alt="i.actor.title">
+            </div>
+          </div>
+          <div>
+            <small class="text-muted">{{ i.actor.title }}</small>
+          </div>
+        </template>
+
+        <div v-html="text2html(i.text) + '<br /><br />'">
+        </div> 
+
+      </div>
     </template>
 
-    <v-card v-if="battleLog">
-      <v-card-text v-html="battleLog">
-      </v-card-text>
-    </v-card>
+    <b-card v-if="battleLog">
+      <b-card-text v-html="battleLog">
+      </b-card-text>
+    </b-card>
 
-    <v-card no-body color="grey darken-1" class="ma-2" v-if="dead">
-      <v-card-title primary-title v-html="'<h1>Ваше путешествие окончено!</h1>'">
-      </v-card-title>
-    </v-card>
+    <b-card no-body bg-variant="danger" v-if="dead" header="Ваше путешествие окончено!">
+    </b-card>
   </div>
 </template>
 

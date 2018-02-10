@@ -53,57 +53,58 @@
       </v-dialog>
 
     <b-col>
-
-        <v-card no-body>
-          <v-card-title primary-title>
-            <h1 v-html="chapter.title"></h1>
-          </v-card-title>
-          <v-card-text class="grey" v-if="text.length">
-            <game-dialog :text="text" :battleLog="battleLog" :dead="player.sta.value <= 0">
-            </game-dialog>
-          </v-card-text>
-
-          <v-card-actions v-if="(player.sta.value > 0) && (!inFight)">
-            <v-layout row wrap>
-              <template v-for="(item, id) in chapter.items">
-                <v-flex xs12 :key="'i' + id" v-if="item.active">
+      <b-card no-body>
+        <b-card-header v-html="chapter.title">
+        </b-card-header>
+        <b-card-body v-if="text.length || battleLog.length">
+        <div v-if="text.length || battleLog.length" class="p-3">
+          <game-dialog :text="text" :battleLog="battleLog" :dead="player.sta.value <= 0">
+          </game-dialog>
+        </div>
+        </b-card-body>
+        <b-card-footer v-if="(player.sta.value > 0) && (!inFight)">
+          <b-row>
+            <template v-for="(item, id) in chapter.items">
+              <b-col sm="12" :key="'i' + id" v-if="item.active">
                   <v-tooltip bottom>
                     <v-btn block flat slot="activator" @click.stop="takeItem(item)">{{ item.short ? item.short : item.title }}</v-btn>
                     <h1>{{ item.title }}</h1>
                     <div v-if="item.description">{{ item.description }}</div>
                     <div v-if="item.full">{{ item.full }}</div>
                   </v-tooltip>
-                </v-flex>
-              </template>
-              <template v-for="(action, id) in chapter.actions">
-                <v-flex xs12 :key="id" v-if="(!action.canDo) || (action.canDo(player))">
-                  <v-btn v-if="(action.chapter) || (action.action)" block flat @click.stop="doAction(action)">
-                    <v-icon v-if="action.direction">{{ directionIcon(action.direction) }}</v-icon>
-                    {{ action.title }}
-                  </v-btn>
-                  <div v-else>{{ action.title }}</div>
-                </v-flex>
-              </template>
-              <v-flex xs12 v-if="chapter.defaultAction">
-                <v-btn block flat @click.stop="doAction(chapter.defaultAction)">
-                  Далее
-                </v-btn>
-              </v-flex>
-            </v-layout>
-          </v-card-actions>
-        </v-card>
-
-        <v-expansion-panel expand v-if="player.log.length">
-          <v-expansion-panel-content>
-            <div slot="header">История</div>
-            <v-card class="grey">
-              <v-card-text>
-                <game-dialog :text="player.log" :battleLog="false" :dead="false">
-                </game-dialog>
-              </v-card-text>
-            </v-card>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
+              </b-col>
+            </template>
+            <template v-for="(action, id) in chapter.actions">
+              <b-col sm="12" :key="id" v-if="(!action.canDo) || (action.canDo(player))">
+                <b-btn v-if="(action.chapter) || (action.action)" block flat @click.stop="doAction(action)">
+                  <i v-if="action.direction" :class="directionIcon(action.direction)"></i>
+                  {{ action.title }}
+                </b-btn>
+                <div v-else>{{ action.title }}</div>
+              </b-col>
+            </template>
+            <b-col sm="12" v-if="chapter.defaultAction">
+              <b-btn block flat @click.stop="doAction(chapter.defaultAction)">
+                Далее
+              </b-btn>
+            </b-col>
+            <b-col sm="12" v-if="player.log.length">
+              <hr />
+              <b-card no-body class="w-100 mb-1" v-if="player.log.length">
+                <b-card-header header-tag="header" class="p-0" role="tab">
+                  <b-btn block href="#" v-b-toggle.history>История</b-btn>
+                </b-card-header>
+                <b-collapse id="history" role="tabpanel">
+                  <b-card-body>
+                    <game-dialog :text="player.log" :battleLog="false" :dead="false">
+                    </game-dialog>
+                  </b-card-body>
+                </b-collapse>
+              </b-card>
+            </b-col>
+          </b-row>
+        </b-card-footer>
+      </b-card>
     </b-col>
     <b-col sm="3">
       <player-panel />
