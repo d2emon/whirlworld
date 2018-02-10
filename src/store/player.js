@@ -64,7 +64,7 @@ lck.restore = function () {
 var player = {
   ready: false,
   avatar: 'player.jpeg',
-  title: 'Игрок',
+  title: 'Майор',
   skl: skl,
   sta: sta,
   cha: cha,

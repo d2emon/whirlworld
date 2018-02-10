@@ -1,5 +1,5 @@
 <template>
-    <v-layout row>
+  <b-row>
       <v-dialog v-model="inFight" persistent max-width="400">
         <v-card>
           <v-card-title class="headline">Бой</v-card-title>
@@ -52,7 +52,7 @@
         </v-card>
       </v-dialog>
 
-      <v-flex xs12>
+    <b-col>
 
         <v-card no-body>
           <v-card-title primary-title>
@@ -104,18 +104,23 @@
             </v-card>
           </v-expansion-panel-content>
         </v-expansion-panel>
-      </v-flex>
-    </v-layout>
+    </b-col>
+    <b-col sm="3">
+      <player-panel />
+    </b-col>
+  </b-row>
 </template>
 
 <script>
 import store from '@/store'
 import GameDialog from '@/components/GameDialog'
+import PlayerPanel from '@/components/PlayerPanel'
 
 export default {
   name: 'HelloWorld',
   components: {
-    GameDialog
+    GameDialog,
+    PlayerPanel
   },
   data () {
     return {

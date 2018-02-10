@@ -1,151 +1,137 @@
 <template>
-    <v-navigation-drawer
-      clipped
-      fixed
-      v-model="playerDrawer"
-      right
-      app
-    >
-      <v-card>
-        <v-card-text>
-          <blockquote class="blockquote caption">
-            <p>Если неприятность может произойти, она обязательно происходит.</p>
-            <p class="grey--text">Закон Мерфи, 2-я пол. ХХ века</p>
-          </blockquote>
-          <hr>
-          <v-layout row wrap>
-            <v-flex xs12>
-              <v-layout row wrap>
-                <v-flex xs8>{{ player.skl.title }}:</v-flex>
-                <v-flex xs2>{{ player.skl.value }}</v-flex>
-                <v-flex xs2>({{ player.skl.max }})</v-flex>
-              </v-layout>
-              <v-layout row wrap>
-                <v-flex xs12>
-                  <v-progress-linear :value="player.skl.percent()" :color="player.skl.color()"></v-progress-linear>
-                </v-flex>
-              </v-layout>
-            </v-flex>
-            <v-flex xs12>
-              <v-layout row wrap>
-                <v-flex xs8>{{ player.sta.title }}:</v-flex>
-                <v-flex xs2>{{ player.sta.value }}</v-flex>
-                <v-flex xs2>({{ player.sta.max }})</v-flex>
-              </v-layout>
-              <v-layout row wrap>
-                <v-flex xs12>
-                  <v-progress-linear :value="player.sta.percent()" :color="player.sta.color()"></v-progress-linear>
-                </v-flex>
-              </v-layout>
-            </v-flex>
-            <v-flex xs12>
-              <v-layout row wrap>
-                <v-flex xs8>{{ player.cha.title }}:</v-flex>
-                <v-flex xs2>{{ player.cha.value }}</v-flex>
-                <v-flex xs2>({{ player.cha.max }})</v-flex>
-              </v-layout>
-              <v-layout row wrap>
-                <v-flex xs12>
-                  <v-progress-linear :value="player.cha.percent()" :color="player.cha.color()"></v-progress-linear>
-                </v-flex>
-              </v-layout>
-            </v-flex>
-            <v-flex xs12>
-              <v-layout row wrap>
-                <v-flex xs8>{{ this.player.lck.title }}:</v-flex>
-                <v-flex xs2>{{ player.lck.value() }}</v-flex>
-                <v-flex xs2>({{ player.lck.max }})</v-flex>
-              </v-layout>
-              <v-layout row wrap>
-                <v-flex xs12>
-                  <v-progress-linear :value="player.lck.percent()" :color="player.lck.color()"></v-progress-linear>
-                </v-flex>
-              </v-layout>
-            </v-flex>
-            <v-flex xs12>
-              <v-layout row wrap>
-                <v-flex xs8>Заряды:</v-flex>
-                <v-flex xs4>{{ player.blaster.shots }}</v-flex>
-              </v-layout>
-            </v-flex>
-          </v-layout>
-          <hr>
-          <v-layout row wrap>
-            <v-flex xs12>
-              <v-progress-linear :value="player.backpackPlace()" :color="player.backpackColor()"></v-progress-linear>
-            </v-flex>
-          </v-layout>
-          <ol>
-            <template v-for="(i, id) in player.items">
-              <li v-if="i" :key="id">
-                <v-tooltip bottom>
-                  <span slot="activator">{{ i.short }}</span>
-                  <h1>{{ i.title }}</h1>
-                  <div v-if="i.description">{{ i.showDescription() }}</div>
-                  <div v-if="i.full">{{ i.full }}</div>
-                </v-tooltip>
-              </li>
-              <li v-else :key="id">
-                <em class="grey--text darken-1">Ничего</em>
-              </li>
-            </template>
-          </ol>
-          <ul>
-            <template v-for="(i, id) in player.noBag">
-              <li v-if="i" :key="id">
-                <v-tooltip bottom>
-                  <span slot="activator">{{ i.short }}</span>
-                  <h1>{{ i.title }}</h1>
-                  <div v-if="i.description">{{ i.showDescription() }}</div>
-                  <div v-if="i.full">{{ i.full }}</div>
-                </v-tooltip>
-              </li>
-              <li v-else :key="id">
-                <em class="grey--text darken-1">Ничего</em>
-              </li>
-            </template>
-          </ul>
-        </v-card-text>
-      </v-card>
-    </v-navigation-drawer>
+  <div show="playerDrawer">
+    <b-card>
+      <blockquote>
+        <small>
+          <p>Если неприятность может произойти, она обязательно происходит.</p>
+          <p class="grey--text">Закон Мерфи, 2-я пол. ХХ века</p>
+        </small>
+      </blockquote>
+    </b-card>
+    <b-card :title="player.title">
+      <b-row>
+        <b-col sm="8" class="text-uppercase mb-1"><small><b>{{ player.skl.title }}</b></small></b-col>
+        <b-col sm="4"><small class="text-muted">{{ player.skl.value }}/{{ player.skl.max }}</small></b-col>
+        <b-col sm="12">
+          <b-progress height={} class="progress-xs" :variant="player.skl.color()" :value="player.skl.percent()"></b-progress>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col sm="8" class="text-uppercase mb-1"><small><b>{{ player.sta.title }}</b></small></b-col>
+        <b-col sm="4"><small class="text-muted">{{ player.sta.value }}/{{ player.sta.max }}</small></b-col>
+        <b-col sm="12">
+          <b-progress height={} class="progress-xs" :variant="player.sta.color()" :value="player.sta.percent()"></b-progress>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col sm="8" class="text-uppercase mb-1"><small><b>{{ player.cha.title }}</b></small></b-col>
+        <b-col sm="4"><small class="text-muted">{{ player.cha.value }}/{{ player.cha.max }}</small></b-col>
+        <b-col sm="12">
+          <b-progress height={} class="progress-xs" :variant="player.cha.color()" :value="player.cha.percent()"></b-progress>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col sm="8" class="text-uppercase mb-1"><small><b>{{ player.lck.title }}</b></small></b-col>
+        <b-col sm="4"><small class="text-muted">{{ player.lck.value() }}/{{ player.lck.max }}</small></b-col>
+        <b-col sm="12">
+          <b-progress height={} class="progress-xs" :variant="player.lck.color()" :value="player.lck.percent()"></b-progress>
+        </b-col>
+      </b-row>
+    </b-card>
+    <b-card title="Рюкзак">
+      <b-row>
+        <b-col sm="12">
+          <b-progress height={} class="progress-xs" :variant="player.backpackColor()" :value="player.backpackPlace()"></b-progress>
+          <small class="text-muted">{{ player.backpackPlace() }}/6</small>
+        </b-col>
+      </b-row>
+      <ol>
+        <template v-for="(i, id) in player.items">
+          <li v-if="i" :key="id">
+            <span :id="'item-' + id" :key="id">{{ i.short }}</span>
+            <b-popover
+              :target="'item-'+id"
+              placement="bottom"
+              :title="i.title"
+              triggers="hover focus"
+            >
+              <div v-if="i.description">{{ i.showDescription() }}</div>
+              <div v-if="i.full">{{ i.full }}</div>
+            </b-popover>
+          </li>
+          <li v-else :key="id">
+            <em>Ничего</em>
+          </li>
+        </template>
+      </ol>
+      <ul>
+        <template v-for="(i, id) in player.noBag">
+          <li v-if="i" :key="id">
+            <span :id="'item-' + id" :key="id">{{ i.short }}</span>
+            <b-popover
+              :target="'item-'+id"
+              placement="bottom"
+              :title="i.title"
+              triggers="hover focus"
+            >
+              <div v-if="i.description">{{ i.showDescription() }}</div>
+              <div v-if="i.full">{{ i.full }}</div>
+            </b-popover>
+          </li>
+          <li v-else :key="id">
+            <em>Ничего</em>
+          </li>
+        </template>
+      </ul>
+      <hr>
+      <b-row>
+        <b-col sm="8" class="text-uppercase mb-1"><small><b>Заряды</b></small></b-col>
+        <b-col sm="4"><small class="text-muted">{{ player.blaster.shots }}</small></b-col>
+      </b-row>
+    </b-card>
+    <b-card>
+      {{ player }}
+    </b-card>
+  </div>
 </template>
 
 <script>
-import store from '@/store'
-
 export default {
   name: 'PlayerPanel',
-  data: () => ({
-    movements: [
-      { icon: 'directions_walk', title: 'Идти' },
-      { icon: 'directions_run', title: 'Бежать' },
-      { icon: 'directions_walk', title: 'Красться' }
-    ],
-    movement: { icon: 'directions_walk', title: 'Идти' },
-    fav: false,
-    message: true,
-    hints: false,
-    minified: true,
-    menuDrawer: null,
-    playerDrawer: false,
-    specialActions: null,
-    showInventory: null,
-    showSettings: null,
-    player: store.state.player,
-    loadData: '',
-    savePlayer: false,
-    loadPlayer: false,
-    editPlayer: false
-  }),
+  data: function () {
+    return {
+      movements: [
+        { icon: 'directions_walk', title: 'Идти' },
+        { icon: 'directions_run', title: 'Бежать' },
+        { icon: 'directions_walk', title: 'Красться' }
+      ],
+      movement: { icon: 'directions_walk', title: 'Идти' },
+      fav: false,
+      message: true,
+      hints: false,
+      minified: true,
+      menuDrawer: null,
+      playerDrawer: false,
+      specialActions: null,
+      showInventory: null,
+      showSettings: null,
+      player: this.$store.state.player,
+      loadData: '',
+      savePlayer: false,
+      loadPlayer: false,
+      editPlayer: false
+    }
+  },
   methods: {
     generate: function () {
+      alert('Generate')
       this.player.generate()
-      console.log(store.state)
+      console.log(this.$store.state)
     },
     restart: function () {
-      store.state.player.ready = false
+      this.$store.state.player.ready = false
       this.generate()
-      this.$router.push('/')
+      this.$router.push('/start')
     },
     getItem: function (item) {
       var res = false
@@ -177,6 +163,11 @@ export default {
     },
     showTime: function () {
       alert('Time')
+    }
+  },
+  mounted: function () {
+    if (!this.player.ready) {
+      this.generate()
     }
   }
 }
