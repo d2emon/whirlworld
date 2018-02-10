@@ -1,44 +1,27 @@
 <template>
     <v-layout row>
       <v-flex xs10>
-        <v-fab-transition>
-          <v-tooltip left>
-            <v-btn
-              color="primary"
-              dark
-              fab
-              fixed
-              bottom
-              right
-              slot="activator"
-              @click.stop="starting = true"
-            >
-              <v-icon>play_arrow</v-icon>
-            </v-btn>
-            <span>Начать игру</span>
-          </v-tooltip>
-        </v-fab-transition>
+        <b-modal v-model="starting" size="lg">
+          <div slot="modal-title">
+            Начало игры
+          </div>
+          <p>Вам предлагают на выбор одну из трех вещей, примерно равных по массе:</p>
+          <div slot="modal-footer">
+            <template v-for="(i, id) in items">
+              <b-btn :id="'item-' + id" @click.stop="selectItem(i)" :key="id">{{ i.short }}</b-btn>
+              <b-popover
+                :target="'item-'+id"
+                placement="bottom"
+                :title="i.title"
+                triggers="hover focus"
+                :content="i.description"
+              >
+              </b-popover>
+            </template>
+          </div>
+        </b-modal>
 
-        <v-dialog v-model="starting" max-width="500px">
-          <v-card>
-            <v-card-title>
-              Начало игры
-            </v-card-title>
-            <v-card-text>
-              <p>Вам предлагают на выбор одну из трех вещей, примерно равных по массе:</p>
-            </v-card-text>
-            <v-card-actions>
-              <v-tooltip bottom v-for="(i, id) in items" :key="id">
-                <v-btn color="primary" dark @click.stop="selectItem(i)" slot="activator">{{ i.short }}</v-btn>
-                <h1>{{ i.title }}</h1>
-                <div v-if="i.description">{{ i.description }}</div>
-              </v-tooltip>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-
-
-        <b-card>
+        <b-card no-body class="w-75 mx-auto">
           <div class="p-3">
             <div class="message">
               <div class="py-3 pb-5 mr-3 float-left">
@@ -705,6 +688,9 @@
             </div>
 
           </div>
+          <b-card-footer>
+            <b-button class="w-100" @click="starting = true"><i class="icon-control-play"></i> Начать игру</b-button>
+          </b-card-footer>
         </b-card>
 
       </v-flex>
@@ -723,8 +709,7 @@ export default {
         items.glasses,
         items.lighter,
         items.tube
-      ],
-      msg: 'Welcome to Your Vue.js App'
+      ]
     }
   },
   methods: {
