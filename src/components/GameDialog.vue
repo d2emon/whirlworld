@@ -24,8 +24,8 @@
     </template>
 
     <b-card v-if="battleLog">
-      <b-card-text v-html="battleLog">
-      </b-card-text>
+      <b-card-body v-html="battleLog">
+      </b-card-body>
     </b-card>
 
     <b-card no-body bg-variant="danger" v-if="dead" header="Ваше путешествие окончено!">

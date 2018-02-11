@@ -40,10 +40,6 @@ export default new Vuex.Store({
         return item.sta > 0
       })
     },
-    inFight: state => {
-      // return (context.commit('enemiesAlive', chapter).length > 0)
-      return false
-    },
     currentChapter: state => {
       return state.chapters[state.player.chapter]
     }

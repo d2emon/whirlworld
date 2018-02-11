@@ -121,5 +121,21 @@ export default {
     title: 'Кузнечик',
     skl: 10,
     sta: 10
+  },
+  animal1: {
+    __proto__: actor,
+    avatar: 'grasshopper.jpg',
+    title: 'Зверь',
+    sklModify: -1,
+    skl: 9,
+    sta: 10
+  },
+  animal2: {
+    __proto__: actor,
+    avatar: 'grasshopper.jpg',
+    title: 'Зверь',
+    sklModify: -1,
+    skl: 9,
+    sta: 8
   }
 }

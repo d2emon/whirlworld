@@ -1,56 +1,70 @@
 <template>
   <b-row>
-      <v-dialog v-model="inFight" persistent max-width="400">
-        <v-card>
-          <v-card-title class="headline">Бой</v-card-title>
-          <v-card-text>
-            <v-layout row>
-              <v-flex xs6 v-if="player">
-                <v-card>
-                  <v-card-title>
-                    <h2>{{player.title}}</h2>
-                  </v-card-title>
-                  <v-card-media :src="'/static/avatar/' + player.avatar" height="100px">
-                  </v-card-media>
-                  <v-card-text>
-                    <v-layout row>
-                      <v-flex xs9>{{player.skl.title}}</v-flex>
-                      <v-flex xs3>{{player.skl.value}}</v-flex>
-                    </v-layout>
-                    <v-layout row>
-                      <v-flex xs9>{{player.sta.title}}</v-flex>
-                      <v-flex xs3>{{player.sta.value}}</v-flex>
-                    </v-layout>
-                  </v-card-text>
-                </v-card>
-              </v-flex>
-              <v-flex xs6 v-if="enemies">
-                <v-card v-for="(e, id) in enemies" v-if="e.sta > 0" :key="'e' + id">
-                  <v-card-title>
-                    <h2>{{e.title}}</h2>
-                  </v-card-title>
-                  <v-card-media :src="'/static/avatar/' + e.avatar" height="100px">
-                  </v-card-media>
-                  <v-card-text>
-                      <v-layout row>
-                        <v-flex xs9>Ловкость</v-flex>
-                        <v-flex xs3>{{e.skl}}</v-flex>
-                      </v-layout>
-                      <v-layout row>
-                        <v-flex xs9>Сила</v-flex>
-                        <v-flex xs3>{{e.sta}}</v-flex>
-                      </v-layout>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-btn color="primary" flat v-if="inFight" @click.native="attack(e)">Атаковать</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-flex>
-            </v-layout>
-            <div class="battle-log" v-html="battleLog"></div>
-          </v-card-text>
-        </v-card>
-      </v-dialog>
+    <b-modal id="combat" v-model="inFight" persistent max-width="400" @hide="noHide">
+      <div slot="modal-title">
+        Бой
+      </div>
+      <b-row>
+        <b-col sm="6" v-if="player">
+          <b-card no-body
+            style="max-width: 20rem;"
+            :img-src="'/static/avatar/' + player.avatar"
+            :img-alt="player.title"
+            img-top>
+            <h4 slot="header">{{ player.title }}</h4>
+            <b-card-body>
+              <b-row>
+                <b-col sm="8" class="text-uppercase mb-1"><small><b>{{ player.skl.title }}</b></small></b-col>
+                <b-col sm="4"><small class="text-muted">{{ player.skl.value }}/{{ player.skl.max }}</small></b-col>
+                <b-col sm="12">
+                  <b-progress height={} class="progress-xs" :variant="player.skl.color()" :value="player.skl.percent()"></b-progress>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col sm="8" class="text-uppercase mb-1"><small><b>{{ player.sta.title }}</b></small></b-col>
+                <b-col sm="4"><small class="text-muted">{{ player.sta.value }}/{{ player.sta.max }}</small></b-col>
+                <b-col sm="12">
+                  <b-progress height={} class="progress-xs" :variant="player.sta.color()" :value="player.sta.percent()"></b-progress>
+                </b-col>
+              </b-row>
+            </b-card-body>
+          </b-card>
+        </b-col>
+        <b-col sm="6" v-if="enemies">
+          <b-card no-body
+            v-for="(e, id) in enemies"
+            v-if="e.sta > 0"
+            :key="'enemy' + id"
+            style="max-width: 20rem;"
+            :img-src="'/static/avatar/' + e.avatar"
+            :img-alt="e.title"
+            img-top>
+            <h4 slot="header">{{ e.title }}</h4>
+            <b-card-body>
+              <b-row>
+                <b-col sm="8" class="text-uppercase mb-1"><small><b>{{ player.skl.title }}</b></small></b-col>
+                <b-col sm="4"><small class="text-muted">{{ e.skl }}</small></b-col>
+                <b-col sm="12">
+                  <b-progress height={} class="progress-xs" variant="danger" :value="100"></b-progress>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col sm="8" class="text-uppercase mb-1"><small><b>{{ player.sta.title }}</b></small></b-col>
+                <b-col sm="4"><small class="text-muted">{{ e.sta }}</small></b-col>
+                <b-col sm="12">
+                  <b-progress height={} class="progress-xs" variant="danger" :value="100"></b-progress>
+                </b-col>
+              </b-row>
+            </b-card-body>
+            <b-card-footer>
+              <b-btn variant="primary" flat v-if="inFight" @click="attack(e)">Атаковать</b-btn>
+            </b-card-footer>
+          </b-card>
+        </b-col>
+      </b-row>
+      <div class="battle-log" v-html="battleLog">
+      </div>
+    </b-modal>
 
     <b-col sm="12">
       <b-card no-body class="w-75 mx-auto">
@@ -66,12 +80,16 @@
           <b-row>
             <template v-for="(item, id) in chapter.items">
               <b-col sm="12" :key="'i' + id" v-if="item.active">
-                  <v-tooltip bottom>
-                    <v-btn block flat slot="activator" @click.stop="takeItem(item)">{{ item.short ? item.short : item.title }}</v-btn>
-                    <h1>{{ item.title }}</h1>
-                    <div v-if="item.description">{{ item.description }}</div>
-                    <div v-if="item.full">{{ item.full }}</div>
-                  </v-tooltip>
+                <b-btn :id="'playitem-' + id" block flat @click.stop="takeItem(item)">{{ item.short ? item.short : item.title }}</b-btn>
+                <b-popover
+                  :target="'playitem-'+id"
+                  placement="bottom"
+                  :title="item.title"
+                  triggers="hover focus"
+                >
+                  <div v-if="item.description">{{ item.showDescription() }}</div>
+                  <div v-if="item.full">{{ item.full }}</div>
+                </b-popover>
               </b-col>
             </template>
             <template v-for="(action, id) in chapter.actions">
@@ -135,7 +153,7 @@ export default {
       this.battleLog = this.$store.state.battleLog
 
       this.enemies = this.$store.getters.enemiesAlive
-      this.inFight = this.$store.getters.inFight
+      this.inFight = this.enemies.length > 0
     },
 
     directionIcon (direction) {
@@ -168,9 +186,9 @@ export default {
 
       if (canTake) {
         this.$store.dispatch('removeItem', item)
-        this.chapter = this.$store.getters.currentChapter
-        this.chapter.load(this.$store.state.player)
       }
+      this.chapter = this.$store.getters.currentChapter
+      this.chapter.load(this.$store.state.player)
     },
     attack: function (enemy) {
       this.battleLog += '<hr>'
@@ -208,6 +226,16 @@ export default {
         this.battleLog += '<span class="' + color + '">' + text + '</span><br>'
       }
       this.battleLog += '</p>'
+
+      if (!this.inFight) {
+        this.$root.$emit('bv::hide::modal', 'combat')
+      }
+    },
+    noHide (evt) {
+      if (this.inFight) {
+        evt.preventDefault()
+        // this.$root.$emit('bv::hide::modal', 'combat')
+      }
     }
   },
   created: function () {

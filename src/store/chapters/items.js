@@ -113,6 +113,8 @@ export default {
     title: 'Мешочек с семенами',
     short: 'Семена',
     chapter: 177,
+    canTake: false,
+    code: 160,
     description: 'Бархатный мешочек с двумя крупными, похожими на шишечки, ' +
       'семенами'
   },

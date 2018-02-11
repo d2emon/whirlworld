@@ -167,6 +167,9 @@ var player = {
   takeItem: function (item) {
     item.onTake(this)
 
+    if (item.chapter) {
+      this.chapter = item.chapter
+    }
     if (!item.canTake) return false
 
     if (item.noBag) {
@@ -184,9 +187,6 @@ var player = {
     if (!res) {
       alert('Ваш рюкзак забит.')
       return false
-    }
-    if (item.chapter) {
-      this.chapter = item.chapter
     }
     return res
   },
