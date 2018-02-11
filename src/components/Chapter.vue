@@ -110,20 +110,17 @@
 </template>
 
 <script>
-import store from '@/store'
 import GameDialog from '@/components/GameDialog'
-import PlayerPanel from '@/components/PlayerPanel'
 
 export default {
-  name: 'HelloWorld',
+  name: 'Chapter',
   components: {
-    GameDialog,
-    PlayerPanel
+    GameDialog
   },
   data () {
     return {
       chapter: null,
-      player: store.state.player,
+      player: this.$store.state.player,
       inFight: false,
       enemies: [],
       text: [],
@@ -132,18 +129,15 @@ export default {
   },
   methods: {
     loadChapter: function (id) {
-      this.enemies = []
-      this.chapter = store.state.chapters[id]
-      this.text = this.chapter.load(store.state.player)
-      this.battleLog = ''
-      console.log(this.chapter.enemies)
-      if (this.chapter.enemies.length) {
-        this.enemies = this.chapter.enemies.filter(function (item) {
-          return item.sta > 0
-        })
-        this.inFight = this.enemies.length > 0
-      }
+      this.$store.commit('loadChapter', id)
+      this.chapter = this.$store.state.chapter
+      this.text = this.$store.state.text
+      this.battleLog = this.$store.state.battleLog
+
+      this.enemies = this.$store.getters.enemiesAlive
+      this.inFight = this.$store.getters.inFight
     },
+
     directionIcon (direction) {
       if (direction === 'nw') return 'mdi-arrow-top-left'
       if (direction === 'n') return 'arrow_upward'
@@ -156,7 +150,7 @@ export default {
       return ''
     },
     doAction: function (action) {
-      var newChapterID = this.chapter.doAction(action, store.state.player)
+      var newChapterID = this.chapter.doAction(action, this.$store.state.player)
       if (!newChapterID) return
 
       this.player.log = this.player.log.concat(this.text)
@@ -170,14 +164,12 @@ export default {
       this.loadChapter(newChapterID)
     },
     takeItem: function (item) {
-      var canTake = store.state.player.takeItem(item)
+      var canTake = this.$store.state.player.takeItem(item)
 
       if (canTake) {
-        this.chapter.items = this.chapter.items.filter(function (element, i) {
-          return element !== item
-        })
-        this.chapter = store.state.chapters[store.state.player.chapter]
-        this.chapter.load(store.state.player)
+        this.$store.dispatch('removeItem', item)
+        this.chapter = this.$store.getters.currentChapter
+        this.chapter.load(this.$store.state.player)
       }
     },
     attack: function (enemy) {

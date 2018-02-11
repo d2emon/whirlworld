@@ -3,7 +3,7 @@
     <b-tabs>
       <b-tab title="<i class='icon-user'></i>">
         <div class="p-3">
-          <player-panel /> 
+          <player-panel />
         </div>
       </b-tab>
       <b-tab title="<i class='icon-list'></i>">

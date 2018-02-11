@@ -42,7 +42,7 @@
       <b-row>
         <b-col sm="12">
           <b-progress height={} class="progress-xs" :variant="player.backpackColor()" :value="player.backpackPlace()"></b-progress>
-          <small class="text-muted">{{ player.backpackPlace() }}/6</small>
+          <small class="text-muted">{{ player.backpackItems() }}/6</small>
         </b-col>
       </b-row>
       <ol>
@@ -115,27 +115,10 @@ export default {
     }
   },
   methods: {
-    generate: function () {
-      this.player.generate()
-      console.log(this.$store.state)
-    },
     restart: function () {
       this.$store.state.player.ready = false
-      this.generate()
+      this.$store.commit('generate')
       this.$router.push('/start')
-    },
-    getItem: function (item) {
-      var res = false
-      for (let i = 0; i < this.player.items.length; i++) {
-        if (!this.player.items[i]) {
-          this.player.items[i] = item
-          res = true
-          break
-        }
-      }
-      if (!res) {
-        alert('Ваш рюкзак забит.')
-      }
     },
     save: function () {
       this.savePlayer = true
@@ -155,7 +138,7 @@ export default {
   },
   mounted: function () {
     if (!this.player.ready) {
-      this.generate()
+      this.$store.commit('generate')
     }
     document.body.classList.toggle('sidebar-hidden', true)
     document.body.classList.toggle('aside-menu-hidden', false)

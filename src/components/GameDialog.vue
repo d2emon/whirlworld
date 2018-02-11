@@ -4,7 +4,7 @@
       <template v-if="i.separator">
         <hr :key="id">
       </template>
-      
+
       <div :key="id" v-if="i.text" class="pa-0 ma-2 message">
         <template v-if="i.actor">
           <div class="py-3 pb-5 mr-3 float-left" v-if="i.actor">
@@ -18,7 +18,7 @@
         </template>
 
         <div v-html="text2html(i.text) + '<br /><br />'">
-        </div> 
+        </div>
 
       </div>
     </template>

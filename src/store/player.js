@@ -190,9 +190,11 @@ var player = {
     }
     return res
   },
+  backpackItems: function () {
+    return this.items.filter(function (x) { return x }).length
+  },
   backpackPlace: function () {
-    var items = this.items.filter(function (x) { return x })
-    return (items.length / 6) * 100
+    return (this.backpackItems() / 6) * 100
   },
   backpackColor: function () {
     if (this.backpackPlace() < 50) return 'success'
@@ -254,7 +256,6 @@ var player = {
     return wounds
   },
   say: function (text) {
-    console.log(this)
     return {
       actor: {
         player: true,
