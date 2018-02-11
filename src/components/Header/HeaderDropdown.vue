@@ -8,6 +8,10 @@
         <!-- b-dropdown-item><i class="fa fa-envelope-o"></i> Messages<b-badge variant="success">{{itemsCount}}</b-badge></b-dropdown-item -->
         <!-- b-dropdown-item><i class="fa fa-tasks"></i> Tasks<b-badge variant="danger">{{itemsCount}}</b-badge></b-dropdown-item -->
         <!-- b-dropdown-item><i class="fa fa-comments"></i> Comments<b-badge variant="warning">{{itemsCount}}</b-badge></b-dropdown-item -->
+        <b-dropdown-header tag="div" class="text-center"><strong>Игра</strong></b-dropdown-header>
+        <b-dropdown-item @click="savePlayer"><i class="fa fa-user"></i> Сохранить</b-dropdown-item>
+        <b-dropdown-item @click="loadPlayer"><i class="fa fa-user"></i> Загрузить</b-dropdown-item>
+        <b-dropdown-item @click="editPlayer"><i class="fa fa-user"></i> Править</b-dropdown-item>
         <b-dropdown-header tag="div" class="text-center"><strong>Настройки</strong></b-dropdown-header>
         <b-dropdown-item><i class="fa fa-user"></i> Profile</b-dropdown-item>
         <b-dropdown-item><i class="fa fa-wrench"></i> Settings</b-dropdown-item>
@@ -28,6 +32,17 @@ export default {
   },
   data: () => {
     return { itemsCount: 42 }
+  },
+  methods: {
+    savePlayer () {
+      this.$root.$emit('bv::show::modal', 'saveModal')
+    },
+    loadPlayer () {
+      this.$root.$emit('bv::show::modal', 'loadModal')
+    },
+    editPlayer () {
+      this.$root.$emit('bv::show::modal', 'editModal')
+    }
   }
 }
 </script>
