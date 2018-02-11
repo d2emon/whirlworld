@@ -1,14 +1,10 @@
 <template>
   <div class="app">
-    <save-modal />
-    <load-modal />
-    <edit-modal />
-
     <AppHeader/>
     <div class="app-body">
-      <!-- Sidebar :navItems="nav"/ -->
+      <Sidebar :navItems="nav"/>
       <main class="main">
-        <!-- breadcrumb :list="list"/ -->
+        <breadcrumb :list="list"/>
         <div class="container-fluid">
           <router-view></router-view>
         </div>
@@ -22,15 +18,10 @@
 <script>
 import nav from '../_nav'
 import { Header as AppHeader, Sidebar, Aside as AppAside, Footer as AppFooter, Breadcrumb } from '@/components/'
-import {SaveModal, LoadModal, EditModal} from '@/components/Modals/'
 
 export default {
   name: 'full',
   components: {
-    SaveModal,
-    LoadModal,
-    EditModal,
-
     AppHeader,
     Sidebar,
     AppAside,
@@ -49,10 +40,6 @@ export default {
     list () {
       return this.$route.matched
     }
-  },
-  mounted: function () {
-    document.body.classList.toggle('sidebar-hidden', true)
-    document.body.classList.toggle('aside-menu-hidden', false)
   }
 }
 </script>

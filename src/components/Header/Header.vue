@@ -1,13 +1,13 @@
 <template>
   <header class="app-header navbar">
-    <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button" @click="mobileSidebarToggle">
+    <!-- button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button" @click="mobileSidebarToggle">
       <span class="navbar-toggler-icon"></span>
-    </button>
+    </button -->
     <!-- b-link class="navbar-brand" to="#"></b-link -->
     <b-link to="/">Вереница миров</b-link>
-    <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" @click="sidebarToggle">
+    <!-- button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" @click="sidebarToggle">
       <span class="navbar-toggler-icon"></span>
-    </button>
+    </button -->
 
     <b-navbar-nav class="d-md-down-none">
       <b-nav-item class="px-3" v-for="(item, id) in mainMenu" :key="id" :to="item.url"><span v-html="item.title"></span></b-nav-item>

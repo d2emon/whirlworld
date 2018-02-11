@@ -140,8 +140,6 @@ export default {
     if (!this.player.ready) {
       this.$store.commit('generate')
     }
-    document.body.classList.toggle('sidebar-hidden', true)
-    document.body.classList.toggle('aside-menu-hidden', false)
   }
 }
 </script>

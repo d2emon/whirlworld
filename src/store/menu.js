@@ -1,9 +1,9 @@
 export default {
   mainMenu: [
     // { title: 'Начать', url: '/start' },
-    { title: 'Панель', url: '/dashboard' },
-    { title: 'Пользователи', url: '#' },
-    { title: 'Настройки', url: '#' },
+    // { title: 'Панель', url: '/dashboard' },
+    // { title: 'Пользователи', url: '#' },
+    // { title: 'Настройки', url: '#' },
     { title: '<i class="icon-refresh"></in>', url: '/start' },
     { title: '<i class="icon-user"></i>', url: '#' },
     { title: '<i class="icon-eye"></i>', url: '#' },

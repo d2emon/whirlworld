@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import HelloWorld from '@/components/HelloWorld'
-import Chapter from '@/components/Chapter'
-
 // Containers
 import Full from '@/containers/Full'
+import Dash from '@/containers/Dash'
 
 // Views
+import Start from '@/views/Start'
+import Chapter from '@/views/Chapter'
+
 import Dashboard from '@/views/Dashboard'
 
 import Colors from '@/views/theme/Colors'
@@ -63,20 +64,28 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/dashboard',
+      redirect: '/start',
       name: 'Home',
       component: Full,
       children: [
         {
           path: 'start',
-          name: 'HelloWorld',
-          component: HelloWorld
+          name: 'Start',
+          component: Start
         },
         {
           path: 'chapter/:id',
           name: 'Chapter',
           component: Chapter
-        },
+        }
+      ]
+    },
+    {
+      path: '/dash',
+      redirect: '/dash/dashboard',
+      name: 'Dash',
+      component: Dash,
+      children: [
         {
           path: 'dashboard',
           name: 'Dashboard',
@@ -84,7 +93,7 @@ export default new Router({
         },
         {
           path: 'theme',
-          redirect: '/theme/colors',
+          redirect: '/dash/theme/colors',
           name: 'Theme',
           component: {
             render (c) { return c('router-view') }
@@ -109,7 +118,7 @@ export default new Router({
         },
         {
           path: 'base',
-          redirect: '/base/cards',
+          redirect: '/dash/base/cards',
           name: 'Base',
           component: {
             render (c) { return c('router-view') }
@@ -194,7 +203,7 @@ export default new Router({
         },
         {
           path: 'buttons',
-          redirect: '/buttons/buttons',
+          redirect: '/dash/buttons/buttons',
           name: 'Buttons',
           component: {
             render (c) { return c('router-view') }
@@ -224,7 +233,7 @@ export default new Router({
         },
         {
           path: 'icons',
-          redirect: '/icons/font-awesome',
+          redirect: '/dash/icons/font-awesome',
           name: 'Icons',
           component: {
             render (c) { return c('router-view') }
@@ -249,7 +258,7 @@ export default new Router({
         },
         {
           path: 'notifications',
-          redirect: '/notifications/alerts',
+          redirect: '/dash/notifications/alerts',
           name: 'Notifications',
           component: {
             render (c) { return c('router-view') }

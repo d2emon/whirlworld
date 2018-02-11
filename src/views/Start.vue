@@ -700,7 +700,7 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'Start',
   data () {
     return {
       starting: null,
