@@ -1,13 +1,5 @@
 <template>
   <div>
-    <b-card>
-      <blockquote>
-        <small>
-          <p>Если неприятность может произойти, она обязательно происходит.</p>
-          <p class="grey--text">Закон Мерфи, 2-я пол. ХХ века</p>
-        </small>
-      </blockquote>
-    </b-card>
     <b-card :title="player.title">
       <b-row>
         <b-col sm="8" class="text-uppercase mb-1"><small><b>{{ player.skl.title }}</b></small></b-col>
@@ -38,66 +30,15 @@
         </b-col>
       </b-row>
     </b-card>
-    <b-card title="Рюкзак">
-      <b-row>
-        <b-col sm="12">
-          <b-progress height={} class="progress-xs" :variant="player.backpackColor()" :value="player.backpackPlace()"></b-progress>
-          <small class="text-muted">{{ player.backpackItems() }}/6</small>
-        </b-col>
-      </b-row>
-      <ol>
-        <template v-for="(i, id) in player.items">
-          <li v-if="i" :key="id">
-            <span :id="'item-' + id" :key="id">{{ i.short }}</span>
-            <b-popover
-              :target="'item-'+id"
-              placement="bottom"
-              :title="i.title"
-              triggers="hover focus"
-            >
-              <div v-if="i.description">{{ i.showDescription() }}</div>
-              <div v-if="i.full">{{ i.full }}</div>
-            </b-popover>
-          </li>
-          <li v-else :key="id">
-            <em>Ничего</em>
-          </li>
-        </template>
-      </ol>
-      <ul>
-        <template v-for="(i, id) in player.noBag">
-          <li v-if="i" :key="id">
-            <span :id="'item-' + id" :key="id">{{ i.short }}</span>
-            <b-popover
-              :target="'item-'+id"
-              placement="bottom"
-              :title="i.title"
-              triggers="hover focus"
-            >
-              <div v-if="i.description">{{ i.showDescription() }}</div>
-              <div v-if="i.full">{{ i.full }}</div>
-            </b-popover>
-          </li>
-          <li v-else :key="id">
-            <em>Ничего</em>
-          </li>
-        </template>
-      </ul>
-      <hr>
-      <b-row>
-        <b-col sm="8" class="text-uppercase mb-1"><small><b>Заряды</b></small></b-col>
-        <b-col sm="4"><small class="text-muted">{{ player.blaster.shots }}</small></b-col>
-      </b-row>
-    </b-card>
-    <b-card>
-      {{ player }}
-    </b-card>
   </div>
 </template>
 
 <script>
 export default {
   name: 'PlayerPanel',
+  props: [
+    'player'
+  ],
   data: function () {
     return {
       movements: [
@@ -107,7 +48,6 @@ export default {
       ],
       movement: { icon: 'directions_walk', title: 'Идти' },
 
-      player: this.$store.state.player,
       loadData: '',
       savePlayer: false,
       loadPlayer: false,
@@ -116,7 +56,7 @@ export default {
   },
   methods: {
     restart: function () {
-      this.$store.state.player.ready = false
+      this.player.ready = false
       this.$store.commit('generate')
       this.$router.push('/start')
     },
