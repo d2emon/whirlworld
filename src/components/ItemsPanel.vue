@@ -17,8 +17,9 @@
               :title="i.title"
               triggers="hover focus"
             >
-              <div v-if="i.description">{{ i.showDescription() }}</div>
-              <div v-if="i.full">{{ i.full }}</div>
+              <item-icon :item="i" />
+              <!-- div v-if="i.description">{{ i.showDescription() }}</div>
+              <div v-if="i.full">{{ i.full }}</div -->
             </b-popover>
           </li>
           <li v-else :key="id">
@@ -29,19 +30,20 @@
       <ul>
         <template v-for="(i, id) in player.noBag">
           <li v-if="i" :key="id">
-            <span :id="'item-' + id" :key="id">{{ i.short }}</span>
+            <span :id="'no-bag-item-' + id" :key="id">{{ i.short }}</span>
             <b-popover
-              :target="'item-'+id"
+              :target="'no-bag-item-'+id"
               placement="bottom"
               :title="i.title"
               triggers="hover focus"
             >
-              <div v-if="i.description">{{ i.showDescription() }}</div>
-              <div v-if="i.full">{{ i.full }}</div>
+              <item-icon :item="i" />
+              <!-- div v-if="i.description">{{ i.showDescription() }}</div>
+              <div v-if="i.full">{{ i.full }}</div -->
             </b-popover>
           </li>
           <li v-else :key="id">
-            <em>Ничего</em>
+            <em class="text-muted">Ничего</em>
           </li>
         </template>
       </ul>
@@ -55,8 +57,13 @@
 </template>
 
 <script>
+import ItemIcon from './ItemIcon'
+
 export default {
   name: 'ItemsPanel',
+  components: {
+    ItemIcon
+  },
   props: [
     'player'
   ]
