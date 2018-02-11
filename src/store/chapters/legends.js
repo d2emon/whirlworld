@@ -333,7 +333,7 @@ var chapters = [
     defaultAction: { chapter: 5 },
     enemies: [
       characters.animal1,
-      characters.animal2,
+      characters.animal2
     ]
   },
   {
@@ -1007,7 +1007,7 @@ var chapters = [
     actions: [
       {
         title: 'А утром, затоптав догорающий костер, вновь пускаетесь в ' +
-          'дорогу.',
+          'дорогу.'
       }
     ],
     defaultAction: { chapter: 401 }
