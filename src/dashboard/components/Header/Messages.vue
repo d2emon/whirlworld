@@ -31,10 +31,8 @@
 <script>
 export default {
   name: 'messages',
-  data: function () {
-    return {
-      messages: this.$store.state.messages
-    }
-  }
+  props: [
+    'messages'
+  ]
 }
 </script>

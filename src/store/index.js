@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 // import * as actions from './actions'
-// import cart from './modules/cart'
-// import products from './modules/products'
 // import createLogger from '../../../src/plugins/logger'
 
 // import models from './models'
@@ -10,6 +8,8 @@ import menu from './menu.js'
 import player from './player.js'
 import chapters from './chapters'
 import items from './chapters/items'
+
+import dashboard from './dashboard'
 
 Vue.use(Vuex)
 
@@ -87,14 +87,11 @@ export default new Vuex.Store({
       context.commit('setToken', response.data.token)
     },
     */
-  }
+  },
   // actions,
-  /*
-   * modules: {
-   *   cart,
-   *   products
-   * },
-   */
+  modules: {
+    dashboard
+  }
   // strict: debug,
   // plugins: debug ? [createLogger()] : []
 })

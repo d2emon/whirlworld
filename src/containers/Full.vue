@@ -6,9 +6,7 @@
 
     <AppHeader/>
     <div class="app-body">
-      <!-- Sidebar :navItems="nav"/ -->
       <main class="main">
-        <!-- breadcrumb :list="list"/ -->
         <div class="container-fluid">
           <router-view></router-view>
         </div>
@@ -20,8 +18,7 @@
 </template>
 
 <script>
-import nav from '../_nav'
-import { Header as AppHeader, Sidebar, Aside as AppAside, Footer as AppFooter, Breadcrumb } from '@/components/'
+import { Header as AppHeader, Aside as AppAside, Footer as AppFooter } from '@/components/'
 import {SaveModal, LoadModal, EditModal} from '@/components/Modals/'
 
 export default {
@@ -32,22 +29,12 @@ export default {
     EditModal,
 
     AppHeader,
-    Sidebar,
     AppAside,
-    AppFooter,
-    Breadcrumb
-  },
-  data () {
-    return {
-      nav: nav.items
-    }
+    AppFooter
   },
   computed: {
     name () {
       return this.$route.name
-    },
-    list () {
-      return this.$route.matched
     }
   },
   mounted: function () {

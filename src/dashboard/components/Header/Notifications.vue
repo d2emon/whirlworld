@@ -28,12 +28,10 @@
 </template>
 <script>
 export default {
-  name: 'notifications',
-  data: function () {
-    return {
-      notifications: this.$store.state.notifications,
-      server: this.$store.state.server
-    }
-  }
+  name: 'Notifications',
+  props: [
+    'notifications',
+    'server'
+  ]
 }
 </script>

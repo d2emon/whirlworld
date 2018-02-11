@@ -17,10 +17,8 @@
 <script>
 export default {
   name: 'tasks',
-  data: function () {
-    return {
-      tasks: this.$store.state.tasks
-    }
-  }
+  props: [
+    'tasks'
+  ]
 }
 </script>

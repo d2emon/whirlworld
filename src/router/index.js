@@ -3,57 +3,57 @@ import Router from 'vue-router'
 
 // Containers
 import Full from '@/containers/Full'
-import Dash from '@/containers/Dash'
+import Dash from '@/dashboard/containers/Dash'
 
 // Views
 import Start from '@/views/Start'
 import Chapter from '@/views/Chapter'
 
-import Dashboard from '@/views/Dashboard'
+import Dashboard from '@/dashboard/views/Dashboard'
 
-import Colors from '@/views/theme/Colors'
-import Typography from '@/views/theme/Typography'
+import Colors from '@/dashboard/views/theme/Colors'
+import Typography from '@/dashboard/views/theme/Typography'
 
-import Widgets from '@/views/Widgets'
+import Widgets from '@/dashboard/views/Widgets'
 
 // Views - Components
-import Cards from '@/views/base/Cards'
-import Forms from '@/views/base/Forms'
-import Switches from '@/views/base/Switches'
-import Tables from '@/views/base/Tables'
-import Breadcrumbs from '@/views/base/Breadcrumbs'
-import Carousels from '@/views/base/Carousels'
-import Collapses from '@/views/base/Collapses'
-import Jumbotrons from '@/views/base/Jumbotrons'
-import ListGroups from '@/views/base/ListGroups'
-import Navs from '@/views/base/Navs'
-import Navbars from '@/views/base/Navbars'
-import Paginations from '@/views/base/Paginations'
-import Popovers from '@/views/base/Popovers'
-import ProgressBars from '@/views/base/ProgressBars'
-import Tooltips from '@/views/base/Tooltips'
+import Cards from '@/dashboard/views/base/Cards'
+import Forms from '@/dashboard/views/base/Forms'
+import Switches from '@/dashboard/views/base/Switches'
+import Tables from '@/dashboard/views/base/Tables'
+import Breadcrumbs from '@/dashboard/views/base/Breadcrumbs'
+import Carousels from '@/dashboard/views/base/Carousels'
+import Collapses from '@/dashboard/views/base/Collapses'
+import Jumbotrons from '@/dashboard/views/base/Jumbotrons'
+import ListGroups from '@/dashboard/views/base/ListGroups'
+import Navs from '@/dashboard/views/base/Navs'
+import Navbars from '@/dashboard/views/base/Navbars'
+import Paginations from '@/dashboard/views/base/Paginations'
+import Popovers from '@/dashboard/views/base/Popovers'
+import ProgressBars from '@/dashboard/views/base/ProgressBars'
+import Tooltips from '@/dashboard/views/base/Tooltips'
 
 // Views - Buttons
-import StandardButtons from '@/views/buttons/StandardButtons'
-import ButtonGroups from '@/views/buttons/ButtonGroups'
-import Dropdowns from '@/views/buttons/Dropdowns'
-import SocialButtons from '@/views/buttons/SocialButtons'
+import StandardButtons from '@/dashboard/views/buttons/StandardButtons'
+import ButtonGroups from '@/dashboard/views/buttons/ButtonGroups'
+import Dropdowns from '@/dashboard/views/buttons/Dropdowns'
+import SocialButtons from '@/dashboard/views/buttons/SocialButtons'
 
 // Views - Icons
-import Flags from '@/views/icons/Flags'
-import FontAwesome from '@/views/icons/FontAwesome'
-import SimpleLineIcons from '@/views/icons/SimpleLineIcons'
+import Flags from '@/dashboard/views/icons/Flags'
+import FontAwesome from '@/dashboard/views/icons/FontAwesome'
+import SimpleLineIcons from '@/dashboard/views/icons/SimpleLineIcons'
 
 // Views - Notifications
-import Alerts from '@/views/notifications/Alerts'
-import Badges from '@/views/notifications/Badges'
-import Modals from '@/views/notifications/Modals'
+import Alerts from '@/dashboard/views/notifications/Alerts'
+import Badges from '@/dashboard/views/notifications/Badges'
+import Modals from '@/dashboard/views/notifications/Modals'
 
 // Views - Pages
-import Page404 from '@/views/pages/Page404'
-import Page500 from '@/views/pages/Page500'
-import Login from '@/views/pages/Login'
-import Register from '@/views/pages/Register'
+import Page404 from '@/dashboard/views/pages/Page404'
+import Page500 from '@/dashboard/views/pages/Page500'
+import Login from '@/dashboard/views/pages/Login'
+import Register from '@/dashboard/views/pages/Register'
 
 Vue.use(Router)
 

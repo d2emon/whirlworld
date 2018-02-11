@@ -45,4 +45,3 @@ for (let i = 0; i < messageCount; i++) {
 export default {
   messages: messages
 }
-
