@@ -13,7 +13,7 @@ import dashboard from './dashboard'
 
 Vue.use(Vuex)
 
-// const debug = process.env.NODE_ENV !== 'production'
+const debug = process.env.NODE_ENV !== 'production'
 
 export default new Vuex.Store({
   state: {
@@ -79,7 +79,7 @@ export default new Vuex.Store({
           return element !== item
         }
       )
-    }
+    },
     /*
     async getToken (context) {
       var response = await context.state.http.post('api-token-auth/', {
@@ -89,11 +89,27 @@ export default new Vuex.Store({
       context.commit('setToken', response.data.token)
     },
     */
+    onNewLoc: (context) => {
+      // $onnewloc='onNewLoc'
+    },
+    onObjSel: (context) => {
+      // $onobjsel='onObjSel'
+    },
+    onGameSave: (context) => {
+      // $ongsave='onGameSave'
+    },
+    onGameLoad: (context) => {
+      // $ongload='onGameLoad'
+    },
+    uc: (context) => {
+      // $usercom='uc'
+    }
+    // gosub 'set.Screen','обложка.чёрный'
   },
   // actions,
   modules: {
     dashboard
-  }
-  // strict: debug,
+  },
+  strict: debug
   // plugins: debug ? [createLogger()] : []
 })
