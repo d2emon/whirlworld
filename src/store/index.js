@@ -9,7 +9,7 @@ import player from './player.js'
 import chapters from './chapters'
 import items from './chapters/items'
 
-import dashboard from './dashboard'
+import utils from './utils.js'
 
 Vue.use(Vuex)
 
@@ -90,7 +90,7 @@ export default new Vuex.Store({
     },
     */
     onNewLoc: (context) => {
-      // $onnewloc='onNewLoc'
+      utils.onNewLoc()
     },
     onObjSel: (context) => {
       // $onobjsel='onObjSel'
@@ -107,9 +107,11 @@ export default new Vuex.Store({
     // gosub 'set.Screen','обложка.чёрный'
   },
   // actions,
-  modules: {
-    dashboard
-  },
+  /**
+   * modules: {
+   *   dashboard
+   * },
+   */
   strict: debug
   // plugins: debug ? [createLogger()] : []
 })
