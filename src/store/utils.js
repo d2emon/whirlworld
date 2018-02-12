@@ -1,121 +1,227 @@
-var id_watch = []
-var refresh_watch = []
-var curloc = null
-var tvar = null
-var AVS_PLAYERTYPE = ''
-var GAME_VALUE = {
-  screen_floor: '',
-  back_code: ''
-}
-var args = {
-  save: '',
-  controlJS: ''
-}
+import iface from './interface'
+import game from './game'
 
-function onNewLoc () {
+var survivedWarriors = []
+var survivedLocation = []
+var fast = {}
+var social = {}
+var power = {}
+
+var luck = []
+var unluck = []
+var ids = []
+var objects = []
+var kolvos = []
+var charges = []
+var positions = []
+var runs = []
+
+var idWatch = []
+var refreshWatch = []
+var tvar = []
+var visited = []
+
+var lvar = {
+  source: ''
+}
+var toScreen = ''
+var maintxt = ''
+var items = ''
+// var nosave = false
+var lval = {
+  header: ''
+}
+var time = {
+  goto: 0
+}
+var checkpoint = []
+// var luckRestore = []
+var location = 0
+
+function onNewLoc (location) {
   // служебная локация для обработки перехода на новую локацию. Фактически
   // здесь исходный текст книжки превращается в выводимый на экран.
+
+  // var save = ''
   // -------------------- переход на новую локацию -----------
-  if (id_watch != curloc) {
-    id_watch.push(curloc)
+  if (idWatch[idWatch.length - 1] !== location) {
+    idWatch.push(location)
     // очищаем временный массив:
-    tvar = null
-    GAME_VALUE.screen_floor = ''
-    args.save = 'yep'
-    if (GAME_VALUE.back_code != 'back') {
-      // save_varriors()
+    tvar = []
+    game.screen_floor = ''
+    // save = 'yep'
+    if (!game.back_code) {
+      saveWarrior()
     } else {
-      // back_varriors('back')
-    }
-    if (AVS_PLAYERTYPE == 'QN') {
-      // данный костыль должен позволять прокручивать
-      // страницу при повторном посещении до низу.
-      // смысл в чём. Элемент добавляется только тогда,
-      // когда страница посещена первый раз.
-      // Если же элемент не найден, скрипт прокрутит
-      // полосу прокрутки до низа.
-      args.controlJS = '<a name="controlJS" id="controlJS"></a>'
+      backWarrior(true)
     }
   }
-  if (id_watch.length > 100) { id_watch = [] }
+  if (idWatch.length > 100) { idWatch = [] }
   // -------------------- переход на новую локацию -----------
 
   // -------------------- переход на любую локацию -----------
-  refresh_watch.push(curloc)
-  if (refresh_watch.length > 9999) { refresh_watch = [] }
+  refreshWatch.push(location)
+  if (refreshWatch.length > 9999) { refreshWatch = [] }
   // -------------------- переход на любую локацию -----------
 
-  if (!was_here[curloc]) {
-    was_here[curloc] = true
-  }
-  if (lvar.source != '') {
-    args.to_screen = int_DIN(lvar.source)
-    args.items_list = int_loc_obj(curloc)
+  if (!visited[location]) { visited[location] = true }
+
+  if (lvar.source) {
+    toScreen = 'int_DIN(lvar.source)'
+    items = 'int_loc_obj(curloc)'
   } else {
-    args.to_screen = '<avs-main>' + maintxt + '</avs-main>'
+    toScreen = '<avs-main>' + maintxt + '</avs-main>'
   }
 
   tvar.dummy_header = lvar.header
   // проверка боем
-  if (instr(lvar.header, '<avs-enemy>')) { args.to_screen += base_txt('war') }
-  if (instr(lvar.header, '<avs-money>')) { args.to_screen += base_txt('sell') }
-  if (instr(lvar.header, '<avs-death>') || GAME_VALUE.power_loose == 'poweroff') {
-    /**
-    if $GAME_VALUE['power.lose']='poweroff': $args['на экран']+=$func('base.txt','off')
-    $args['на экран']+=$func('base.txt','wl')
-    $args['список предметов']=''
-    $GAME_INTERFACE['refresh']='страница.сброс'
-    $GAME_VALUE['interface']=''
-     */
-    nosave = true
+  if (lvar.header.enemy) { toScreen += "base_txt('war')" }
+  if (lvar.header.money) { toScreen += "base_txt('sell')" }
+  if (lvar.header.death || game.power_loose === 'poweroff') {
+    if (game.power_lose === 'poweroff') { toScreen += "base_txt('off')" }
+    toScreen += "base_txt('wl')"
+    items = []
+    iface.refresh = 'page.reset'
+    game.iface = ''
+    // nosave = true
   } else {
-    nosave = false
+    // nosave = false
   }
-  /**
-if instr($lvar['заголовок'],'<avs-victory>')!0:
-  $args['на экран']+=$func('base.txt','go')
-  $args['список предметов']=''
-  $GAME_INTERFACE['refresh']='страница.сброс'
-  $GAME_VALUE['interface']=''
-end
-if instr($lvar['заголовок'],'<avs-game:')!0:
-  $args['на экран']+=$func('int.DIN',$func('base.txt','game.enemy',$func('get.tag.cont',$lvar['заголовок'],'avs-game')))
-end
-! кусок костыля для прокрутки
-$args['на экран']+=$args['controlJS']
-*clr
-if $GAME_INTERFACE['refresh']!'': gosub 'set.Screen',$GAME_INTERFACE['refresh']
-$args['PRINTSCREEN']=$func('int.screen',$args['на экран'],$args['список предметов'],$lvar['заголовок'],$GAME_VALUE['interface'],$lvar['колонтитул'])
-*pl $args['PRINTSCREEN']
+  if (lval.header.victory) {
+    toScreen += "base_txt('go')"
+    items = []
+    iface.refresh = 'page.reset'
+    game.iface = ''
+  }
+  if (lvar.header.game) {
+    toScreen += "int_DIN( base_txt('game.enemy', get_tag_cont(lvar.header, 'avs-game')))"
+  }
 
-if $refresh_watch[]=$refresh_watch[arrsize('$refresh_watch')-2] and time['goto']=0:
-  wait 1
-  *p ' '
-end
+  var res = ''
+  if (iface.refresh) { /* set_Screen(iface.refresh) */ }
 
-if $refresh_watch[]!$refresh_watch[arrsize('$refresh_watch')-2]:
-  ! если локация, на которую мы переместились, новая
-  if instr($tvar['костыль.заголовок'],'<avs-enemy>')!0:
-    $GAME_VALUE['приём лекарства']='запрещён'
-  elseif $GAME_VALUE['приём лекарства']='запрещён':
-    $GAME_VALUE['приём лекарства']='разрешён'
-  else
-    $GAME_VALUE['приём лекарства']=''
-  end
-end
+  var printscreen = 'int_screen(' +
+    toScreen +
+    items +
+    lvar.header +
+    game.iface +
+    lvar.colontitle +
+    ')'
+  res += printscreen + '\n'
 
-killvar '$lvar'
-killvar '$GAME_WAR'
-killvar '$GAME_WAR_LOG'
+  if (refreshWatch[refreshWatch.length - 1] === refreshWatch[refreshWatch.length - 2] && time.goto === 0) {
+    // wait(1)
+    res += ' '
+  } else {
+    // если локация, на которую мы переместились, новая
+    if (tvar.dummy_header.enemy) {
+      game.take_pills = 'denied'
+    } else if (game.take_pills === 'denied') {
+      game.take_pills = 'enabled'
+    } else {
+      game.take_pills = ''
+    }
+  }
 
-if instr($tvar['костыль.заголовок'],'<checkpoint>')!0 and checkpoint[$curloc]=0:
-  checkpoint[$curloc]+=1
-  gosub 'avs.save',999
-end
-time['goto']=0
-   */
+  lvar = []
+  // var GAME_WAR = []
+  // var GAME_WAR_LOG = []
 
+  if (tvar.dummy_header.checkpoint && checkpoint[location]) {
+    checkpoint[location] += 1
+    // avs_save(999)
+  }
+
+  time.goto = 0
+  return res
 }
+
+// function onObjClick () {}
+// function onObjSel () {}
+// function onGameSave () {}
+// function onGameLoad () {}
+
+function saveWarrior () {
+  // локация, сохраняющая переменные в виде динамического кода в специальный
+  // массив:
+  survivedWarriors.push({
+    GAME: game,
+    fast: fast,
+    social: social,
+    power: power,
+    luck: luck,
+    unluck: unluck,
+    pit: {
+      ids: ids,
+      objects: objects,
+      kolvos: kolvos,
+      charges: charges,
+      positions: positions,
+      runs: runs
+    }
+  })
+  survivedLocation.push(location)
+  return {
+    vars: survivedWarriors,
+    locs: survivedLocation
+  }
+}
+
+function backWarrior (data) {
+  // управление
+  var state = survivedLocation.length - 2
+  // состояние по текущей локации arrsize-1
+  // состояние по предыдущей локации arrsize-2
+  var vars = survivedWarriors[state]
+  location = survivedLocation[state]
+  if (!data) {
+    // переходим на предыдущую локацию
+    time.goto = 1
+    /**
+     * killvar '$GAME_INTERFACE'
+     * killvar '$GAME_VALUE'
+     * killvar 'fast' & killvar 'power' & killvar 'social'
+     * killvar '$id_array'
+     * killvar '$object_array'
+     * killvar '$position_array'
+     * killvar 'kolvo_array'
+     * killvar 'charge_array'
+     * killvar '$run_array'
+     * killvar '$num_unluck'
+     * killvar '$num_luck'
+     * killvar 'здесь_был'
+     * killvar 'удача_восст'
+     * killvar 'checkpoint'
+     */
+    game.back_code = true
+    // goto(location)
+  } else {
+    // если мы уже перешли на предыдущую локацию. Удаляем знания о текущей
+    // (с которой перешли)
+    survivedLocation.length--
+    survivedWarriors.length--
+    // killvar '$GAME_INTERFACE'
+    visited = []
+    // luckRestore = []
+    checkpoint = []
+    // восстанавливаем значения
+    // game = vars.GAME
+    fast = vars.fast
+    social = vars.social
+    power = vars.power
+    luck = vars.luck
+    unluck = vars.unluck
+    ids = vars.pit.ids
+    objects = vars.pit.objects
+    kolvos = vars.pit.kolvos
+    charges = vars.pit.charges
+    positions = vars.pit.positions
+    runs = vars.pit.runs
+  }
+}
+
+// function uc () {}
+// function uc_obj () {}
 
 export default {
   onNewLoc
