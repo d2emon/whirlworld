@@ -19,5 +19,8 @@ export default {
   take_pills: '',
 
   screen_floor: '',
-  back_code: false
+  back_code: false,
+  load: function (data) {
+    //
+  }
 }
