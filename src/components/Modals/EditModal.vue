@@ -48,9 +48,9 @@
 <script>
 export default {
   name: 'EditModal',
-  computed: {
-    player () {
-      return this.$store.state.player
+  data: function () {
+    return {
+      player: this.$store.state.player
     }
   },
   methods: {

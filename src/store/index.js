@@ -13,7 +13,7 @@ import utils from './utils.js'
 
 Vue.use(Vuex)
 
-const debug = process.env.NODE_ENV !== 'production'
+const debug = false // process.env.NODE_ENV !== 'production'
 
 export default new Vuex.Store({
   state: {

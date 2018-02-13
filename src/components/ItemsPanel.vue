@@ -11,10 +11,10 @@
         <template v-for="(i, id) in player.items">
           <li v-if="i" :key="id">
             <span :id="'item-' + id" :key="id">{{ i.short }}</span>
+            <!-- :title="i.title" -->
             <b-popover
               :target="'item-'+id"
               placement="bottom"
-              :title="i.title"
               triggers="hover focus"
             >
               <item-icon :item="i" />
@@ -31,10 +31,10 @@
         <template v-for="(i, id) in player.noBag">
           <li v-if="i" :key="id">
             <span :id="'no-bag-item-' + id" :key="id">{{ i.short }}</span>
+            <!-- :title="i.title" -->
             <b-popover
               :target="'no-bag-item-'+id"
               placement="bottom"
-              :title="i.title"
               triggers="hover focus"
             >
               <item-icon :item="i" />

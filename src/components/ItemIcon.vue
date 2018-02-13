@@ -7,7 +7,7 @@
     img-top
     @click="itemClick">
     <h4 slot="header">{{ item.title }}</h4>
-    <b-card-body>
+    <b-card-body v-if="item.description || item.full">
       <div v-if="item.description">{{ item.showDescription() }}</div>
       <div v-if="item.full">{{ item.full }}</div>
     </b-card-body>
@@ -41,5 +41,7 @@ export default {
 }
 .item-card {
   max-height: 20rem;
+  // height: 15rem;
+  width: 13rem;
 }
 </style>

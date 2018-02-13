@@ -12,18 +12,18 @@
               <!-- b-card style="max-width: 20rem;" :key="id" -->
               <item-icon :item="i" :key="'c' + id" @click="selectItem(i)"/>
               <!-- /b-card -->
-              <!-- b-btn :id="'item-' + id" @click.stop="selectItem(i)" :key="'si' + id">{{ i.short }}</b-btn>
-              <b-popover
+              <!-- b-btn :id="'item-' + id" @click.stop="selectItem(i)" :key="'si' + id">{{ i.short }}</b-btn -->
+              <!-- b-popover
                 :target="'item-'+id"
                 placement="bottom"
                 :title="i.title"
                 triggers="hover focus"
                 :key="'p' + id"
-              >
-                <item-icon :item="i" />
-                <!-- div v-if="i.description">{{ i.showDescription() }}</div>
-                <div v-if="i.full">{{ i.full }}</div -->
-              </b-popover -->
+              -->
+                <!-- item-icon :item="i" / -->
+                <!-- div v-if="i.description">{{ i.showDescription() }}</div -->
+                <!-- div v-if="i.full">{{ i.full }}</div -->
+              <!-- /b-popover -->
             </template>
             </b-card-group>
           </div>
