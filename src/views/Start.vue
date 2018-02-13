@@ -7,18 +7,25 @@
           </div>
           <p>Вам предлагают на выбор одну из трех вещей, примерно равных по массе:</p>
           <div slot="modal-footer">
+            <b-card-group deck>
             <template v-for="(i, id) in items">
-              <b-btn :id="'item-' + id" @click.stop="selectItem(i)" :key="id">{{ i.short }}</b-btn>
+              <!-- b-card style="max-width: 20rem;" :key="id" -->
+              <item-icon :item="i" :key="'c' + id" @click="selectItem(i)"/>
+              <!-- /b-card -->
+              <!-- b-btn :id="'item-' + id" @click.stop="selectItem(i)" :key="'si' + id">{{ i.short }}</b-btn>
               <b-popover
                 :target="'item-'+id"
                 placement="bottom"
                 :title="i.title"
                 triggers="hover focus"
-                :content="i.description"
                 :key="'p' + id"
               >
-              </b-popover>
+                <item-icon :item="i" />
+                <!-- div v-if="i.description">{{ i.showDescription() }}</div>
+                <div v-if="i.full">{{ i.full }}</div -->
+              </b-popover -->
             </template>
+            </b-card-group>
           </div>
         </b-modal>
 
@@ -699,8 +706,13 @@
 </template>
 
 <script>
+import ItemIcon from '@/components/ItemIcon'
+
 export default {
   name: 'Start',
+  components: {
+    ItemIcon
+  },
   data () {
     return {
       starting: null,

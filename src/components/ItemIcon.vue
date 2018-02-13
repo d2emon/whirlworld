@@ -4,7 +4,8 @@
     :img-src="image()"
     :img-alt="item.title"
     img-fluid
-    img-top>
+    img-top
+    @click="itemClick">
     <h4 slot="header">{{ item.title }}</h4>
     <b-card-body>
       <div v-if="item.description">{{ item.showDescription() }}</div>
@@ -24,6 +25,9 @@ export default {
       if (!this.item.image) return null
 
       return '/static/items/' + this.item.image
+    },
+    itemClick: function () {
+      this.$emit('click')
     }
   }
 }
