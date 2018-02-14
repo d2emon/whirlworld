@@ -21,6 +21,7 @@ var item = {
 
 var blaster = {
   __proto__: item,
+  id: 1,
   title: 'Бластер',
   short: 'Бластер',
   noBag: true,
@@ -36,6 +37,7 @@ export default {
   blaster,
   glasses: {
     __proto__: item,
+    id: 101,
     title: 'Инфракрасные очки «Ночное зрение»',
     short: 'Инфракрасные очки',
     image: 'glasses.jpeg',
@@ -43,6 +45,7 @@ export default {
   },
   lighter: {
     __proto__: item,
+    id: 102,
     title: 'Зажигалка',
     short: 'Зажигалка',
     image: 'lighter.jpeg',
@@ -50,6 +53,7 @@ export default {
   },
   tube: {
     __proto__: item,
+    id: 103,
     title: 'Тюбик питательной пасты',
     short: 'Тюбик',
     image: 'tube.jpeg',
@@ -58,12 +62,14 @@ export default {
   },
   fan: {
     __proto__: item,
+    id: 201,
     title: 'Веер',
     short: 'Веер',
     description: 'Изящный веер на резной ручке.'
   },
   flask: {
     __proto__: item,
+    id: 202,
     title: 'Фляжка',
     short: 'Фляжка',
     noBag: true,
@@ -76,6 +82,7 @@ export default {
   },
   racket: {
     __proto__: item,
+    id: 203,
     title: 'Ракетка',
     short: 'Ракетка',
     take: 'ракетку',
@@ -85,6 +92,7 @@ export default {
   },
   rope: {
     __proto__: item,
+    id: 204,
     title: 'Веревка',
     short: 'Веревка',
     take: 'моток',
@@ -96,6 +104,7 @@ export default {
   },
   extinguisher: {
     __proto__: item,
+    id: 205,
     title: 'Огнетушитель',
     short: 'Огнетушитель',
     take: 'небольшом металлическом цилиндрике, раскрашенном красными и ' +
@@ -110,6 +119,7 @@ export default {
   },
   seeds: {
     __proto__: item,
+    id: 301,
     title: 'Мешочек с семенами',
     short: 'Семена',
     chapter: 177,
@@ -120,6 +130,7 @@ export default {
   },
   ring: {
     __proto__: item,
+    id: 302,
     title: 'Кольцо',
     short: 'Кольцо',
     chapter: 253,
@@ -127,6 +138,7 @@ export default {
   },
   jar: {
     __proto__: item,
+    id: 303,
     title: 'Кувшинчик',
     short: 'Кувшинчик',
     chapter: 313,
@@ -135,6 +147,7 @@ export default {
   },
   belt: {
     __proto__: item,
+    id: 304,
     title: 'Пояс',
     short: 'Пояс',
     chapter: 353,
@@ -142,6 +155,7 @@ export default {
   },
   usedBlaster: {
     __proto__: item,
+    id: 206,
     title: 'Бластер',
     short: 'Бластер',
     description: 'Возле тела лежит бластер почти той же конструкции, что и ' +
@@ -157,6 +171,7 @@ export default {
   },
   usedBlaster2: {
     __proto__: item,
+    id: 401,
     title: 'Бластер',
     short: 'Бластер',
     description: 'Ну и крепко же бластер грохнулся о камни! Корпус ' +
@@ -174,6 +189,7 @@ export default {
   },
   liana: {
     __proto__: item,
+    id: 501,
     title: 'Лиана',
     short: 'Лиана',
     description: 'Лианы. Они выглядят очень прочными, хотя и тонкими...',
@@ -184,6 +200,7 @@ export default {
   },
   grasshopperMeat: {
     __proto__: item,
+    id: 502,
     title: 'Мясо кузнечика',
     short: 'Мясо',
     description: 'Кусок жареного мяса. В любую минуту он прибавит 3 к ' +
@@ -192,6 +209,7 @@ export default {
   },
   candle: {
     __proto__: item,
+    id: 207,
     title: 'Свеча',
     short: 'Свеча',
     image: 'candle.jpg'

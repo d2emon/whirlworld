@@ -83,6 +83,21 @@ var player = {
   noBag: [],
   log: [],
   save: function () {
+    var userItems = [
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
+    ]
+    var noBag = []
+    this.items.forEach((item, id) => {
+      if (item) userItems[id] = item.id
+    })
+    this.noBag.forEach((item) => {
+      if (item) noBag.push(item.id)
+    })
     return JSON.stringify({
       avatar: this.avatar,
       title: this.title,
@@ -91,6 +106,8 @@ var player = {
       cha: { value: this.cha.value, max: this.cha.max },
       lck: this.lck.data,
       chapter: this.chapter,
+      items: userItems,
+      nobag: noBag,
       log: this.log
     })
   },
@@ -108,6 +125,31 @@ var player = {
     this.lck.data = data.lck
     this.chapter = data.chapter
     this.log = data.log
+
+    if (data.items.length) {
+      data.items.forEach((item, id) => {
+        if (item == null) return
+        for (let i in items) {
+          if (items[i].id === item) {
+            this.items[id] = items[i]
+            break
+          }
+        }
+      })
+    }
+
+    if (data.nobag.length) {
+      this.noBag = []
+      data.nobag.forEach(item => {
+        if (item == null) return
+        for (let i in items) {
+          if (items[i].id === item) {
+            this.nobag.push(items[i])
+            break
+          }
+        }
+      })
+    }
   },
   setStats: function (sklValue, staValue, chaValue) {
     this.skl.value = sklValue
