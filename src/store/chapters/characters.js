@@ -137,5 +137,12 @@ export default {
     sklModify: -1,
     skl: 9,
     sta: 8
+  },
+  predatorBall: {
+    __proto__: actor,
+    avatar: 'grasshopper.jpg',
+    title: 'Шар-хищник',
+    skl: 10,
+    sta: 6
   }
 }
