@@ -101,6 +101,48 @@
                 <div v-else>{{ action.title }}</div>
               </b-col>
             </template>
+            <template v-if="chapter.directions">
+              <b-col sm="12" v-if="chapter.directions">
+                <b-row>
+                  <b-col sm="3" v-if="chapter.directions.l">
+                    <b-btn block flat @click.stop="doAction(chapter.directions.l)">
+                      <i :class="directionIcon('l')"></i>
+                      Налево
+                    </b-btn>
+                  </b-col>
+                  <b-col sm="3" v-if="chapter.directions.w">
+                    <b-btn block flat @click.stop="doAction(chapter.directions.w)">
+                      <i :class="directionIcon('w')"></i>
+                      На запад
+                    </b-btn>
+                  </b-col>
+                  <b-col sm="3" v-if="chapter.directions.n">
+                    <b-btn block flat @click.stop="doAction(chapter.directions.n)">
+                      <i :class="directionIcon('n')"></i>
+                      На север
+                    </b-btn>
+                  </b-col>
+                  <b-col sm="3" v-if="chapter.directions.s">
+                    <b-btn block flat @click.stop="doAction(chapter.directions.s)">
+                      <i :class="directionIcon('s')"></i>
+                      На юг
+                    </b-btn>
+                  </b-col>
+                  <b-col sm="3" v-if="chapter.directions.e">
+                    <b-btn block flat @click.stop="doAction(chapter.directions.e)">
+                      <i :class="directionIcon('e')"></i>
+                      На восток
+                    </b-btn>
+                  </b-col>
+                  <b-col sm="3" v-if="chapter.directions.r">
+                    <b-btn block flat @click.stop="doAction(chapter.directions.r)">
+                      <i :class="directionIcon('r')"></i>
+                      Направо
+                    </b-btn>
+                  </b-col>
+                </b-row>
+              </b-col>
+            </template>
             <b-col sm="12" v-if="chapter.defaultAction">
               <b-btn block flat @click.stop="doAction(chapter.defaultAction)">
                 Далее
@@ -157,14 +199,14 @@ export default {
     },
 
     directionIcon (direction) {
-      if (direction === 'nw') return 'mdi-arrow-top-left'
-      if (direction === 'n') return 'arrow_upward'
-      if (direction === 'ne') return 'mdi-arrow-top-right'
-      if (direction === 'e') return 'arrow_forward'
-      if (direction === 's') return 'arrow_downward'
-      if (direction === 'w') return 'arrow_back'
-      if (direction === 'l') return 'chevron_left'
-      if (direction === 'r') return 'chevron_right'
+      if (direction === 'nw') return 'fa fa-mail-reply'
+      if (direction === 'n') return 'fa fa-arrow-up'
+      if (direction === 'ne') return 'fa fa-mail-forward'
+      if (direction === 'e') return 'fa fa-arrow-right'
+      if (direction === 's') return 'fa fa-arrow-down'
+      if (direction === 'w') return 'fa fa-arrow-left'
+      if (direction === 'l') return 'fa fa-chevron-left'
+      if (direction === 'r') return 'fa fa-chevron-right'
       return ''
     },
     doAction: function (action) {

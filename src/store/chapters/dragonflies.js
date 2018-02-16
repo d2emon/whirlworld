@@ -84,7 +84,11 @@ var chapters = [
       { title: 'На какую из тропок вы свернете?' },
       { direction: 'l', title: 'Левую', chapter: 67 },
       { direction: 'r', title: 'Правую', chapter: 527 }
-    ]
+    ],
+    directions: {
+      l: { chapter: 67 },
+      r: { chapter: 527 }
+    }
   },
   {
     __proto__: chapter,
@@ -118,7 +122,11 @@ var chapters = [
       { title: 'Куда свернете?' },
       { title: 'Налево', chapter: 31 },
       { title: 'Направо', chapter: 231 }
-    ]
+    ],
+    directions: {
+      l: { chapter: 31 },
+      r: { chapter: 231 }
+    }
   },
   {
     __proto__: chapter,
@@ -155,7 +163,11 @@ var chapters = [
       { title: 'Какую дорожку выберете на этот раз?' },
       { title: 'Левую', chapter: 267 },
       { title: 'Правую', chapter: 479 }
-    ]
+    ],
+    directions: {
+      l: { chapter: 267 },
+      r: { chapter: 479 }
+    }
   },
   {
     __proto__: chapter,
@@ -205,7 +217,11 @@ var chapters = [
     actions: [
       { direction: 'n', title: 'Пойдете дальше на север', chapter: 243 },
       { direction: 'nw', title: 'Свернете на северо-запад?', chapter: 595 }
-    ]
+    ],
+    directions: {
+      n: { chapter: 243 },
+      nw: { chapter: 595 }
+    }
   },
   // 339
   {
@@ -237,7 +253,11 @@ var chapters = [
       { title: 'Куда двинетесь?' },
       { direction: 's', title: 'На юг, к горам', chapter: 23 },
       { direction: 'n', title: 'На север, к морю', chapter: 603 }
-    ]
+    ],
+    directions: {
+      s: { chapter: 23 },
+      n: { chapter: 603 }
+    }
   },
   // 431
   {
@@ -309,9 +329,7 @@ var chapters = [
       'разговоры о быте и нравах муравьев, которые вы (при помощи Клуши) ' +
       'будете вести с ошалевшими от счастья ксенобиологами и этнографами. ' +
       'Так сказать, «наш человек в муравейнике».</p>',
-    actions: [
-      { title: 'Далее', chapter: 143 }
-    ]
+    defaultAction: { chapter: 143 }
   },
   {
     __proto__: chapter,
@@ -369,18 +387,14 @@ var chapters = [
       'приклеивается к зеленой кожице. И сразу из-под листа вылетают три ' +
       'тонких и прочных щупальца и крепко впиваются в вас. Это ' +
       'растение-хищник, напоминающее земную росянку!',
-    defaultAction: {
-      chapter: 47
-    }
+    defaultAction: { chapter: 47 }
   },
   {
     __proto__: chapter,
     id: 623,
     description: 'Тропинка бежит, не теряясь, в высокой траве и обрывается ' +
       'на маленькой полянке.',
-    defaultAction: {
-      chapter: 11
-    }
+    defaultAction: { chapter: 11 }
   }
 ]
 

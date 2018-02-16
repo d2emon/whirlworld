@@ -12,6 +12,7 @@ var chapter = {
   actions: [],
   enemies: [],
   items: [],
+  directions: {},
   loose: false,
   load: function (player) {
     var items = []
