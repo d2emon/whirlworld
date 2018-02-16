@@ -23,16 +23,27 @@ for (var i = 0; i < 665; i++) {
 chapters[1].generate = function (player) {
   this.actions = []
 
-  this.description = '<p>Ворота выглядят не так, как вы их себе представляли. ' +
+  this.description = 'Ворота выглядят не так, как вы их себе представляли. ' +
     'У ваших ног — большая металлическая чаша. Вторая чаша — перевернутая — ' +
     'куполом нависает над первой на высоте в полтора человеческих роста. А ' +
-    'между ними — столб теплого золотого света.</p>'
+    'между ними — столб теплого золотого света.'
   this.story = [
-    desc.describe('<p>Вы уже приготовились вступить в световой поток, как вдруг инженер кладет руку вам на плечо.</p>'),
-    characters.engineer.say('Еще одна просьба. Из-за подлого Бронсона у нас перепутаны все сведения в банке данных... Обратите внимание — над каждыми Воротами обозначен их кодовый номер. Будем признательны, если запишете для нас номера всех Ворот, через которые вам придется пройти.'),
-    player.say('Ладно, это нетрудно. Но я же вижу, что вы еще что-то хотите сказать!'),
-    characters.engineer.say('Да, <em class="grey--text text--lighten-2">— хмуро кивает инженер, —</em> должен предупредить. Если вы вторично попадете в Мир, где недавно уже побывали, произойдет перегрузка основного контура, и вас зашвырнет неизвестно куда, в любую точку Вселенной... или даже за ее пределы. Это непредсказуемо!'),
-    player.say('Это как раз то, что мне хотелось услышать для поднятия духа, <em class="grey--text text--lighten-2">— мрачно отвечаете вы и делаете шаг вперед...</em>')
+    desc.describe('Вы уже приготовились вступить в световой поток, как ' +
+      'вдруг инженер кладет руку вам на плечо.'),
+    characters.engineer.say('Еще одна просьба. Из-за подлого Бронсона у нас ' +
+      'перепутаны все сведения в банке данных... Обратите внимание — над ' +
+      'каждыми Воротами обозначен их кодовый номер. Будем признательны, ' +
+      'если запишете для нас номера всех Ворот, через которые вам придется ' +
+      'пройти.'),
+    player.say('Ладно, это нетрудно. Но я же вижу, что вы еще что-то хотите ' +
+      'сказать!'),
+    characters.engineer.say('Да, <em>— хмуро кивает инженер, —</em> должен ' +
+      'предупредить. Если вы вторично попадете в Мир, где недавно уже ' +
+      'побывали, произойдет перегрузка основного контура, и вас зашвырнет ' +
+      'неизвестно куда, в любую точку Вселенной... или даже за ее пределы. ' +
+      'Это непредсказуемо!'),
+    player.say('Это как раз то, что мне хотелось услышать для поднятия ' +
+      'духа, <em>— мрачно отвечаете вы и делаете шаг вперед...</em>')
   ]
   this.actions.push({
     title: 'Войти в Ворота',
@@ -43,14 +54,11 @@ chapters[1].generate = function (player) {
         world.dragonflies,
         world.robots
       ]
-      console.log(worlds)
-      var links = [366, 290, 345, 178]
       let roll = 10
       while (roll > 4) {
         roll = player.roll()
       }
-      console.log(worlds[roll - 1])
-      return links[roll - 1]
+      return worlds[roll - 1].start
       // vue.$router.push('/chapter/' + links[roll - 1])
     }
   })
@@ -60,10 +68,14 @@ chapters[404].generate = function (player) {
   this.actions.push({
     title: 'Вам сюда',
     action: function (player) {
-      var links = [366, 290, 345]
+      var worlds = [
+        world.legends,
+        world.stones,
+        world.dragonflies
+      ]
       let roll = player.roll()
       if (roll > 3) roll -= 3
-      return links[roll - 1]
+      return worlds[roll - 1].start
     }
   })
 }
@@ -72,11 +84,15 @@ chapters[641].generate = function (player) {
   this.actions.push({
     title: 'Вам сюда',
     action: function (player) {
-      var links = [290, 345, 178]
+      var worlds = [
+        world.stones,
+        world.dragonflies,
+        world.robots
+      ]
       let roll = player.roll()
-      if (roll <= 2) return links[0]
-      if (roll <= 4) return links[1]
-      return links[2]
+      if (roll <= 2) return worlds[0].start
+      if (roll <= 4) return worlds[1].start
+      return worlds[2].start
     }
   })
 }

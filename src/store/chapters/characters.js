@@ -6,13 +6,16 @@ var actor = {
   attack: 2,
   sklModify: 0,
   isPlayer: false,
+  actorData: function () {
+    return {
+      player: this.isPlayer,
+      avatar: this.avatar,
+      title: this.title
+    }
+  },
   say: function (text) {
     return {
-      actor: {
-        player: this.isPlayer,
-        avatar: this.avatar,
-        title: this.title
-      },
+      actor: this.actorData(),
       dialog: true,
       text: text
     }
@@ -49,9 +52,11 @@ export default {
     avatar: 'clusha.jpg',
     title: 'Клуша',
     describe: function (world) {
-      return this.say('<h1>' + world.title + '</h1>' +
-        '<h2>' + world.subtitle + '</h2>' +
-        world.description)
+      return {
+        actor: this.actorData(),
+        dialog: true,
+        world: world
+      }
     }
   },
   robot: {

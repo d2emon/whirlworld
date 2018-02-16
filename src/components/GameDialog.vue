@@ -5,7 +5,7 @@
         <hr :key="id">
       </template>
 
-      <div :key="id" v-if="i.text" class="pa-0 ma-2 message">
+      <div :key="id" class="pa-0 ma-2 message">
         <template v-if="i.actor">
           <div class="py-3 pb-5 mr-3 float-left" v-if="i.actor">
             <div class="avatar">
@@ -17,10 +17,19 @@
           </div>
         </template>
 
-        <div v-html="text2html(i.text) + '<br /><br />'">
-        </div>
+        <div v-if="i.text" v-html="text2html(i.text) + '<br /><br />'"></div>
 
+        <div v-if="i.world">
+          <b-card>
+            <h4 slot="header">{{ i.world.title }}</h4>
+            <b-card-body>
+              <h5 v-if="i.world.subtitle" v-text="i.world.subtitle"></h5>
+              <div v-text="i.world.description"></div>
+            </b-card-body>
+          </b-card>
+        </div>
       </div>
+
     </template>
 
     <b-card v-if="battleLog">
