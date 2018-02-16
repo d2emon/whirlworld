@@ -728,8 +728,13 @@ export default {
       console.log(item)
       this.starting = false
       this.$store.commit('getItem', item)
+      // this.$store.state.player.load(this.$cookie.get('player'))
+      this.$cookie.set('player', this.$store.state.player.save())
       this.$router.push('/chapter/1')
     }
+  },
+  mounted: function () {
+    this.$store.commit('generate')
   }
 }
 </script>

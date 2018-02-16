@@ -38,6 +38,7 @@ export default new Vuex.Store({
       return 'danger'
     },
     enemiesAlive: state => {
+      if (!state.chapter) return []
       return state.chapter.enemies.filter(function (item) {
         return item.sta > 0
       })
@@ -70,7 +71,7 @@ export default new Vuex.Store({
         alert('Ваш рюкзак забит.')
       }
     },
-    generate: (state) => {
+    generate: state => {
       state.player.generate()
     }
   },

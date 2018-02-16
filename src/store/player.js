@@ -144,7 +144,7 @@ var player = {
         if (item == null) return
         for (let i in items) {
           if (items[i].id === item) {
-            this.nobag.push(items[i])
+            this.noBag.push(items[i])
             break
           }
         }

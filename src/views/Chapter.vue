@@ -177,6 +177,7 @@ export default {
       this.player.log.push({ text: action.title })
       this.player.log.push({ separator: true })
 
+      this.$cookie.set('player', this.player.save())
       window.scrollTo(0, 0)
       this.$router.push('/chapter/' + newChapterID)
       this.loadChapter(newChapterID)
@@ -239,6 +240,7 @@ export default {
     }
   },
   created: function () {
+    this.player.load(JSON.parse(this.$cookie.get('player')))
     this.loadChapter(this.$route.params.id)
   }
 }
