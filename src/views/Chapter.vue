@@ -177,10 +177,10 @@ export default {
       this.player.log.push({ text: action.title })
       this.player.log.push({ separator: true })
 
-      this.$cookie.set('player', this.player.save())
       window.scrollTo(0, 0)
       this.$router.push('/chapter/' + newChapterID)
       this.loadChapter(newChapterID)
+      this.$cookie.set('player', this.player.save())
     },
     takeItem: function (item) {
       var canTake = this.$store.state.player.takeItem(item)

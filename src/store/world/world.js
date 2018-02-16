@@ -1,7 +1,8 @@
 var world = {
   title: 'Мир',
   subtitle: '',
-  description: ''
+  description: '',
+  start: 0
 }
 
 export default world

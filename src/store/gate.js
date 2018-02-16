@@ -11,10 +11,10 @@ export default {
 
   go1: function (player) {
     var w = [
-      this.legends,
-      this.stones,
-      this.dragonflies,
-      this.robots
+      world.legends,
+      world.stones,
+      world.dragonflies,
+      world.robots
     ]
     let roll = 10
     while (roll > 4) {
@@ -25,9 +25,9 @@ export default {
 
   go404: function (player) {
     var w = [
-      this.legends,
-      this.stones,
-      this.dragonflies
+      world.legends,
+      world.stones,
+      world.dragonflies
     ]
     let roll = player.roll()
     if (roll > 3) roll -= 3
@@ -36,9 +36,9 @@ export default {
 
   go641: function (player) {
     var w = [
-      this.stones,
-      this.dragonflies,
-      this.robots
+      world.stones,
+      world.dragonflies,
+      world.robots
     ]
     let roll = player.roll()
     if (roll <= 2) return w[0].start
