@@ -104,40 +104,62 @@
             <template v-if="chapter.directions">
               <b-col sm="12" v-if="chapter.directions">
                 <b-row>
-                  <b-col sm="3" v-if="chapter.directions.l">
-                    <b-btn block flat @click.stop="doAction(chapter.directions.l)">
-                      <i :class="directionIcon('l')"></i>
-                      Налево
-                    </b-btn>
-                  </b-col>
                   <b-col sm="3" v-if="chapter.directions.w">
                     <b-btn block flat @click.stop="doAction(chapter.directions.w)">
                       <i :class="directionIcon('w')"></i>
-                      На запад
+                      <template v-if="chapter.directions.w.title">{{ chapter.directions.w.title }}</template>
+                      <template v-else>На запад</template>
                     </b-btn>
                   </b-col>
                   <b-col sm="3" v-if="chapter.directions.n">
                     <b-btn block flat @click.stop="doAction(chapter.directions.n)">
                       <i :class="directionIcon('n')"></i>
-                      На север
+                      <template v-if="chapter.directions.n.title">{{ chapter.directions.n.title }}</template>
+                      <template v-else>На север</template>
                     </b-btn>
                   </b-col>
                   <b-col sm="3" v-if="chapter.directions.s">
                     <b-btn block flat @click.stop="doAction(chapter.directions.s)">
                       <i :class="directionIcon('s')"></i>
-                      На юг
+                      <template v-if="chapter.directions.s.title">{{ chapter.directions.s.title }}</template>
+                      <template v-else>На юг</template>
                     </b-btn>
                   </b-col>
                   <b-col sm="3" v-if="chapter.directions.e">
                     <b-btn block flat @click.stop="doAction(chapter.directions.e)">
                       <i :class="directionIcon('e')"></i>
-                      На восток
+                      <template v-if="chapter.directions.e.title">{{ chapter.directions.e.title }}</template>
+                      <template v-else>На восток</template>
+                    </b-btn>
+                  </b-col>
+                </b-row>
+                <b-row>
+                  <b-col sm="3" v-if="chapter.directions.l">
+                    <b-btn block flat @click.stop="doAction(chapter.directions.l)">
+                      <i :class="directionIcon('l')"></i>
+                      <template v-if="chapter.directions.l.title">{{ chapter.directions.l.title }}</template>
+                      <template v-else>Налево</template>
+                    </b-btn>
+                  </b-col>
+                  <b-col sm="3" v-if="chapter.directions.f">
+                    <b-btn block flat @click.stop="doAction(chapter.directions.f)">
+                      <i :class="directionIcon('f')"></i>
+                      <template v-if="chapter.directions.f.title">{{ chapter.directions.f.title }}</template>
+                      <template v-else>Вперед</template>
+                    </b-btn>
+                  </b-col>
+                  <b-col sm="3" v-if="chapter.directions.b">
+                    <b-btn block flat @click.stop="doAction(chapter.directions.b)">
+                      <i :class="directionIcon('b')"></i>
+                      <template v-if="chapter.directions.b.title">{{ chapter.directions.b.title }}</template>
+                      <template v-else>Назад</template>
                     </b-btn>
                   </b-col>
                   <b-col sm="3" v-if="chapter.directions.r">
                     <b-btn block flat @click.stop="doAction(chapter.directions.r)">
                       <i :class="directionIcon('r')"></i>
-                      Направо
+                      <template v-if="chapter.directions.r.title">{{ chapter.directions.r.title }}</template>
+                      <template v-else>Направо</template>
                     </b-btn>
                   </b-col>
                 </b-row>
@@ -205,8 +227,11 @@ export default {
       if (direction === 'e') return 'fa fa-arrow-right'
       if (direction === 's') return 'fa fa-arrow-down'
       if (direction === 'w') return 'fa fa-arrow-left'
-      if (direction === 'l') return 'fa fa-chevron-left'
+
+      if (direction === 'f') return 'fa fa-chevron-up'
       if (direction === 'r') return 'fa fa-chevron-right'
+      if (direction === 'b') return 'fa fa-chevron-down'
+      if (direction === 'l') return 'fa fa-chevron-left'
       return ''
     },
     doAction: function (action) {

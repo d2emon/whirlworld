@@ -9,6 +9,8 @@ import player from './player.js'
 import chapters from './chapters'
 import items from './chapters/items'
 
+import characters from './chapters/characters'
+
 import utils from './utils.js'
 
 Vue.use(Vuex)
@@ -55,6 +57,7 @@ export default new Vuex.Store({
       state.chapter = state.chapters[id]
       state.text = state.chapter.load(state.player)
       state.battleLog = ''
+      characters.clusha.world = state.chapter.world
     },
     getItem: (state, item) => {
       console.log(item)

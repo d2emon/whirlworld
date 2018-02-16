@@ -51,7 +51,9 @@ export default {
     __proto__: actor,
     avatar: 'clusha.jpg',
     title: 'Клуша',
+    world: null,
     describe: function (world) {
+      if (!world) world = this.world
       return {
         actor: this.actorData(),
         dialog: true,
