@@ -3,6 +3,7 @@
 // import legends from './legends.js'
 // import stones from './stones.js'
 
+import gate from '../gate.js'
 import world from '../world'
 
 import characters from './characters.js'
@@ -21,8 +22,6 @@ for (var i = 0; i < 665; i++) {
 }
 
 chapters[1].generate = function (player) {
-  this.actions = []
-
   this.description = 'Ворота выглядят не так, как вы их себе представляли. ' +
     'У ваших ног — большая металлическая чаша. Вторая чаша — перевернутая — ' +
     'куполом нависает над первой на высоте в полтора человеческих роста. А ' +
@@ -45,55 +44,27 @@ chapters[1].generate = function (player) {
     player.say('Это как раз то, что мне хотелось услышать для поднятия ' +
       'духа, <em>— мрачно отвечаете вы и делаете шаг вперед...</em>')
   ]
+  this.world = null
+  this.actions = []
   this.actions.push({
     title: 'Войти в Ворота',
-    action: function (player) {
-      var worlds = [
-        world.legends,
-        world.stones,
-        world.dragonflies,
-        world.robots
-      ]
-      let roll = 10
-      while (roll > 4) {
-        roll = player.roll()
-      }
-      return worlds[roll - 1].start
-      // vue.$router.push('/chapter/' + links[roll - 1])
-    }
+    action: gate.go1
   })
 }
 
 chapters[404].generate = function (player) {
+  this.world = null
   this.actions.push({
     title: 'Вам сюда',
-    action: function (player) {
-      var worlds = [
-        world.legends,
-        world.stones,
-        world.dragonflies
-      ]
-      let roll = player.roll()
-      if (roll > 3) roll -= 3
-      return worlds[roll - 1].start
-    }
+    action: gate.go404
   })
 }
 
 chapters[641].generate = function (player) {
+  this.world = null
   this.actions.push({
     title: 'Вам сюда',
-    action: function (player) {
-      var worlds = [
-        world.stones,
-        world.dragonflies,
-        world.robots
-      ]
-      let roll = player.roll()
-      if (roll <= 2) return worlds[0].start
-      if (roll <= 4) return worlds[1].start
-      return worlds[2].start
-    }
+    action: gate.go641
   })
 }
 
