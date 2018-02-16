@@ -1,7 +1,9 @@
-import dragonflies from './dragonflies.js'
-import robots from './robots.js'
-import legends from './legends.js'
-import stones from './stones.js'
+// import dragonflies from './dragonflies.js'
+// import robots from './robots.js'
+// import legends from './legends.js'
+// import stones from './stones.js'
+
+import world from '../world'
 
 import characters from './characters.js'
 
@@ -35,11 +37,19 @@ chapters[1].generate = function (player) {
   this.actions.push({
     title: 'Войти в Ворота',
     action: function (player) {
+      var worlds = [
+        world.legends,
+        world.stones,
+        world.dragonflies,
+        world.robots
+      ]
+      console.log(worlds)
       var links = [366, 290, 345, 178]
       let roll = 10
       while (roll > 4) {
         roll = player.roll()
       }
+      console.log(worlds[roll - 1])
       return links[roll - 1]
       // vue.$router.push('/chapter/' + links[roll - 1])
     }
@@ -72,25 +82,25 @@ chapters[641].generate = function (player) {
 }
 
 // 178
-robots.forEach(function (item, i, arr) {
+world.robots.chapters.forEach(function (item, i, arr) {
   chapters[item.id] = item
   chapters[item.id].title = '&#xa7;' + item.id
 })
 
 // 290
-stones.forEach(function (item, i, arr) {
+world.stones.chapters.forEach(function (item, i, arr) {
   chapters[item.id] = item
   chapters[item.id].title = '&#xa7;' + item.id
 })
 
 // 345
-dragonflies.forEach(function (item, i, arr) {
+world.dragonflies.chapters.forEach(function (item, i, arr) {
   chapters[item.id] = item
   chapters[item.id].title = '&#xa7;' + item.id
 })
 
 // 366
-legends.forEach(function (item, i, arr) {
+world.legends.chapters.forEach(function (item, i, arr) {
   chapters[item.id] = item
   chapters[item.id].title = '&#xa7;' + item.id
 })
