@@ -2,7 +2,7 @@
   <div>
     <template v-for="(i, id) in text">
       <template v-if="i.separator">
-        <hr :key="id">
+        <hr :key="'-' + id">
       </template>
 
       <div :key="id" class="pa-0 ma-2 message">

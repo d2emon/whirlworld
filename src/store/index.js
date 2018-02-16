@@ -44,6 +44,9 @@ export default new Vuex.Store({
     },
     currentChapter: state => {
       return state.chapters[state.player.chapter]
+    },
+    world: state => {
+      return state.chapters[state.player.chapter].world
     }
   },
   mutations: {

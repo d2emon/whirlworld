@@ -100,24 +100,28 @@ chapters[641].generate = function (player) {
 // 178
 world.robots.chapters.forEach(function (item, i, arr) {
   chapters[item.id] = item
+  chapters[item.id].world = world.robots
   chapters[item.id].title = '&#xa7;' + item.id
 })
 
 // 290
 world.stones.chapters.forEach(function (item, i, arr) {
   chapters[item.id] = item
+  chapters[item.id].world = world.stones
   chapters[item.id].title = '&#xa7;' + item.id
 })
 
 // 345
 world.dragonflies.chapters.forEach(function (item, i, arr) {
   chapters[item.id] = item
+  chapters[item.id].world = world.dragonflies
   chapters[item.id].title = '&#xa7;' + item.id
 })
 
 // 366
 world.legends.chapters.forEach(function (item, i, arr) {
   chapters[item.id] = item
+  chapters[item.id].world = world.legends
   chapters[item.id].title = '&#xa7;' + item.id
 })
 

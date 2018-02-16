@@ -28,6 +28,18 @@
           </b-card>
         </div>
       </b-tab>
+
+      <b-tab title="<i class='icon-globe'></i>" v-if="world">
+        <div class="p-3">
+          <b-card>
+            <h4 slot="header">{{ world.title }}</h4>
+            <b-card-body>
+              <h5 v-if="world.subtitle" v-text="world.subtitle"></h5>
+              <div v-text="world.description"></div>
+            </b-card-body>
+          </b-card>
+        </div>
+      </b-tab>
     </b-tabs>
   </aside>
 </template>
@@ -47,9 +59,8 @@ export default {
     ItemsPanel
   },
   computed: {
-    player: function () {
-      return this.$store.state.player
-    }
+    player: function () { return this.$store.state.player },
+    world: function () { return this.$store.getters.world }
   }
 }
 </script>
