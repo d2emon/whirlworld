@@ -111,11 +111,25 @@
                       <template v-else>На запад</template>
                     </b-btn>
                   </b-col>
+                  <b-col sm="3" v-if="chapter.directions.nw">
+                    <b-btn block flat @click.stop="doAction(chapter.directions.nw)">
+                      <i :class="directionIcon('nw')"></i>
+                      <template v-if="chapter.directions.nw.title">{{ chapter.directions.nw.title }}</template>
+                      <template v-else>На северо-запад</template>
+                    </b-btn>
+                  </b-col>
                   <b-col sm="3" v-if="chapter.directions.n">
                     <b-btn block flat @click.stop="doAction(chapter.directions.n)">
                       <i :class="directionIcon('n')"></i>
                       <template v-if="chapter.directions.n.title">{{ chapter.directions.n.title }}</template>
                       <template v-else>На север</template>
+                    </b-btn>
+                  </b-col>
+                  <b-col sm="3" v-if="chapter.directions.ne">
+                    <b-btn block flat @click.stop="doAction(chapter.directions.ne)">
+                      <i :class="directionIcon('ne')"></i>
+                      <template v-if="chapter.directions.ne.title">{{ chapter.directions.ne.title }}</template>
+                      <template v-else>На северо-восток</template>
                     </b-btn>
                   </b-col>
                   <b-col sm="3" v-if="chapter.directions.s">
