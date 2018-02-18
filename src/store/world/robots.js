@@ -1,7 +1,10 @@
 import world from './world.js'
-import robots from '../chapters/robots.js'
+import robots from './data/robots.js'
 
-export default {
+import desc from '../chapters/description.js'
+import characters from '../chapters/characters.js'
+
+var w = {
   __proto__: world,
   title: 'Мир Роботов',
   subtitle: 'Планета земного типа.',
@@ -18,3 +21,30 @@ export default {
   start: 178, // 304
   chapters: robots
 }
+
+var start = {
+  __proto__: desc.chapter,
+  world: w,
+  id: 178,
+  description: 'Голова начинает кружиться так сильно, что вы ничего не ' +
+    'видите вокруг. Стараясь удержаться на ногах, жадно глотаете воздух. ' +
+    'Вас оглушает рев снарядов, треск пулеметных очередей, свист пуль. ' +
+    'Прижавшись к подножию полуразрушенной стены и зажмурившись, чтобы ' +
+    'преодолеть головокружение, слушаете рапорт Клуши:',
+  story: [
+    characters.clusha.describe(w),
+    desc.describe('Да, не самое уютное местечко во Вселенной... Вы ' +
+      'осторожно открываете глаза и сразу смотрите на браслет. Индикатор ' +
+      'остается черным.\n' +
+      'Кажется, стрельба переместилась чуть в сторону. Теперь можно ' +
+      'осторожно осмотреться: куда же закинул вас переход?')
+  ],
+  defaultAction: { chapter: 304 }
+}
+
+robots.forEach(item => {
+  item.world = w
+})
+w.chapters.push(start)
+
+export default w
