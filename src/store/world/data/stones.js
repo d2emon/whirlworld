@@ -596,7 +596,6 @@ var chapters = [
     generate: player => { player.wound(3) },
     defaultAction: { chapter: 82 }
   },
-  
   {
     __proto__: chapter,
     id: 522,

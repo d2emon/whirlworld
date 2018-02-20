@@ -19,6 +19,8 @@
 
         <div v-if="i.text" v-html="text2html(i.text) + '<br /><br />'"></div>
 
+        <div v-if="i.separator"><hr /></div>
+
         <div v-if="i.world">
           <b-card>
             <h4 slot="header">{{ i.world.title }}</h4>
