@@ -35,8 +35,8 @@ export default {
 
 <style>
 .item-card .card-img-top {
-  max-height: 64px;
-  max-width: 64px;
+  max-height: 200px;
+  max-width: 200px;
   margin: auto;
 }
 .item-card {
