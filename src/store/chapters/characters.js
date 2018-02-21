@@ -99,19 +99,19 @@ export default {
   },
   bertold: {
     __proto__: actor,
-    avatar: 'knight.jpg',
+    avatar: 'bertold.jpg',
     title: 'Бертольд из Соргейля',
     skl: 10,
     sta: 10
   },
   forestMistress: {
     __proto__: actor,
-    avatar: 'knight.jpg',
+    avatar: 'mistress.jpg',
     title: 'Владычица Древнего Леса'
   },
   murphy: {
     __proto__: actor,
-    avatar: 'knight.jpg',
+    avatar: 'murphy.jpg',
     title: 'Эргенгард Мерфи'
   },
   sundew: {
@@ -131,7 +131,7 @@ export default {
   },
   animal1: {
     __proto__: actor,
-    avatar: 'grasshopper.jpg',
+    avatar: 'wolf.png',
     title: 'Зверь',
     sklModify: -1,
     skl: 9,
@@ -139,7 +139,7 @@ export default {
   },
   animal2: {
     __proto__: actor,
-    avatar: 'grasshopper.jpg',
+    avatar: 'wolf.png',
     title: 'Зверь',
     sklModify: -1,
     skl: 9,
@@ -147,7 +147,7 @@ export default {
   },
   predatorBall: {
     __proto__: actor,
-    avatar: 'grasshopper.jpg',
+    avatar: 'toothball.jpeg',
     title: 'Шар-хищник',
     skl: 10,
     sta: 6
