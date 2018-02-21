@@ -151,5 +151,12 @@ export default {
     title: 'Шар-хищник',
     skl: 10,
     sta: 6
+  },
+  knight: {
+    __proto__: actor,
+    avatar: 'knight.jpg',
+    title: 'Рыцарь',
+    skl: 10,
+    sta: 12
   }
 }
