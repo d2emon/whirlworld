@@ -122,6 +122,13 @@ export default {
     skl: 7,
     sta: 8
   },
+  predatorBush: {
+    __proto__: actor,
+    avatar: 'sundew.jpg',
+    title: 'Куст-Хищник',
+    skl: 9,
+    sta: 10
+  },
   grasshopper: {
     __proto__: actor,
     avatar: 'grasshopper.jpg',
