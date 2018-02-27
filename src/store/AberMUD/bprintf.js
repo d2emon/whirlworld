@@ -1,15 +1,114 @@
+function getuid() { return true }
+function geteuid() { return true }
 function crapup(text) { console.log('CRAPUP: ' + text))
+function isdark(loc) { return false }
+function fpbns(p) { return {} }
+var alarm = {
+  block: function () {},
+  unblock: function () {}
+}
+var world = {
+  load: function () {},
+  save: function () {}
+}
+var me = {
+  num: 0,
+  lev: 0,
+  loc: 0,
+  vis: 0,
+  name: '',
+  ail: {
+    blind: false,
+  }
+  loose: function () {}
+}
+var wd = {
+  him: '',
+  her: '',
+  it: '',
+  them: ''
+}
 
-var pr_due = 0
-
-function bprintf(args) {
-  x = args
-  if (x.length > 235) {
+function bprintf(text) {
+  if (text.length > 235) {
     console.log("Bprintf Short Buffer overflow")
     crapup("Internal Error in BPRINTF")
   }
   /* Now we have a string of chars expanded */
-  quprnt(x)
+  sysbuf.quprnt(text)
+}
+
+function seeplayer(p) {
+  if (!p) return true
+  if (me.num == p.num) return true /* me */
+  if (me.lev < p.vis) return false
+  if (me.ail.blind) return false /* Cant see */
+  if ((me.loc == p.loc) && (isdark(me.loc))) return false
+  setname(p)
+  return true
+}
+
+function setname(p) {
+  /* Assign Him her etc according to who it is */
+  if ((p.id > 15) && (p != fpbns("riatha")) && (p != fpbns("shazareth"))) {
+    wd.it = p.name
+    return
+  }
+  if (p.sex) wd.her = p.name
+  else wd.him = p.name
+  wd.them = x.name
+}
+
+var sysbuf = {
+  max: 4096,
+  buff: '',
+
+  iskb: true,
+  pr: {
+    due: false,
+    qcr: false
+  },
+
+  putchar: function (c) {},
+  makebfr: function () {
+    this.buff = malloc(this.max) /* 4K of chars should be enough for worst case */
+    if (!this.buff) crapup("Out Of Memory")
+    this.buff = ''
+  },
+  quprnt: function (text) {
+    if (text.length + this.buff.length > this.max) {
+      this.buff = ''
+      me.loose()
+      console.log('Buffer overflow on user ' + me.name)
+      crapup('PANIC - Buffer overflow')
+    }
+    this.buff += text
+  },
+  pbfr: function (){
+    alarm.block()
+    world.save()
+
+    if (this.buff) this.pr.due = true
+    if (this.buff && this.pr.qcr) stdout.putchar('\n')
+    this.pr.qcr = false
+
+    if (log_fl.opened) {
+      this.iskb = false
+      log_fl.dcprnt(this.buff)
+    }
+
+    if (snoopd.load()) {
+      this.iskb = false
+      snoopd.dcprnt(this.buff)
+      snoopd.close()
+    }
+
+    this.iskb = true
+    stdout.dcprnt(this.buff)
+    this.buff = "" /* clear buffer */
+    snoopt.load()
+    alarm.unblock()
+  }
 }
 
 var fileBuff = {
@@ -18,8 +117,9 @@ var fileBuff = {
   output: '',
   ct: 0,
 
-  function printf(text) console.log(text)
-  function f_listfl(x) {}
+  printf: function (text) { console.log(text) } ,
+  f_listfl: function (x) {},
+  putc: function (c) {},
 
   function tocontinue(max) {
     let res = ''
@@ -27,11 +127,13 @@ var fileBuff = {
       res += this.input[this.ct]
       this.ct++
     }
+
     if (res.length >= max) {
       console.log("IO_TOcontinue overrun")
       this.input = ""
       crapup("Buffer OverRun in IO_TOcontinue")
     }
+
     this.ct++
     return res
   }
@@ -128,50 +230,60 @@ var fileBuff = {
   }
 }
 
-function seeplayer(p) {
-  if (!p) return true
-  if (me.num == p.num) return true /* me */
-  if (me.lev < p.vis) return false
-  if (ail.blind) return false /* Cant see */
-  if ((me.loc == p.loc) && (isdark(me.loc))) return false
-  setname(p)
-  return true
-}
-
-var sysbuf = null
-
-function makebfr() {
-  sysbuf = malloc(4096) /* 4K of chars should be enough for worst case */
-  if (!sysbuf) crapup("Out Of Memory")
-  sysbuf = ""
-}
-    
 var log_fl = {
   _proto_: fileBuff,
 
-  function open(filename, mode) {
+  load: function () {
+    bprintf("Commencing Logging Of Session\n")
+    this.open("mud_log", "a")
+    if (!this.opened) this.open("mud_log", "w")
+    if (!this.opened) {
+      bprintf("Cannot open log file mud_log\n")
+      return false
+    }
+    bprintf("The log will be written to the file 'mud_log'\n")
+    return true
+  },
+  open: function (filename, mode) {
     this.opened = true
   }
 }
 
 var snoop = {
   _proto_: fileBuff,
-  snoopt: null,
 
-  function open(user, per) {
-    let z =  SNOOP + user
-    let x = openlock(z, per)
-    this.opened = true
-    return x
+  filename: function (username) {
+    return SNOOP + username
+  },
+
+  open: function (username, per) {
+    this.opened  = openlock(this.filename(username), per)
+    return this.opened
   }
+}
 
-  function viewsnoop() {
-    this.open(me.name, "r+")
-    if (!this.snoopt) return
-    if (!this.opened) return
+var snoopd = {
+  _proto_: snoop,
+  snoopd: null,
+
+  load: function () {
+    if (!this.snoopd) return false
+    this.open(this.snoopd.name, 'a')
+    return this.opened
+  }
+}
+
+var snoopt = {
+  _proto_: snoop,
+  snoopt: null,
+  sntn: null,
+
+  view: function () {
+    if (!this.openr(me)) return
+
     while(!this.feof()) {
       z = this.fgets(127)
-      printf("|%s", z)
+      this.printf("|%s", z)
     }
     this.truncate(0)
     this.close()
@@ -181,10 +293,32 @@ var snoop = {
     pbfr();
     snoopt = x
     */
+  },
+  start: function () {
+    if (!this.snoopt) return false
+    return this.view()
+  },
+  load: function (player) {
+    this.open(player.name, 'r+')
+    if (!this.snoopt) return false
+    return this.opened
+  },
+  check: function () {
+    if (!this.snoopt) return
+    sendsys(this.sntn, me, -400, 0, '')
   }
 }
 
-function logcom() {
+var snoopme = {
+  _proto_: snoop,
+
+  load: function () {
+    this.open(me, 'w')
+  }
+}
+
+// Actions
+function logcom(args) {
   if (getuid() != geteuid()) {
     bprintf("\nNot allowed from this ID\n")
     return
@@ -195,103 +329,38 @@ function logcom() {
     return
   }
 
-  bprintf("Commencing Logging Of Session\n")
-  log_fl.open("mud_log", "a")
-  if (!log_fl.opened) log_fl.open("mud_log", "w")
-  if (!log_fl.opened) {
-    bprintf("Cannot open log file mud_log\n")
-    return
-  }
-  bprintf("The log will be written to the file 'mud_log'\n")
+  log_fl.open()
 }
 
-var pr_qcr = 0 
-
-function pbfr(){
-  block_alarm()
-  closeworld()
-  if (sysbuf) pr_due = 1
-  if (sysbuf && pr_qcr) putchar('\n')
-  pr_qcr = 0
-  if (log_fl.opened) {
-    iskb = 0
-    log_fl.dcprnt(sysbuf)
-  }
-  if (snoopd) {
-    snoop.open(snoopd.name, "a")
-    if (snoop.opened) {
-      iskb = 0
-      snoop.dcprnt(sysbuf)
-      snoop.close()
-    }
-  }
-  iskb = 1
-  stdout.dcprnt(sysbuf)
-  sysbuf = "" /* clear buffer */
-  if (snoop.snoopt) viewsnoop()
-  unblock_alarm()
-}
-
-var iskb = 1
-
-function quprnt(x) {
-  if (x.length + sysbuf.length > 4095) {
-    sysbuf = ''
-    me.loseme()
-    console.log('Buffer overflow on user ' + me.name)
-    crapup('PANIC - Buffer overflow')
-  }
-  sysbuf += x
-}
-
-var snoopd = null
-var sntn[32] = []
-
-function snoopcom(){
-  if (my_lev < 10) {
+function snoopcom(args){
+  if (me.lev < 10) {
     bprintf('Ho hum, the weather is nice isn\'t it\n')
     return
   }
 
-  if (snoop.snoopt) {
-    bprintf('Stopped snooping on ' + sntn.name + '\n')
-    snoop.snoopt = null
-    sendsys(sntn, me, -400, 0, '')
+  if (snoopt.snoopt) {
+    bprintf('Stopped snooping on ' + snoopt.sntn.name + '\n')
+    snoopt.snoopt = null
+    sendsys(snoopt.sntn, me, -400, 0, '')
   }
-  if (brkword() == -1) {
-    return
-  }
-  x = fpbn(wordbuf)
-  if (x == -1) {
+
+  if (args.length <= 0) return
+  p = fpbn(args[0])
+  if (!p) {
     bprintf('Who is that ?\n')
     return
   }
-  if(((my_lev < 10000) && (x.lev >= 10))||(x.bit[6])) {
+  if(((me.lev < 10000) && (p.lev >= 10)) || (p.bit[6])) {
     bprintf('Your magical vision is obscured\n')
-    snoop.snoopt = null
+    snoopt.snoopt = null
     return
   }
-  sntn = x
-  snoop.snoopt = x
-  bprintf('Started to snoop on ' + x.name + '\n')
-  sendsys(sntn, me, -401, 0, '')
-  snoop.open(me, 'w')
-  snoop.printf(' ')
-  snoop.close()
-}
+  snoopt.sntn = p
+  snoopt.snoopt = p
+  bprintf('Started to snoop on ' + p.name + '\n')
+  sendsys(snoopt.sntn, me, -401, 0, '')
 
-function chksnp() {
-  if (!snoopt) return
-  sendsys(sntn, me, -400, 0, '')
-}
- 
-function setname(x) {
-  /* Assign Him her etc according to who it is */
-  if((x>15) && (x!=fpbns("riatha")) && (x!=fpbns("shazareth"))) {
-    strcpy(wd_it, pname(x))
-    return
-  }
-  if(psex(x)) strcpy(wd_her, pname(x))
-  else strcpy(wd_him, pname(x))
-  strcpy(wd_them, pname(x))
+  snoopme.load(me, 'w')
+  snoopme.printf(' ')
+  snoopme.close()
 }

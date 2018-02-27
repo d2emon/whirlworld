@@ -1,199 +1,209 @@
-var in_fight = 0
-var fighting = -1
 
 function dambyitem(it)
 {
-  if (it == -1) return 4
-  if (!otstbit(it, 15)) return -1
-  return obyte(it, 0)
-}
-
-var wpnheld = -1
-
-function weapcom()
-{
-  if (brkword() == -1) {
-    bprintf("Which weapon do you wish to select though\n")
-    return
-  }
-  a = fobnc(wordbuf)
-  if (a== -1) {
-    bprintf("Whats one of those ?\n")
-    return
-  }
-  b = dambyitem(a)
-  if (b < 0) {
-    bprintf("Thats not a weapon\n")
-    wpnheld = -1
-    return
-  }
-  wpnheld = a
-  calibme()
-  bprintf("OK...\n")
+  if (!it) return 4
+  return it.dambyitem
 }
 
 function hitplayer(victim, wpn) {
-  if (!strlen(pname(victim))) return
+  if (!victim) return
 
   /* Chance to hit stuff */
-  if ((!iscarrby(wpn, mynum)) && (wpn != -1)) {
-    bprintf("You belatedly realise you dont have the %s,\nand are forced " +
-      "to use your hands instead..\n", oname(wpn))
-    if (wpnheld == wpn) wpnheld = -1
-    wpn = -1
+  if (wpn && (!wpn.iscarrby(me))) {
+    bprintf('You belatedly realise you dont have the ' + wpn.name + ',\n' +
+      'and are forced to use your hands instead..\n')
+    if (me.wpnheld == wpn) wpnheld = null
+    wpn = null
   }
-  wpnheld = wpn
-  if ((wpn == 32) && (iscarrby(16, victim))) {
-    bprintf("The runesword flashes back away from its target, growling in " +
-      "anger!\n")
+
+  me.wpnheld = wpn
+  if (!wpn.onHit(victim)) return
+  if (wpn.dambyitem() < 0) {
+    bprintf('Thats no good as a weapon\n')
+    me.wpnheld = null
     return
   }
-  if (dambyitem(wpn) < 0) {
-    bprintf("Thats no good as a weapon\n")
-    wpnheld = -1
+
+  if (me.in_fight) {
+    bprintf('You are already fighting!\n')
     return
   }
-  if (in_fight) {
-    bprintf("You are already fighting!\n")
-    return
-  }
-  fighting = victim
-  in_fight = 300
-  res = randperc()
-  cth = 40 + 3 * my_lev
-  if ((iswornby(89, victim)) || (iswornby(113, victim)) ||
-    (iswornby(114, victim))) cth -= 10
-  if (cth<0) cth=0
-  if (cth>res) {
-    bprintf("You hit \001p%s\001 ", pname(victim))
-    if (wpn != -1) bprintf("with the %s", oname(wpn))
+
+  me.fighting = victim
+  me.in_fight = 300
+
+  var res = randperc()
+
+  var cth = 40 + 3 * me.lev
+  if (item89.iswornby(victim) ||
+    item113.iswornby(victim) ||
+    item114.iswornby(victim)) cth -= 10
+  if (cth < 0) cth=0
+
+  if (cth > res) {
+    bprintf('You hit \001p' + victim.name + '\001 ')
+    if (wpn) bprintf('with the ' + wpn.name)
     bprintf("\n")
+
     ddn = randperc() % (dambyitem(wpn))
-    x[0] = mynum
-    x[1] = ddn
-    x[2] = wpn
-    if (pstr(victim) - ddn < 0) {
-      bprintf("Your last blow did the trick\n")
-      if (pstr(victim) >= 0) {
-        /* Bonus ? */
-	if (victim < 16)
-          my_sco += (plev(victim) * plev(victim) * 100)
-	else
-          my_sco += 10 * damof(victim)
-      }
-      setpstr(victim, -1) /* MARK ALREADY DEAD */
-      in_fight = 0
-      fighting = -1
+    x = {
+      sender: me,
+      dmg: ddn,
+      wpn: wpn
     }
-    if (victim < 16)
-      sendsys(pname(victim), globme, -10021, curch, (char *)x)
+
+    if (victim.str - ddn < 0) {
+      bprintf("Your last blow did the trick\n")
+      if (victim.str >= 0) {
+        /* Bonus ? */
+        me.sco += victim.bonus()
+      victim.str = -1 /* MARK ALREADY DEAD */
+      me.in_fight = 0
+      me.fighting = null
+    }
+
+    if (victim.isPc)
+      sendsys(victim, me, -10021, me.loc, x)
     else {
       woundmn(victim, ddn)
     }
-    my_sco += ddn * 2
-    calibme()
+    me.sco += ddn * 2
+    me.calib()
     return
   } else {
-    bprintf("You missed \001p%s\001\n", pname(victim))
-    x[0] = mynum
-    x[1] = -1
-    x[2] = wpn
-    if (victim<16)
-      sendsys(pname(victim), globme, -10021, curch, (char *)x)
+    bprintf('You missed \001p' + victim.name + '\001\n')
+    x = {
+      sender: me,
+      dmg: -1,
+      wpn: wpn
+    }
+    if (victim.isPc)
+      sendsys(victim, me, -10021, me.loc, x)
     else
       woundmn(victim, 0)
   }
 }
 
-function killcom() {
-  if (brkword() == -1) {
-    bprintf("Kill who\n")
-    return
-  }
-  if (!strcmp(wordbuf, "door")) {
-    bprintf("Who do you think you are , Moog ?\n")
-    return
-  }
-  if (fobna(wordbuf) != -1) {
-    breakitem(fobna(wordbuf))
-    return
-  }
-  if ((a=fpbn(wordbuf)) == -1) {
-    bprintf("You can't do that\n")
-    return
-  }
-  if (a == mynum) {
-    bprintf("Come on, it will look better tomorrow...\n")
-    return
-  }
-  if (ploc(a) != curch) {
-    bprintf("They aren't here\n")
-    return
-  }
-  // xwisc:
-  if (brkword() == -1) {
-    hitplayer(a, wpnheld)
-    return
-  }
-  if (!strcmp(wordbuf, "with")) {
-    if (brkword() == -1) {
-      bprintf("with what ?\n")
-      return
-    }
-  } else
-    // goto xwisc;
-  x = fobnc(wordbuf)
-  if (x == -1) {
-    bprintf("with what ?\n")
-    return
-  }
-  hitplayer(a, x)
-}
-
-function bloodrcv(array, isme) {
+function bloodrcv(data, isme) {
   if (!isme) return /* for mo */
-  if (array[0] < 0) return
+  if (!data.sender) return
+
   // nlod:
-  if (!strlen(pname(array[0]))) return
-  fighting = array[0]
-  in_fight = 300
-  if (array[1] == -1) {
-    bprintf("\001p%s\001 attacks you", pname(array[0]))
-    if (array[2] != -1) bprintf(" with the %s", oname(array[2]))
+  if (!data.sender.name) return
+  me.fighting = data.sender
+  me.in_fight = 300
+  if (!data.dmg) {
+    bprintf('\001p' + data.sender.name + '\001 attacks you')
+    if (data.wpn) bprintf(' with the ' + data.wpn.name)
     bprintf("\n")
   } else {
-    bprintf("You are wounded by \001p%s\001", pname(array[0]))
-    if (array[2] > -1) bprintf(" with the %s", oname(array[2]))
-    bprintf("\n")
-    if (my_lev < 10) {
-      my_str -= array[1]
-      if (array[0] == 16) {
-        my_sco -= 100 * array[1]
-	bprintf("You feel weaker, as the wraiths icy touch seems to drain " +
-          "your very life force\n")
-	if (my_sco<0) my_str = -1
-      }
+    bprintf('You are wounded by \001p' + data.sender.name + '\001')
+    if (data.wpn) bprintf(' with the ' + data.wpn.name)
+    bprintf('\n')
+    if (me.lev < 10) {
+      me.str -= data.dmg
+      data.sender.onHitBy(me, dmg)
     }
-    if(my_str<0) {
-      syslog("%s slain by %s", globme, pname(array[0]))
+    if (me.str < 0) {
+      console.log(me.name + ' slain by ' + data.sender.name)
       dumpitems()
-      loseme()
-      closeworld()
-      delpers(globme)
-      openworld()
-      sprintf(ms, "\001p%s\001 has just died.\n", globme)
-      sendsys(globme, globme, -10000, curch, ms)
-      sprintf(ms, "[ \001p%s\001 has been slain by \001p%s\001 ]\n", globme,
-        pname(array[0]))
-      sendsys(globme, globme, -10113, curch, ms)
+      me.loose()
+      world.save()
+      me.delpers()
+      world.load()
+
+      ms = '\001p' + me.name + '\001 has just died.\n'
+      sendsys(me, me, -10000, me.loc, ms)
+
+      ms = '[ \001p' + me.name + '\001 has been slain by \001p' + data.sender.name + '\001 ]\n'
+      sendsys(me, me, -10113, me.loc, ms)
+
       crapup("Oh dear... you seem to be slightly dead\n")
     }
-    me_cal = 1 /* Queue an update when ready */
+    me.cal = 1 /* Queue an update when ready */
   }
 }
 
 function breakitem(x) {
-  if (x == 171) sys_reset()
-  if (x == -1) bprintf("What is that ?\n")
+  if (!x) {
+    bprintf("What is that ?\n")
+    return
+  }
+  x.onBreak()
   bprintf("You can't do that\n")
+}
+
+// Actions
+function weapcom(args) {
+  if (args.length <= 0) {
+    bprintf("Which weapon do you wish to select though\n")
+    return
+  }
+  a = fobnc(args[0])
+  if (!a) {
+    bprintf("Whats one of those ?\n")
+    return
+  }
+  b = a.dambyitem()
+  if (b < 0) {
+    bprintf("Thats not a weapon\n")
+    me.wpnheld = null
+    return
+  }
+  me.wpnheld = a
+  me.calib()
+  bprintf("OK...\n")
+}
+
+function killcom(args) {
+  if (args.length <= 0) {
+    bprintf("Kill who\n")
+    return
+  }
+
+  if (args[0] == "door") {
+    bprintf("Who do you think you are , Moog ?\n")
+    return
+  }
+
+  if (fobna(args[0])) {
+    breakitem(fobna(args[0]))
+    return
+  }
+
+  a = fpbn(args[0])
+  if (!a) {
+    bprintf("You can't do that\n")
+    return
+  }
+  if (a == me) {
+    bprintf("Come on, it will look better tomorrow...\n")
+    return
+  }
+  if (a.loc != me.loc) {
+    bprintf("They aren't here\n")
+    return
+  }
+
+  // xwisc:
+  for (i = 1; i < args.length; i++) {
+    if (args[i] != "with")) {
+      continue
+    }
+    if (i + 1 >= args.length) {
+      bprintf("with what ?\n")
+      return
+    }
+  }
+  if (args.length <= i) {
+    hitplayer(a, me.wpnheld)
+    return
+  }
+
+  x = fobnc(args[i])
+  if (!x) {
+    bprintf("with what ?\n")
+    return
+  }
+  hitplayer(a, x)
 }
